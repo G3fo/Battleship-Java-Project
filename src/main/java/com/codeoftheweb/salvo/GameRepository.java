@@ -4,5 +4,5 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface GameRepository extends JpaRepository<Player, Long> {
-    List<Game> findByLastName(String lastName);
+    List<Game> findByUserName(String userName);
 }
