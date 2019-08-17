@@ -1,14 +1,9 @@
 package com.codeoftheweb.salvo;
 
 import org.hibernate.annotations.GenericGenerator;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
+import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 public class Game {
@@ -17,16 +12,26 @@ public class Game {
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     private long id;
-    public Date gameDate = new Date();
+    private LocalDateTime gameDate;
+
+    @OneToMany(mappedBy="game", fetch= FetchType.EAGER)
+    Set<GamePlayer> gamePlayers;
+
 
     public Game() { }
 
-    public void setGameDate(Date gameDate) {
-        this.gameDate = LocalDate.parse("2011-08-03T03:15:00", DateTimeFormatter.ISO_LOCAL_DATE_TIME);;
+
+    public Game(LocalDateTime gameDate){
+        this.gameDate = gameDate;
     }
 
-    public Date getGameDate() {
+    public LocalDateTime getGameDate() {
         return gameDate;
     }
+
+    public void setGameDate(LocalDateTime gameDate) {
+        this.gameDate = gameDate;
+    }
+
 
 }
