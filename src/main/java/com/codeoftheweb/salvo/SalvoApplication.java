@@ -5,6 +5,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.time.LocalDateTime;
+
 @SpringBootApplication
 
 public class SalvoApplication {
@@ -24,9 +26,13 @@ public class SalvoApplication {
 			PlayerRepository.save(new Player("MichelleDessler@gmail.com"));
 
 			// Saves a couple of games
-			GameRepository.save(new Game());
-			GameRepository.save(new Game());
-			GameRepository.save(new Game());
+			LocalDateTime date1 = LocalDateTime.now().plusHours(0);
+			LocalDateTime date2 = LocalDateTime.now().plusHours(1);
+			LocalDateTime date3 = LocalDateTime.now().plusHours(2);
+
+			GameRepository.save(new Game(date1));
+			GameRepository.save(new Game(date2));
+			GameRepository.save(new Game(date3));
 		};
 	}
 

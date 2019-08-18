@@ -10,7 +10,6 @@ import javax.persistence.Id;
 @Entity
 public class GamePlayer {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
@@ -25,6 +24,28 @@ public class GamePlayer {
     private Game game;
 
 
+    public long getGamePlayerId(){
+        return id;
+    }
+
+    public long getGameId(){
+        return id;
+    }
 
 
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
+    public Game getGame() {
+        return game;
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
+    }
 }

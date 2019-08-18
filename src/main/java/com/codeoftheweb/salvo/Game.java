@@ -3,7 +3,11 @@ package com.codeoftheweb.salvo;
 import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+
+import static java.util.stream.Collectors.toList;
 
 @Entity
 public class Game {
@@ -33,5 +37,15 @@ public class Game {
         this.gameDate = gameDate;
     }
 
+    public List<Player> getPlayer() {
+        return gamePlayers.stream().map(sub -> sub.getPlayer()).collect(toList());
+    }
 
+    public Set<GamePlayer> getGamePlayers() {
+        return gamePlayers;
+    }
+
+    public void setGamePlayers(Set<GamePlayer> gamePlayers) {
+        this.gamePlayers = gamePlayers;
+    }
 }
