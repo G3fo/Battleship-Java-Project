@@ -8,6 +8,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 
 @Entity
@@ -18,7 +21,7 @@ public class GamePlayer {
     @GenericGenerator(name = "native", strategy = "native")
     private long id;
 
-    private LocalDate joinDate;
+    private LocalDateTime joinDate;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="player_id")
@@ -30,17 +33,17 @@ public class GamePlayer {
 
     public GamePlayer(){}
 
-    public GamePlayer(LocalDate joinDate, Player player, Game game) {
+    public GamePlayer(LocalDateTime joinDate, Player player, Game game) {
         this.joinDate = joinDate;
         this.player = player;
         this.game = game;
     }
 
-    public LocalDate getJoinDate() {
+    public LocalDateTime getJoinDate() {
         return joinDate;
     }
 
-    public void setJoinDate(LocalDate joinDate) {
+    public void setJoinDate(LocalDateTime joinDate) {
         this.joinDate = joinDate;
     }
     public long getGamePlayerId(){
@@ -69,4 +72,11 @@ public class GamePlayer {
         this.game = game;
     }
 
+
+    //public Map<String, Object> createGameDTO_GamePlayer(){
+    //    Map<String, Object> dto = new LinkedHashMap<>();
+    //    dto.put("gpid", this.getGamePlayerId());
+    //    dto.put("Players", this.getPlayer().getUserName());
+    //    dto.put("", this.ge());
+    //}
 }

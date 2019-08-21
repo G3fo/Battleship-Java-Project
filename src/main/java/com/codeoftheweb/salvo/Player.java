@@ -1,5 +1,6 @@
 package com.codeoftheweb.salvo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.util.HashSet;
@@ -43,6 +44,7 @@ public class Player {
         this.gamePlayers = gamePlayers;
     }
 
+    @JsonIgnore
     public List<Game> getGame() {
         return gamePlayers.stream().map(sub -> sub.getGame()).collect(toList());
     }
