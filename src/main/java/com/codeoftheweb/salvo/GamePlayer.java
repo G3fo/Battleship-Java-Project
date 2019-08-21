@@ -1,11 +1,14 @@
 package com.codeoftheweb.salvo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.time.LocalDate;
+
 
 @Entity
 public class GamePlayer {
@@ -15,6 +18,8 @@ public class GamePlayer {
     @GenericGenerator(name = "native", strategy = "native")
     private long id;
 
+    private LocalDate joinDate;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="player_id")
     private Player player;
@@ -23,7 +28,21 @@ public class GamePlayer {
     @JoinColumn(name="game_id")
     private Game game;
 
+    public GamePlayer(){}
 
+    public GamePlayer(LocalDate joinDate, Player player, Game game) {
+        this.joinDate = joinDate;
+        this.player = player;
+        this.game = game;
+    }
+
+    public LocalDate getJoinDate() {
+        return joinDate;
+    }
+
+    public void setJoinDate(LocalDate joinDate) {
+        this.joinDate = joinDate;
+    }
     public long getGamePlayerId(){
         return id;
     }
@@ -32,7 +51,7 @@ public class GamePlayer {
         return id;
     }
 
-
+    @JsonIgnore
     public Player getPlayer() {
         return player;
     }
@@ -41,6 +60,7 @@ public class GamePlayer {
         this.player = player;
     }
 
+    @JsonIgnore
     public Game getGame() {
         return game;
     }
@@ -48,4 +68,5 @@ public class GamePlayer {
     public void setGame(Game game) {
         this.game = game;
     }
+
 }

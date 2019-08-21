@@ -19,7 +19,7 @@ public class Game {
     private LocalDateTime gameDate;
 
     @OneToMany(mappedBy="game", fetch= FetchType.EAGER)
-    Set<GamePlayer> gamePlayers;
+    private Set<GamePlayer> gamePlayers;
 
 
     public Game() { }
@@ -36,6 +36,7 @@ public class Game {
     public void setGameDate(LocalDateTime gameDate) {
         this.gameDate = gameDate;
     }
+
 
     public List<Player> getPlayer() {
         return gamePlayers.stream().map(sub -> sub.getPlayer()).collect(toList());
