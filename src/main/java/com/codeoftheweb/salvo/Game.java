@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.*;
 
 import static java.util.stream.Collectors.toList;
@@ -23,6 +24,7 @@ public class Game {
 
     public Game() { }
 
+    //Constructor
 
     public Game(LocalDateTime gameDate){
         this.gameDate = gameDate;
@@ -57,8 +59,8 @@ public class Game {
     public Map<String, Object> createGameDTO(){
         Map<String, Object> gameDTO = new LinkedHashMap<>();
         gameDTO.put("id", this.id);
-        gameDTO.put("created", this.getGameDate());
-        //gameDTO.put("gamePlayers", this.getGamePlayers().stream().map(GamePlayer::createGameDTO_GamePlayer));
+        gameDTO.put("created", this.getGameDate().atZone(ZoneId.systemDefault()).toInstant());
+        gameDTO.put("gamePlayers", this.getGamePlayers().stream().map(GamePlayer::createGameDTO_GamePlayer));
         return gameDTO;
     }
 

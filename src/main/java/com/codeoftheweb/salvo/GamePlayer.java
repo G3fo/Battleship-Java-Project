@@ -73,10 +73,10 @@ public class GamePlayer {
     }
 
 
-    //public Map<String, Object> createGameDTO_GamePlayer(){
-    //    Map<String, Object> dto = new LinkedHashMap<>();
-    //    dto.put("gpid", this.getGamePlayerId());
-    //    dto.put("Players", this.getPlayer().getUserName());
-    //    dto.put("", this.ge());
-    //}
+    public Map<String, Object> createGameDTO_GamePlayer (){
+        Map<String, Object> dto = new LinkedHashMap<>();
+        dto.put("gpid", this.getGamePlayerId());
+        dto.put("Players", this.getPlayer().makeGameDTO_Player());
+        return dto;
+    }
 }

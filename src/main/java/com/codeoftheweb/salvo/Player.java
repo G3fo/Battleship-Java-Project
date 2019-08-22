@@ -3,9 +3,7 @@ package com.codeoftheweb.salvo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static java.util.stream.Collectors.toList;
 
@@ -44,7 +42,18 @@ public class Player {
         this.gamePlayers = gamePlayers;
     }
 
+    public long getPlayerId() {
+        return id;
+    }
+
     @JsonIgnore
+    public Map<String, Object> makeGameDTO_Player (){
+        Map<String, Object> dto = new LinkedHashMap<>();
+        dto.put("id", this.getPlayerId());
+        dto.put("user_name", this.getUserName());
+        return dto;
+    }
+
     public List<Game> getGame() {
         return gamePlayers.stream().map(sub -> sub.getGame()).collect(toList());
     }
