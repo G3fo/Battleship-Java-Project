@@ -45,6 +45,7 @@ public class GamePlayer {
     public void setJoinDate(LocalDateTime joinDate) {
         this.joinDate = joinDate;
     }
+
     public long getGamePlayerId(){
         return id;
     }
@@ -74,7 +75,7 @@ public class GamePlayer {
 
     public Map<String, Object> createGameDTO_GamePlayer (){
         Map<String, Object> dto = new LinkedHashMap<>();
-        dto.put("gpid", this.getGamePlayerId());
+        dto.put("GamePlayerId", this.getGamePlayerId());
         dto.put("Players", this.getPlayer().createGameDTO_Player());
         return dto;
     }

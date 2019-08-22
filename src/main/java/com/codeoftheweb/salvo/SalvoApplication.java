@@ -19,7 +19,6 @@ public class SalvoApplication {
 									  GameRepository GameRepository,
 									  GamePlayerRepository gamePlayerRepository) {
 		return (args) -> {
-			// Save a couple of customers
 
 			Player player1 = new Player("Jackbauer@gmail.com");
 			Player player2 = new Player("Chloe@Brian.com");
@@ -33,8 +32,7 @@ public class SalvoApplication {
 			PlayerRepository.save(player4);
 			PlayerRepository.save(player5);
 
-			// Saves a couple of games
-			LocalDateTime date1 = LocalDateTime.now().plusHours(0);
+			LocalDateTime date1 = LocalDateTime.now();
 			LocalDateTime date2 = LocalDateTime.now().plusHours(1);
 			LocalDateTime date3 = LocalDateTime.now().plusHours(2);
 

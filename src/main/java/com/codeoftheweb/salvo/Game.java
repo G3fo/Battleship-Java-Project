@@ -34,6 +34,10 @@ public class Game {
         return gameDate;
     }
 
+    public void setGameDate(LocalDateTime gameDate) {
+        this.gameDate = gameDate;
+    }
+
     public long getGameId(){
         return id;
     }
