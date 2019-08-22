@@ -51,7 +51,7 @@ public class SalvoApplication {
 			GamePlayer gp3 = new GamePlayer(date2, player3, g2);
 			GamePlayer gp4 = new GamePlayer(date2, player4, g2);
 			GamePlayer gp5 = new GamePlayer(date3, player5, g3);
-			GamePlayer gp6 = new GamePlayer(date3, player5, g3);
+			GamePlayer gp6 = new GamePlayer(date3, player1, g3);
 
 			gamePlayerRepository.save(gp1);
 			gamePlayerRepository.save(gp2);

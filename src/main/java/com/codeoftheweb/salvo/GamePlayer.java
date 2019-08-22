@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -76,7 +75,7 @@ public class GamePlayer {
     public Map<String, Object> createGameDTO_GamePlayer (){
         Map<String, Object> dto = new LinkedHashMap<>();
         dto.put("gpid", this.getGamePlayerId());
-        dto.put("Players", this.getPlayer().makeGameDTO_Player());
+        dto.put("Players", this.getPlayer().createGameDTO_Player());
         return dto;
     }
 }

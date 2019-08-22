@@ -34,8 +34,8 @@ public class Game {
         return gameDate;
     }
 
-    public void setGameDate(LocalDateTime gameDate) {
-        this.gameDate = gameDate;
+    public long getGameId(){
+        return id;
     }
 
     @JsonIgnore
@@ -43,23 +43,15 @@ public class Game {
         return gamePlayers.stream().map(sub -> sub.getPlayer()).collect(toList());
     }
 
-    public Set<GamePlayer> getGamePlayers() {
+    public Set<GamePlayer> getGamePlayers(){
         return gamePlayers;
     }
+    
 
-    public long getId() {
-        return id;
-    }
-
-    public void setGamePlayers(Set<GamePlayer> gamePlayers) {
-        this.gamePlayers = gamePlayers;
-    }
-
-
-    public Map<String, Object> createGameDTO(){
+    public Map<String, Object> createGameDTO (){
         Map<String, Object> gameDTO = new LinkedHashMap<>();
-        gameDTO.put("id", this.id);
-        gameDTO.put("created", this.getGameDate().atZone(ZoneId.systemDefault()).toInstant());
+        gameDTO.put("id", this.getGameId());
+        gameDTO.put("created", this.getGameDate());
         gameDTO.put("gamePlayers", this.getGamePlayers().stream().map(GamePlayer::createGameDTO_GamePlayer));
         return gameDTO;
     }

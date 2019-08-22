@@ -34,27 +34,21 @@ public class Player {
         this.userName = userName;
     }
 
-    public Set<GamePlayer> getGamePlayers() {
-        return gamePlayers;
-    }
-
-    public void setGamePlayers(Set<GamePlayer> gamePlayers) {
-        this.gamePlayers = gamePlayers;
-    }
-
     public long getPlayerId() {
         return id;
     }
 
-    @JsonIgnore
-    public Map<String, Object> makeGameDTO_Player (){
-        Map<String, Object> dto = new LinkedHashMap<>();
-        dto.put("id", this.getPlayerId());
-        dto.put("user_name", this.getUserName());
-        return dto;
-    }
 
+    @JsonIgnore
     public List<Game> getGame() {
         return gamePlayers.stream().map(sub -> sub.getGame()).collect(toList());
+    }
+
+
+    public Map<String, Object> createGameDTO_Player (){
+        Map<String, Object> dto = new LinkedHashMap<>();
+        dto.put("id", this.getPlayerId());
+        dto.put("user", this.getUserName());
+        return dto;
     }
 }
