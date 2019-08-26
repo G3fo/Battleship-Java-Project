@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 
@@ -27,7 +26,7 @@ public class SalvoController {
 
     @RequestMapping("/games")
     public Map<String, Object> getAllGames() {
-        Map <String, Object> dto = new HashMap<>();
+        Map<String, Object> dto = new HashMap<>();
         dto.put("games", gameRepository.findAll().stream().map(Game::createGameDTO).collect(toList()));
         return dto;
     }

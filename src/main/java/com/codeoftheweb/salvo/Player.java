@@ -2,6 +2,7 @@ package com.codeoftheweb.salvo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.util.*;
 
@@ -16,10 +17,11 @@ public class Player {
     private long id;
     private String userName;
 
-    @OneToMany(mappedBy="player", fetch= FetchType.EAGER)
+    @OneToMany(mappedBy = "player", fetch = FetchType.EAGER)
     private Set<GamePlayer> gamePlayers;
 
-    public Player() { }
+    public Player() {
+    }
 
     public Player(String user) {
         this.userName = user;
@@ -39,7 +41,7 @@ public class Player {
     }
 
 
-    public Map<String, Object> createGameDTO_Player (){
+    public Map<String, Object> createGameDTO_Player() {
         Map<String, Object> dto = new LinkedHashMap<>();
         dto.put("id", this.getPlayerId());
         dto.put("user", this.getUserName());

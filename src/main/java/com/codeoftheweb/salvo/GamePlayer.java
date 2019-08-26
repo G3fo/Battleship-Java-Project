@@ -2,6 +2,7 @@ package com.codeoftheweb.salvo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,14 +24,15 @@ public class GamePlayer {
     private Date joinDate;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="player_id")
+    @JoinColumn(name = "player_id")
     private Player player;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="game_id")
+    @JoinColumn(name = "game_id")
     private Game game;
 
-    public GamePlayer(){}
+    public GamePlayer() {
+    }
 
     public GamePlayer(Date joinDate, Player player, Game game) {
         this.joinDate = joinDate;
@@ -46,11 +48,11 @@ public class GamePlayer {
         this.joinDate = joinDate;
     }
 
-    public long getGamePlayerId(){
+    public long getGamePlayerId() {
         return id;
     }
 
-    public long getGameId(){
+    public long getGameId() {
         return id;
     }
 
@@ -73,7 +75,7 @@ public class GamePlayer {
     }
 
 
-    public Map<String, Object> createGameDTO_GamePlayer (){
+    public Map<String, Object> createGameDTO_GamePlayer() {
         Map<String, Object> dto = new LinkedHashMap<>();
         dto.put("GamePlayerId", this.getGamePlayerId());
         dto.put("Players", this.getPlayer().createGameDTO_Player());

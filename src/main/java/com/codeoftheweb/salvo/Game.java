@@ -2,6 +2,7 @@ package com.codeoftheweb.salvo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.*;
@@ -17,15 +18,16 @@ public class Game {
     private long id;
     private Date gameDate;
 
-    @OneToMany(mappedBy="game", fetch= FetchType.EAGER)
+    @OneToMany(mappedBy = "game", fetch = FetchType.EAGER)
     private Set<GamePlayer> gamePlayers;
 
 
-    public Game() { }
+    public Game() {
+    }
 
     //Constructor
 
-    public Game(Date gameDate){
+    public Game(Date gameDate) {
         this.gameDate = gameDate;
     }
 
@@ -37,7 +39,7 @@ public class Game {
         this.gameDate = gameDate;
     }
 
-    public long getGameId(){
+    public long getGameId() {
         return id;
     }
 
@@ -46,12 +48,12 @@ public class Game {
         return gamePlayers.stream().map(sub -> sub.getPlayer()).collect(toList());
     }
 
-    public Set<GamePlayer> getGamePlayers(){
+    public Set<GamePlayer> getGamePlayers() {
         return gamePlayers;
     }
-    
 
-    public Map<String, Object> createGameDTO (){
+
+    public Map<String, Object> createGameDTO() {
         Map<String, Object> gameDTO = new LinkedHashMap<>();
         gameDTO.put("id", this.getGameId());
         gameDTO.put("created", this.getGameDate().getTime());
