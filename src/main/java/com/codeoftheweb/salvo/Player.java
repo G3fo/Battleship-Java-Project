@@ -19,7 +19,6 @@ public class Player {
     @OneToMany(mappedBy="player", fetch= FetchType.EAGER)
     private Set<GamePlayer> gamePlayers;
 
-
     public Player() { }
 
     public Player(String user) {
@@ -30,14 +29,9 @@ public class Player {
         return userName;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
     public long getPlayerId() {
         return id;
     }
-
 
     @JsonIgnore
     public List<Game> getGame() {

@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -20,7 +20,7 @@ public class GamePlayer {
     @GenericGenerator(name = "native", strategy = "native")
     private long id;
 
-    private LocalDateTime joinDate;
+    private Date joinDate;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="player_id")
@@ -32,17 +32,17 @@ public class GamePlayer {
 
     public GamePlayer(){}
 
-    public GamePlayer(LocalDateTime joinDate, Player player, Game game) {
+    public GamePlayer(Date joinDate, Player player, Game game) {
         this.joinDate = joinDate;
         this.player = player;
         this.game = game;
     }
 
-    public LocalDateTime getJoinDate() {
+    public Date getJoinDate() {
         return joinDate;
     }
 
-    public void setJoinDate(LocalDateTime joinDate) {
+    public void setJoinDate(Date joinDate) {
         this.joinDate = joinDate;
     }
 

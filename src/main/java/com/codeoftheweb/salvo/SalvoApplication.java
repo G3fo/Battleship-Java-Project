@@ -4,10 +4,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @SpringBootApplication
-
 public class SalvoApplication {
 
 	public static void main(String[] args) {
@@ -32,13 +31,13 @@ public class SalvoApplication {
 			PlayerRepository.save(player4);
 			PlayerRepository.save(player5);
 
-			LocalDateTime date1 = LocalDateTime.now();
-			LocalDateTime date2 = LocalDateTime.now().plusHours(1);
-			LocalDateTime date3 = LocalDateTime.now().plusHours(2);
+			Date date1 = new Date();
+			Date date2 = Date.from(date1.toInstant().plusSeconds(3600));
+			Date date3 = Date.from(date2.toInstant().plusSeconds(3600));
 
-			Game g1 = new Game();
-			Game g2 = new Game();
-			Game g3 = new Game();
+			Game g1 = new Game(date1);
+			Game g2 = new Game(date2);
+			Game g3 = new Game(date3);
 
 			GameRepository.save(g1);
 			GameRepository.save(g2);
