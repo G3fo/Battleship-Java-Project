@@ -35,21 +35,47 @@ public class SalvoApplication {
             Date date1 = new Date();
             Date date2 = Date.from(date1.toInstant().plusSeconds(3600));
             Date date3 = Date.from(date2.toInstant().plusSeconds(3600));
+            Date date4 = Date.from(date3.toInstant().plusSeconds(3600));
+            Date date5 = Date.from(date4.toInstant().plusSeconds(3600));
+            Date date6 = Date.from(date5.toInstant().plusSeconds(3600));
+            Date date7 = Date.from(date6.toInstant().plusSeconds(3600));
+            Date date8 = Date.from(date7.toInstant().plusSeconds(3600));
 
             Game g1 = new Game(date1);
             Game g2 = new Game(date2);
             Game g3 = new Game(date3);
+            Game g4 = new Game(date4);
+            Game g5 = new Game(date5);
+            Game g6 = new Game(date6);
+            Game g7 = new Game(date7);
+            Game g8 = new Game(date8);
 
             GameRepository.save(g1);
             GameRepository.save(g2);
             GameRepository.save(g3);
+            GameRepository.save(g4);
+            GameRepository.save(g5);
+            GameRepository.save(g6);
+            GameRepository.save(g7);
+            GameRepository.save(g8);
 
             GamePlayer gp1 = new GamePlayer(date1, player1, g1);
             GamePlayer gp2 = new GamePlayer(date1, player2, g1);
-            GamePlayer gp3 = new GamePlayer(date2, player3, g2);
-            GamePlayer gp4 = new GamePlayer(date2, player4, g2);
-            GamePlayer gp5 = new GamePlayer(date3, player5, g3);
-            GamePlayer gp6 = new GamePlayer(date3, player1, g3);
+            GamePlayer gp3 = new GamePlayer(date2, player1, g2);
+            GamePlayer gp4 = new GamePlayer(date2, player2, g2);
+            GamePlayer gp5 = new GamePlayer(date3, player2, g3);
+            GamePlayer gp6 = new GamePlayer(date3, player3, g3);
+            GamePlayer gp7 = new GamePlayer(date4, player2, g4);
+            GamePlayer gp8 = new GamePlayer(date4, player4, g4);
+            GamePlayer gp9 = new GamePlayer(date5, player4, g5);
+            GamePlayer gp10 = new GamePlayer(date5, player3, g5);
+            GamePlayer gp11 = new GamePlayer(date6, player2, g6);
+            GamePlayer gp12 = new GamePlayer(date6, player4, g6);
+            GamePlayer gp13 = new GamePlayer(date7, player5, g7);
+            GamePlayer gp14 = new GamePlayer(date7, player1, g7);
+            GamePlayer gp15 = new GamePlayer(date8, player3, g8);
+            GamePlayer gp16 = new GamePlayer(date8, player5, g8);
+
 
             gamePlayerRepository.save(gp1);
             gamePlayerRepository.save(gp2);
@@ -57,6 +83,16 @@ public class SalvoApplication {
             gamePlayerRepository.save(gp4);
             gamePlayerRepository.save(gp5);
             gamePlayerRepository.save(gp6);
+            gamePlayerRepository.save(gp7);
+            gamePlayerRepository.save(gp8);
+            gamePlayerRepository.save(gp9);
+            gamePlayerRepository.save(gp10);
+            gamePlayerRepository.save(gp11);
+            gamePlayerRepository.save(gp12);
+            gamePlayerRepository.save(gp13);
+            gamePlayerRepository.save(gp14);
+            gamePlayerRepository.save(gp15);
+            gamePlayerRepository.save(gp16);
 
         };
     }
