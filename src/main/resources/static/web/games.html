@@ -18,8 +18,8 @@
       <ul v-for="games in vueGames.games">
         <li>
           {{ games.id }} {{ games.created }}
-          {{ games.gamePlayers }}
-          <!-- {{ games.gamePlayers.Players }} -->
+          {{ games.gamePlayers[0].Player.user }}
+          {{ games.gamePlayers[1].Player.user }}
         </li>
       </ul>
     </div>
