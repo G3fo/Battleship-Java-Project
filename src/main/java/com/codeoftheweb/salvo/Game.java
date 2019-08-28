@@ -21,11 +21,8 @@ public class Game {
     @OneToMany(mappedBy = "game", fetch = FetchType.EAGER)
     private Set<GamePlayer> gamePlayers;
 
-
     public Game() {
     }
-
-    //Constructor
 
     public Game(Date gameDate) {
         this.gameDate = gameDate;
@@ -33,10 +30,6 @@ public class Game {
 
     public Date getGameDate() {
         return gameDate;
-    }
-
-    public void setGameDate(Date gameDate) {
-        this.gameDate = gameDate;
     }
 
     public long getGameId() {
@@ -51,7 +44,6 @@ public class Game {
     public Set<GamePlayer> getGamePlayers() {
         return gamePlayers;
     }
-
 
     public Map<String, Object> createGameDTO() {
         Map<String, Object> gameDTO = new LinkedHashMap<>();

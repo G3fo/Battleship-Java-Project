@@ -20,7 +20,6 @@ public class GamePlayer {
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     private long id;
-
     private Date joinDate;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -44,10 +43,6 @@ public class GamePlayer {
         return joinDate;
     }
 
-    public void setJoinDate(Date joinDate) {
-        this.joinDate = joinDate;
-    }
-
     public long getGamePlayerId() {
         return id;
     }
@@ -61,17 +56,9 @@ public class GamePlayer {
         return player;
     }
 
-    public void setPlayer(Player player) {
-        this.player = player;
-    }
-
     @JsonIgnore
     public Game getGame() {
         return game;
-    }
-
-    public void setGame(Game game) {
-        this.game = game;
     }
 
     public Map<String, Object> createGameDTO_GamePlayer() {
