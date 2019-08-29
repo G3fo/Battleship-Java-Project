@@ -8,9 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 
 @Entity
@@ -29,6 +27,9 @@ public class GamePlayer {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "game_id")
     private Game game;
+
+    @OneToMany(mappedBy = "gamePlayer",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    Set<Ship> ships = new HashSet<>();
 
     public GamePlayer() {
     }
