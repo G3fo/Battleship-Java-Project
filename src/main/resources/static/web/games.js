@@ -20,7 +20,13 @@ var app = new Vue({
 $.get("/api/games")
   .done(function(games) {
     gamesJSON = games;
-    app.vueGames = games;
+    var date;
+    gamesJSON.games.forEach(game => {
+      date = new Date(game.created);
+      game.created = date.toLocaleString();
+    });
+
+    app.vueGames = gamesJSON;
     //console.log(gamesJSON);
   })
   .fail(function(jqXHR, textStatus) {
