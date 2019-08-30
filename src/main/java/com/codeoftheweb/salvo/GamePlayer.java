@@ -40,6 +40,10 @@ public class GamePlayer {
         this.game = game;
     }
 
+    public Set<Ship> getShips() {
+        return ships;
+    }
+
     public Date getJoinDate() {
         return joinDate;
     }
@@ -60,6 +64,10 @@ public class GamePlayer {
     @JsonIgnore
     public Game getGame() {
         return game;
+    }
+
+    public void addShip(Ship ship){
+        ships.add(ship);
     }
 
     public Map<String, Object> createGameDTO_GamePlayer() {

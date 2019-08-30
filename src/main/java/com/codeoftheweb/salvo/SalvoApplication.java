@@ -5,7 +5,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 @SpringBootApplication
 public class SalvoApplication {
@@ -25,6 +28,24 @@ public class SalvoApplication {
             Player player3 = new Player("KimBauer@gmail.com");
             Player player4 = new Player("DavidPalmer@gmail.com");
             Player player5 = new Player("MichelleDessler@gmail.com");
+
+            //List<String> locations1 = new ArrayList(Arrays.asList("F6","G6"));
+            //List<String> locations2 = new ArrayList(Arrays.asList("E1", "F1", "G1"));
+            //List<String> locations3 = new ArrayList(Arrays.asList("B4", "B5"));
+            //List<String> locations4 = new ArrayList(Arrays.asList("B5", "C5", "D5"));
+            //List<String> locations5 = new ArrayList(Arrays.asList("F1","F2","F3","F4"));
+            //List<String> locations6 = new ArrayList(Arrays.asList("B6", "B7"));
+            //List<String> locations7 = new ArrayList(Arrays.asList("A2", "A3", "A4"));
+            //List<String> locations8 = new ArrayList(Arrays.asList("H2", "H3","H4","H5","H6"));
+
+
+            //Ship ship1_1_1 = new Ship(ShipType.CARRIER, locations1);
+            //Ship ship2_1_1 = new Ship(ShipType.BATTLESHIP, locations2);
+            //Ship ship3_1_1 = new Ship(ShipType.CRUISER, locations4);
+            //Ship ship1_1_2 = new Ship(ShipType.SUBMARINE, locations5);
+            //Ship ship2_1_2 = new Ship(ShipType.DESTROYER, locations8);
+
+
 
             PlayerRepository.save(player1);
             PlayerRepository.save(player2);

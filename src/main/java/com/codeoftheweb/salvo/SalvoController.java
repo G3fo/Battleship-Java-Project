@@ -23,6 +23,8 @@ public class SalvoController {
     //    return gameRepository.findAll().stream().map(game -> game.getId()).collect(toList());
     //}
 
+
+
     @RequestMapping("/games")
     public Map<String, Object> getAllGames() {
         Map<String, Object> dto = new HashMap<>();
