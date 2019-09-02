@@ -25,7 +25,7 @@ public class Game {
     }
 
     public Game(Date gameDate) {
-        this.gameDate = gameDate;
+        this.gameDate = new Date();
     }
 
     public Date getGameDate() {
@@ -52,5 +52,4 @@ public class Game {
         gameDTO.put("gamePlayers", this.getGamePlayers().stream().map(GamePlayer::createGameDTO_GamePlayer));
         return gameDTO;
     }
-
 }

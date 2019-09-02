@@ -20,7 +20,8 @@ public class SalvoApplication {
     @Bean
     public CommandLineRunner initData(PlayerRepository PlayerRepository,
                                       GameRepository GameRepository,
-                                      GamePlayerRepository gamePlayerRepository) {
+                                      GamePlayerRepository gamePlayerRepository,
+                                      ShipRepository ShipRepository) {
         return (args) -> {
 
             Player player1 = new Player("Jackbauer@gmail.com");
@@ -29,23 +30,14 @@ public class SalvoApplication {
             Player player4 = new Player("DavidPalmer@gmail.com");
             Player player5 = new Player("MichelleDessler@gmail.com");
 
-            //List<String> locations1 = new ArrayList(Arrays.asList("F6","G6"));
-            //List<String> locations2 = new ArrayList(Arrays.asList("E1", "F1", "G1"));
+            List<String> locations1 = new ArrayList(Arrays.asList("F6","G6"));
+            List<String> locations2 = new ArrayList(Arrays.asList("E1", "F1", "G1"));
             //List<String> locations3 = new ArrayList(Arrays.asList("B4", "B5"));
-            //List<String> locations4 = new ArrayList(Arrays.asList("B5", "C5", "D5"));
-            //List<String> locations5 = new ArrayList(Arrays.asList("F1","F2","F3","F4"));
+            List<String> locations4 = new ArrayList(Arrays.asList("B5", "C5", "D5"));
+            List<String> locations5 = new ArrayList(Arrays.asList("F1","F2","F3","F4"));
             //List<String> locations6 = new ArrayList(Arrays.asList("B6", "B7"));
             //List<String> locations7 = new ArrayList(Arrays.asList("A2", "A3", "A4"));
-            //List<String> locations8 = new ArrayList(Arrays.asList("H2", "H3","H4","H5","H6"));
-
-
-            //Ship ship1_1_1 = new Ship(ShipType.CARRIER, locations1);
-            //Ship ship2_1_1 = new Ship(ShipType.BATTLESHIP, locations2);
-            //Ship ship3_1_1 = new Ship(ShipType.CRUISER, locations4);
-            //Ship ship1_1_2 = new Ship(ShipType.SUBMARINE, locations5);
-            //Ship ship2_1_2 = new Ship(ShipType.DESTROYER, locations8);
-
-
+            List<String> locations8 = new ArrayList(Arrays.asList("H2", "H3","H4","H5","H6"));
 
             PlayerRepository.save(player1);
             PlayerRepository.save(player2);
@@ -80,23 +72,22 @@ public class SalvoApplication {
             GameRepository.save(g7);
             GameRepository.save(g8);
 
-            GamePlayer gp1 = new GamePlayer(date1, player1, g1);
-            GamePlayer gp2 = new GamePlayer(date1, player2, g1);
-            GamePlayer gp3 = new GamePlayer(date2, player1, g2);
-            GamePlayer gp4 = new GamePlayer(date2, player2, g2);
-            GamePlayer gp5 = new GamePlayer(date3, player2, g3);
-            GamePlayer gp6 = new GamePlayer(date3, player3, g3);
-            GamePlayer gp7 = new GamePlayer(date4, player2, g4);
-            GamePlayer gp8 = new GamePlayer(date4, player4, g4);
-            GamePlayer gp9 = new GamePlayer(date5, player4, g5);
-            GamePlayer gp10 = new GamePlayer(date5, player3, g5);
-            GamePlayer gp11 = new GamePlayer(date6, player2, g6);
-            GamePlayer gp12 = new GamePlayer(date6, player4, g6);
-            GamePlayer gp13 = new GamePlayer(date7, player5, g7);
-            GamePlayer gp14 = new GamePlayer(date7, player1, g7);
-            GamePlayer gp15 = new GamePlayer(date8, player3, g8);
-            GamePlayer gp16 = new GamePlayer(date8, player5, g8);
-
+            GamePlayer gp1 = new GamePlayer(player1, g1);
+            GamePlayer gp2 = new GamePlayer(player2, g1);
+            GamePlayer gp3 = new GamePlayer(player1, g2);
+            GamePlayer gp4 = new GamePlayer(player2, g2);
+            GamePlayer gp5 = new GamePlayer(player2, g3);
+            GamePlayer gp6 = new GamePlayer(player3, g3);
+            GamePlayer gp7 = new GamePlayer(player2, g4);
+            GamePlayer gp8 = new GamePlayer(player4, g4);
+            GamePlayer gp9 = new GamePlayer(player4, g5);
+            GamePlayer gp10 = new GamePlayer(player3, g5);
+            GamePlayer gp11 = new GamePlayer(player2, g6);
+            GamePlayer gp12 = new GamePlayer(player4, g6);
+            GamePlayer gp13 = new GamePlayer(player5, g7);
+            GamePlayer gp14 = new GamePlayer(player1, g7);
+            GamePlayer gp15 = new GamePlayer(player3, g8);
+            GamePlayer gp16 = new GamePlayer(player5, g8);
 
             gamePlayerRepository.save(gp1);
             gamePlayerRepository.save(gp2);
@@ -114,6 +105,18 @@ public class SalvoApplication {
             gamePlayerRepository.save(gp14);
             gamePlayerRepository.save(gp15);
             gamePlayerRepository.save(gp16);
+
+            Ship ship1_1_1 = new Ship(ShipType.CARRIER, locations1, gp1);
+            Ship ship2_1_1 = new Ship(ShipType.BATTLESHIP, locations2, gp1);
+            Ship ship3_1_1 = new Ship(ShipType.CRUISER, locations4, gp1);
+            Ship ship1_1_2 = new Ship(ShipType.SUBMARINE, locations5, gp1);
+            Ship ship2_1_2 = new Ship(ShipType.DESTROYER, locations8, gp1);
+
+            ShipRepository.save(ship1_1_1);
+            ShipRepository.save(ship2_1_1);
+            ShipRepository.save(ship3_1_1);
+            ShipRepository.save(ship1_1_2);
+            ShipRepository.save(ship2_1_2);
 
         };
     }

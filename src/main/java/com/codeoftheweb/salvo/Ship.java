@@ -25,9 +25,10 @@ public class Ship {
 
     public Ship() { }
 
-    public Ship(ShipType shipType, List<String> locations){
+    public Ship(ShipType shipType, List<String> locations, GamePlayer gamePlayer){
         this.shipType = shipType;
         this.locations = locations;
+        this.gamePlayer = gamePlayer;
     }
 
     public GamePlayer getGamePlayer() {
@@ -42,7 +43,7 @@ public class Ship {
         return locations;
     }
 
-    public Map<String, Object> makeGameDTO_Ship (){
+    public Map<String, Object> createGameDTO_Ship (){
         Map<String, Object> dto = new LinkedHashMap<>();
         dto.put("shipType", this.getShipType());
         dto.put("locations", this.getLocations());

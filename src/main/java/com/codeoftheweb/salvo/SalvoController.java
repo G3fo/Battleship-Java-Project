@@ -13,8 +13,8 @@ public class SalvoController {
 
     @Autowired
     private GameRepository gameRepository;
-    //@Autowired
-    //private GamePlayerRepository gamePlayerRepository;
+    @Autowired
+    private GamePlayerRepository gamePlayerRepository;
     //@Autowired
     //private PlayerRepository playerRepository;
 
@@ -24,7 +24,6 @@ public class SalvoController {
     //}
 
 
-
     @RequestMapping("/games")
     public Map<String, Object> getAllGames() {
         Map<String, Object> dto = new HashMap<>();
@@ -32,4 +31,12 @@ public class SalvoController {
         return dto;
     }
 
+    @RequestMapping("/game_view/{gamePlayerId}")
+    public Map<String,Object> getGameView(@PathVariable Long gamePlayerId) {
+        Optional<GamePlayer> gamePlayer = gamePlayerRepository.findById(gamePlayerId);
+        if(gamePlayer.isPresent())
+            return gamePlayer.get().dto_gameView();
+        else
+            return null;
+    }
 }

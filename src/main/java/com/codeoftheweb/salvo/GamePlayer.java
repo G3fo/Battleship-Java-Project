@@ -34,8 +34,8 @@ public class GamePlayer {
     public GamePlayer() {
     }
 
-    public GamePlayer(Date joinDate, Player player, Game game) {
-        this.joinDate = joinDate;
+    public GamePlayer(Player player, Game game) {
+        this.joinDate = new Date();
         this.player = player;
         this.game = game;
     }
@@ -74,6 +74,16 @@ public class GamePlayer {
         Map<String, Object> dto = new LinkedHashMap<>();
         dto.put("GamePlayerId", this.getGamePlayerId());
         dto.put("Player", this.getPlayer().createGameDTO_Player());
+        dto.put("ships", this.getShips().stream().map(Ship::createGameDTO_Ship));
+        return dto;
+    }
+
+    public Map<String, Object> dto_gameView (){
+        Map<String, Object> dto = new LinkedHashMap<>();
+        dto.put("id", this.getGameId());
+        dto.put("created", this.getGame().getGameDate());
+        dto.put("gamePlayers", this.game.getGamePlayers().stream().map(GamePlayer::createGameDTO_GamePlayer));
+        //dto.put("ships", this.getShips().stream().map(Ship::createGameDTO_Ship));
         return dto;
     }
 }
