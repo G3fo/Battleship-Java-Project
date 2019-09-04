@@ -63,14 +63,7 @@ public class SalvoApplication {
             Game g7 = new Game(date7);
             Game g8 = new Game(date8);
 
-            GameRepository.save(g1);
-            GameRepository.save(g2);
-            GameRepository.save(g3);
-            GameRepository.save(g4);
-            GameRepository.save(g5);
-            GameRepository.save(g6);
-            GameRepository.save(g7);
-            GameRepository.save(g8);
+            GameRepository.saveAll(Arrays.asList(g1, g2, g3, g4, g5, g6, g7, g8));
 
             GamePlayer gp1 = new GamePlayer(player1, g1);
             GamePlayer gp2 = new GamePlayer(player2, g1);
@@ -89,22 +82,8 @@ public class SalvoApplication {
             GamePlayer gp15 = new GamePlayer(player3, g8);
             GamePlayer gp16 = new GamePlayer(player5, g8);
 
-            gamePlayerRepository.save(gp1);
-            gamePlayerRepository.save(gp2);
-            gamePlayerRepository.save(gp3);
-            gamePlayerRepository.save(gp4);
-            gamePlayerRepository.save(gp5);
-            gamePlayerRepository.save(gp6);
-            gamePlayerRepository.save(gp7);
-            gamePlayerRepository.save(gp8);
-            gamePlayerRepository.save(gp9);
-            gamePlayerRepository.save(gp10);
-            gamePlayerRepository.save(gp11);
-            gamePlayerRepository.save(gp12);
-            gamePlayerRepository.save(gp13);
-            gamePlayerRepository.save(gp14);
-            gamePlayerRepository.save(gp15);
-            gamePlayerRepository.save(gp16);
+
+            gamePlayerRepository.saveAll(Arrays.asList(gp1, gp2, gp3, gp4, gp5, gp6, gp7, gp8, gp9, gp10, gp11, gp12, gp13, gp14, gp15, gp16));
 
             Ship ship1_1_1 = new Ship(ShipType.CARRIER, locations1, gp1);
             Ship ship2_1_1 = new Ship(ShipType.BATTLESHIP, locations2, gp1);
