@@ -5,10 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @SpringBootApplication
 public class SalvoApplication {
@@ -96,6 +93,12 @@ public class SalvoApplication {
             ShipRepository.save(ship3_1_1);
             ShipRepository.save(ship1_1_2);
             ShipRepository.save(ship2_1_2);
+
+            Salvo salvo1 = new Salvo(1, Arrays.asList("H2","H3","H4"), gp1);
+            Salvo salvo2 = new Salvo(1, Arrays.asList("H4","H5","H6"), gp2);
+            Salvo salvo3 = new Salvo(1, Arrays.asList("A2","B2","C3"), gp1);
+            Salvo salvo4 = new Salvo(1, Arrays.asList("B2","B3","B4"), gp2);
+            Salvo salvo5 = new Salvo(1, Arrays.asList("A1","A2","A3"), gp1);
 
         };
     }

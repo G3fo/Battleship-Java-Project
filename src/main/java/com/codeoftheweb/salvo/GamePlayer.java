@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Entity
 public class GamePlayer {
@@ -88,7 +89,9 @@ public class GamePlayer {
         dto.put("created", this.getGame().getGameDate());
         dto.put("gamePlayers", this.game.getGamePlayers().stream().map(GamePlayer::createGameDTO_GamePlayer));
         dto.put("ships", this.getShips().stream().map(Ship::createGameDTO_Ship));
-        dto.put("salvoes", this.game.getGamePlayers().stream().flatMap(gp->gp.getSalvoes().stream().map(Salvo::createGameDTO_Salvo)));
+        dto.put("salvoes", this.game.getGamePlayers().stream()
+                .flatMap(gp->gp.getSalvoes().stream().map(Salvo::createGameDTO_Salvo))
+                .collect(Collectors.toList()));
         return dto;
     }
 }
