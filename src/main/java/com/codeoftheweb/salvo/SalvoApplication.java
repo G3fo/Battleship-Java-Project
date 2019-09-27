@@ -27,14 +27,14 @@ public class SalvoApplication {
             Player player4 = new Player("DavidPalmer@gmail.com");
             Player player5 = new Player("MichelleDessler@gmail.com");
 
-            List<String> locations1 = new ArrayList(Arrays.asList("F6","G6"));
-            List<String> locations2 = new ArrayList(Arrays.asList("E1", "F1", "G1"));
-            //List<String> locations3 = new ArrayList(Arrays.asList("B4", "B5"));
-            List<String> locations4 = new ArrayList(Arrays.asList("B5", "C5", "D5"));
-            List<String> locations5 = new ArrayList(Arrays.asList("F1","F2","F3","F4"));
-            //List<String> locations6 = new ArrayList(Arrays.asList("B6", "B7"));
-            //List<String> locations7 = new ArrayList(Arrays.asList("A2", "A3", "A4"));
-            List<String> locations8 = new ArrayList(Arrays.asList("H2", "H3","H4","H5","H6"));
+            List<String> locations1 = new ArrayList(Arrays.asList("A2", "A3","A4","A5","A6"));
+            List<String> locations2 = new ArrayList(Arrays.asList("F1", "G1", "H1"));
+            //List<String> locations3 = new ArrayList(Arrays.asList("C4", "C5"));
+            List<String> locations4 = new ArrayList(Arrays.asList("C5", "D5", "E5"));
+            List<String> locations5 = new ArrayList(Arrays.asList("G1","G2","G3","G4"));
+            //List<String> locations6 = new ArrayList(Arrays.asList("D6", "D7"));
+            //List<String> locations7 = new ArrayList(Arrays.asList("B2", "B3", "B4"));
+            List<String> locations8 = new ArrayList(Arrays.asList("A6","B6"));
 
             PlayerRepository.save(player1);
             PlayerRepository.save(player2);
@@ -94,7 +94,7 @@ public class SalvoApplication {
             ShipRepository.save(ship1_1_2);
             ShipRepository.save(ship2_1_2);
 
-            Salvo salvo1 = new Salvo(1, Arrays.asList("H2","H3","H4"), gp1);
+            Salvo salvo1 = new Salvo(1, Arrays.asList("H2","H3","H4","H5"), gp1);
             Salvo salvo2 = new Salvo(1, Arrays.asList("H4","H5","H6"), gp2);
             Salvo salvo3 = new Salvo(1, Arrays.asList("A2","B2","C3"), gp1);
             Salvo salvo4 = new Salvo(1, Arrays.asList("B2","B3","B4"), gp2);
@@ -102,5 +102,4 @@ public class SalvoApplication {
 
         };
     }
-
 }

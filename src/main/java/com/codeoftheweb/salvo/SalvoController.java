@@ -39,6 +39,4 @@ public class SalvoController {
         else
             return null;
     }
-
-
 }
