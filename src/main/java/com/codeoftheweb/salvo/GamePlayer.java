@@ -92,6 +92,10 @@ public class GamePlayer {
         dto.put("salvoes", this.game.getGamePlayers().stream()
                 .flatMap(gp->gp.getSalvoes().stream().map(Salvo::createGameDTO_Salvo))
                 .collect(Collectors.toList()));
+        if(this.getPlayer().getScore(this.getGame()) != null)
+            dto.put("score", this.getPlayer().getScore(this.getGame()).getScore());
+        else dto.put("score", null);
+
         return dto;
     }
 }

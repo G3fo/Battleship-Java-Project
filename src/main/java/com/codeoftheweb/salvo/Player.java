@@ -50,4 +50,8 @@ public class Player {
         dto.put("user", this.getUserName());
         return dto;
     }
+
+    public Score getScore(Game game){
+        return scores.stream().filter(score->score.getGame().getGameId() == game.getGameId()).findAny().orElse(null);
+    }
 }
