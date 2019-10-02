@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 
@@ -15,14 +16,17 @@ public class SalvoController {
     private GameRepository gameRepository;
     @Autowired
     private GamePlayerRepository gamePlayerRepository;
-    //@Autowired
-    //private PlayerRepository playerRepository;
+    @Autowired
+    private PlayerRepository playerRepository;
 
-
-    //public List<Object> getAllGames(){
-    //    return gameRepository.findAll().stream().map(game -> game.getId()).collect(toList());
-    //}
-
+    @RequestMapping("/leaderboard")
+    public List<Object> getLeaderboard() {
+        return playerRepository
+                .findAll()
+                .stream()
+                .map(player -> player.toGameHistory())
+                .collect(Collectors.toList());
+    }
 
     @RequestMapping("/games")
     public Map<String, Object> getAllGames() {
