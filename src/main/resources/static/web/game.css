@@ -1,11 +1,35 @@
 .ship-piece{
-    background-color: darkslateblue;
-}
-
-.ship-piece-hited{
-    background-color: darkmagenta;
+    background-color: green;
 }
 
 .salvo{
-    background-color: crimson;
+  background-color: blue;
+}
+
+.ship-piece-hitted{
+    background-color: red;
+}
+
+title{
+  margin-top:10%;
+}
+
+
+section{
+  width: 40%;
+  margin-left: 7%;
+}
+
+#tabla1{
+  display:inline-block;
+}
+
+#tabla2{
+  display:inline-block;
+}
+
+
+#player1Info, #player2Info{
+  font-style: Arial 1em;
+  margin-left: 35%;
 }

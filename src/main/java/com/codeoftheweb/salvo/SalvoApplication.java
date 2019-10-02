@@ -18,7 +18,8 @@ public class SalvoApplication {
     public CommandLineRunner initData(PlayerRepository PlayerRepository,
                                       GameRepository GameRepository,
                                       GamePlayerRepository gamePlayerRepository,
-                                      ShipRepository ShipRepository) {
+                                      ShipRepository ShipRepository,
+                                      ScoreRepository ScoreRepository) {
         return (args) -> {
 
             Player player1 = new Player("Jackbauer@gmail.com");
@@ -60,6 +61,22 @@ public class SalvoApplication {
             Game g7 = new Game(date7);
             Game g8 = new Game(date8);
 
+            Score score1_1 = new Score(g1, player1, 3, date1);
+            Score score1_2 = new Score(g1, player2, 0, date2);
+            Score score2_1 = new Score(g2, player1, 0, date3);
+            Score score2_2 = new Score(g2, player2, 3, date4);
+            Score score3_1 = new Score(g3, player2, 3, date5);
+            Score score3_2 = new Score(g3, player3, 0, date6);
+            Score score4_1 = new Score(g4, player1, 1, date7);
+            Score score4_2 = new Score(g4, player2, 1, date8);
+            Score score5_1 = new Score(g5, player3, 3, date1);
+            Score score5_2 = new Score(g5, player1, 0, date2);
+            Score score6_1 = new Score(g6, player3, 3, date3);
+            Score score6_2 = new Score(g6, player1, 0, date4);
+            Score score7_1 = new Score(g7, player3, 3, date5);
+            Score score7_2 = new Score(g7, player4, 0, date6);
+            Score score8_1 = new Score(g8, player4, 3, date7);
+
             GameRepository.saveAll(Arrays.asList(g1, g2, g3, g4, g5, g6, g7, g8));
 
             GamePlayer gp1 = new GamePlayer(player1, g1);
@@ -99,6 +116,22 @@ public class SalvoApplication {
             Salvo salvo3 = new Salvo(1, Arrays.asList("A2","B2","C3"), gp1);
             Salvo salvo4 = new Salvo(1, Arrays.asList("B2","B3","B4"), gp2);
             Salvo salvo5 = new Salvo(1, Arrays.asList("A1","A2","A3"), gp1);
+
+            ScoreRepository.save(score1_1);
+            ScoreRepository.save(score1_2);
+            ScoreRepository.save(score2_1);
+            ScoreRepository.save(score2_2);
+            ScoreRepository.save(score3_1);
+            ScoreRepository.save(score3_2);
+            ScoreRepository.save(score4_1);
+            ScoreRepository.save(score4_2);
+            ScoreRepository.save(score5_1);
+            ScoreRepository.save(score5_2);
+            ScoreRepository.save(score6_1);
+            ScoreRepository.save(score6_2);
+            ScoreRepository.save(score7_1);
+            ScoreRepository.save(score7_2);
+            ScoreRepository.save(score8_1);
 
         };
     }

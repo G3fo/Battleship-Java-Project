@@ -80,6 +80,9 @@ public class GamePlayer {
         dto.put("GamePlayerId", this.getGamePlayerId());
         dto.put("Player", this.getPlayer().createGameDTO_Player());
         dto.put("ships", this.getShips().stream().map(Ship::createGameDTO_Ship));
+        if(this.getPlayer().getScore(this.getGame()) != null)
+            dto.put("score", this.getPlayer().getScore(this.getGame()).getScore());
+        else dto.put("score", null);
         return dto;
     }
 
