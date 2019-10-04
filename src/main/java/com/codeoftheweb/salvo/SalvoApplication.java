@@ -15,11 +15,12 @@ public class SalvoApplication {
     }
 
     @Bean
-    public CommandLineRunner initData(PlayerRepository PlayerRepository,
-                                      GameRepository GameRepository,
+    public CommandLineRunner initData(PlayerRepository playerRepository,
+                                      GameRepository gameRepository,
                                       GamePlayerRepository gamePlayerRepository,
-                                      ShipRepository ShipRepository,
-                                      ScoreRepository ScoreRepository) {
+                                      ShipRepository shipRepository,
+                                      ScoreRepository scoreRepository,
+                                      SalvoRepository salvoRepository) {
         return (args) -> {
 
             Player player1 = new Player("Jackbauer@gmail.com");
@@ -28,20 +29,14 @@ public class SalvoApplication {
             Player player4 = new Player("DavidPalmer@gmail.com");
             Player player5 = new Player("MichelleDessler@gmail.com");
 
-            List<String> locations1 = new ArrayList(Arrays.asList("A2", "A3","A4","A5","A6"));
-            List<String> locations2 = new ArrayList(Arrays.asList("F1", "G1", "H1"));
-            //List<String> locations3 = new ArrayList(Arrays.asList("C4", "C5"));
-            List<String> locations4 = new ArrayList(Arrays.asList("C5", "D5", "E5"));
-            List<String> locations5 = new ArrayList(Arrays.asList("G1","G2","G3","G4"));
-            //List<String> locations6 = new ArrayList(Arrays.asList("D6", "D7"));
-            //List<String> locations7 = new ArrayList(Arrays.asList("B2", "B3", "B4"));
-            List<String> locations8 = new ArrayList(Arrays.asList("A6","B6"));
+            playerRepository.save(player1);
+            playerRepository.save(player2);
+            playerRepository.save(player3);
+            playerRepository.save(player4);
+            playerRepository.save(player5);
 
-            PlayerRepository.save(player1);
-            PlayerRepository.save(player2);
-            PlayerRepository.save(player3);
-            PlayerRepository.save(player4);
-            PlayerRepository.save(player5);
+
+
 
             Date date1 = new Date();
             Date date2 = Date.from(date1.toInstant().plusSeconds(3600));
@@ -61,23 +56,7 @@ public class SalvoApplication {
             Game g7 = new Game(date7);
             Game g8 = new Game(date8);
 
-            Score score1_1 = new Score(g1, player1, 3, date1);
-            Score score1_2 = new Score(g1, player2, 0, date2);
-            Score score2_1 = new Score(g2, player1, 0, date3);
-            Score score2_2 = new Score(g2, player2, 3, date4);
-            Score score3_1 = new Score(g3, player2, 3, date5);
-            Score score3_2 = new Score(g3, player3, 0, date6);
-            Score score4_1 = new Score(g4, player1, 1, date7);
-            Score score4_2 = new Score(g4, player2, 1, date8);
-            Score score5_1 = new Score(g5, player3, 3, date1);
-            Score score5_2 = new Score(g5, player1, 0, date2);
-            Score score6_1 = new Score(g6, player3, 3, date3);
-            Score score6_2 = new Score(g6, player1, 0, date4);
-            Score score7_1 = new Score(g7, player3, 3, date5);
-            Score score7_2 = new Score(g7, player4, 0, date6);
-            Score score8_1 = new Score(g8, player4, 3, date7);
-
-            GameRepository.saveAll(Arrays.asList(g1, g2, g3, g4, g5, g6, g7, g8));
+            gameRepository.saveAll(Arrays.asList(g1, g2, g3, g4, g5, g6, g7, g8));
 
             GamePlayer gp1 = new GamePlayer(player1, g1);
             GamePlayer gp2 = new GamePlayer(player2, g1);
@@ -99,17 +78,27 @@ public class SalvoApplication {
 
             gamePlayerRepository.saveAll(Arrays.asList(gp1, gp2, gp3, gp4, gp5, gp6, gp7, gp8, gp9, gp10, gp11, gp12, gp13, gp14, gp15, gp16));
 
+
+            List<String> locations1 = new ArrayList(Arrays.asList("A2", "A3","A4","A5","A6"));
+            List<String> locations2 = new ArrayList(Arrays.asList("F1", "G1", "H1"));
+            //List<String> locations3 = new ArrayList(Arrays.asList("C4", "C5"));
+            List<String> locations4 = new ArrayList(Arrays.asList("C5", "D5", "E5"));
+            List<String> locations5 = new ArrayList(Arrays.asList("G1","G2","G3","G4"));
+            //List<String> locations6 = new ArrayList(Arrays.asList("D6", "D7"));
+            //List<String> locations7 = new ArrayList(Arrays.asList("B2", "B3", "B4"));
+            List<String> locations8 = new ArrayList(Arrays.asList("A6","B6"));
+
             Ship ship1_1_1 = new Ship(ShipType.CARRIER, locations1, gp1);
             Ship ship2_1_1 = new Ship(ShipType.BATTLESHIP, locations2, gp1);
             Ship ship3_1_1 = new Ship(ShipType.CRUISER, locations4, gp1);
             Ship ship1_1_2 = new Ship(ShipType.SUBMARINE, locations5, gp1);
             Ship ship2_1_2 = new Ship(ShipType.DESTROYER, locations8, gp1);
 
-            ShipRepository.save(ship1_1_1);
-            ShipRepository.save(ship2_1_1);
-            ShipRepository.save(ship3_1_1);
-            ShipRepository.save(ship1_1_2);
-            ShipRepository.save(ship2_1_2);
+            shipRepository.save(ship2_1_1);
+            shipRepository.save(ship3_1_1);
+            shipRepository.save(ship1_1_1);
+            shipRepository.save(ship1_1_2);
+            shipRepository.save(ship2_1_2);
 
             Salvo salvo1 = new Salvo(1, Arrays.asList("H2","H3","H4","H5"), gp1);
             Salvo salvo2 = new Salvo(1, Arrays.asList("H4","H5","H6"), gp2);
@@ -117,21 +106,39 @@ public class SalvoApplication {
             Salvo salvo4 = new Salvo(1, Arrays.asList("B2","B3","B4"), gp2);
             Salvo salvo5 = new Salvo(1, Arrays.asList("A1","A2","A3"), gp1);
 
-            ScoreRepository.save(score1_1);
-            ScoreRepository.save(score1_2);
-            ScoreRepository.save(score2_1);
-            ScoreRepository.save(score2_2);
-            ScoreRepository.save(score3_1);
-            ScoreRepository.save(score3_2);
-            ScoreRepository.save(score4_1);
-            ScoreRepository.save(score4_2);
-            ScoreRepository.save(score5_1);
-            ScoreRepository.save(score5_2);
-            ScoreRepository.save(score6_1);
-            ScoreRepository.save(score6_2);
-            ScoreRepository.save(score7_1);
-            ScoreRepository.save(score7_2);
-            ScoreRepository.save(score8_1);
+            salvoRepository.save(salvo1);
+
+            Score score1_1 = new Score(g1, player1, 1, date1);
+            Score score1_2 = new Score(g1, player2, 0, date2);
+            Score score2_1 = new Score(g2, player1, 0, date3);
+            Score score2_2 = new Score(g2, player2, 0.5F, date4);
+            Score score3_1 = new Score(g3, player2, 0.5F, date5);
+            Score score3_2 = new Score(g3, player3, 0, date6);
+            Score score4_1 = new Score(g4, player1, 1, date7);
+            Score score4_2 = new Score(g4, player2, 1, date8);
+            Score score5_1 = new Score(g5, player3, 1, date1);
+            Score score5_2 = new Score(g5, player1, 0, date2);
+            Score score6_1 = new Score(g6, player3, 1, date3);
+            Score score6_2 = new Score(g6, player1, 0, date4);
+            Score score7_1 = new Score(g7, player3, 0.5F, date5);
+            Score score7_2 = new Score(g7, player4, 0, date6);
+            Score score8_1 = new Score(g8, player4, 1, date7);
+
+            scoreRepository.save(score1_1);
+            scoreRepository.save(score1_2);
+            scoreRepository.save(score2_1);
+            scoreRepository.save(score2_2);
+            scoreRepository.save(score3_1);
+            scoreRepository.save(score3_2);
+            scoreRepository.save(score4_1);
+            scoreRepository.save(score4_2);
+            scoreRepository.save(score5_1);
+            scoreRepository.save(score5_2);
+            scoreRepository.save(score6_1);
+            scoreRepository.save(score6_2);
+            scoreRepository.save(score7_1);
+            scoreRepository.save(score7_2);
+            scoreRepository.save(score8_1);
 
         };
     }

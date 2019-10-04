@@ -37,10 +37,16 @@ public class SalvoController {
 
     @RequestMapping("/game_view/{gamePlayerId}")
     public Map<String,Object> getGameView(@PathVariable Long gamePlayerId) {
-        Optional<GamePlayer> gamePlayer = gamePlayerRepository.findById(gamePlayerId);
-        if(gamePlayer.isPresent())
-            return gamePlayer.get().dto_gameView();
-        else
-            return null;
+
+        GamePlayer gamePlayer = gamePlayerRepository.getOne(gamePlayerId);
+
+        Map<String, Object> dto = gamePlayer.getGame().createGameDTO();
+        dto.put("ships", gamePlayer.getShips().stream().map(Ship::createGameDTO_Ship));
+        dto.put("salvoes", gamePlayer.getGame().getGamePlayers().stream()
+                .flatMap(gp->gp.getSalvoes().stream().map(Salvo::createGameDTO_Salvo))
+                .collect(Collectors.toList()));
+
+        return dto;
+
     }
 }

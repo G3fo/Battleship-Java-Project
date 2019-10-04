@@ -6,6 +6,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 
@@ -31,6 +32,10 @@ public class Game {
         this.gameDate = new Date();
     }
 
+    /*public Game(int hours){
+        this.gameDate = new Date().toInstant().plusSeconds(3600 * hours);
+    }*/
+
     public Date getGameDate() {
         return gameDate;
     }
@@ -55,4 +60,10 @@ public class Game {
         gameDTO.put("gamePlayers", this.getGamePlayers().stream().map(GamePlayer::createGameDTO_GamePlayer));
         return gameDTO;
     }
+
+    @JsonIgnore
+    public List<Map <String, Object>> getAllGamePlayers (Set <GamePlayer> gamePlayers){
+        return gamePlayers.stream().map(GP -> GP.createGameDTO_GamePlayer()).collect(Collectors.toList());
+    }
+
 }

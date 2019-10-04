@@ -79,10 +79,10 @@ public class GamePlayer {
         Map<String, Object> dto = new LinkedHashMap<>();
         dto.put("GamePlayerId", this.getGamePlayerId());
         dto.put("Player", this.getPlayer().createGameDTO_Player());
-        dto.put("ships", this.getShips().stream().map(Ship::createGameDTO_Ship));
-        if(this.getPlayer().getScore(this.getGame()) != null)
-            dto.put("score", this.getPlayer().getScore(this.getGame()).getScore());
-        else dto.put("score", null);
+        //dto.put("ships", this.getShips().stream().map(Ship::createGameDTO_Ship));
+        //if(this.getPlayer().getScore(this.getGame()) != null)
+        //    dto.put("score", this.getPlayer().getScore(this.getGame()).getScore());
+        //else dto.put("score", null);
         return dto;
     }
 
@@ -90,15 +90,15 @@ public class GamePlayer {
         Map<String, Object> dto = new LinkedHashMap<>();
         dto.put("id", this.getGameId());
         dto.put("created", this.getGame().getGameDate());
-        dto.put("gamePlayers", this.game.getGamePlayers().stream().map(GamePlayer::createGameDTO_GamePlayer));
+        dto.put("gamePlayers", this.game.getAllGamePlayers(this.game.getGamePlayers()));
+                //this.game.getGamePlayers().stream().map(GamePlayer::createGameDTO_GamePlayer));
         dto.put("ships", this.getShips().stream().map(Ship::createGameDTO_Ship));
         dto.put("salvoes", this.game.getGamePlayers().stream()
                 .flatMap(gp->gp.getSalvoes().stream().map(Salvo::createGameDTO_Salvo))
                 .collect(Collectors.toList()));
-        if(this.getPlayer().getScore(this.getGame()) != null)
-            dto.put("score", this.getPlayer().getScore(this.getGame()).getScore());
-        else dto.put("score", null);
-
+        //if(this.getPlayer().getScore(this.getGame()) != null)
+        //    dto.put("score", this.getPlayer().getScore(this.getGame()).getScore());
+        //else dto.put("score", null);
         return dto;
     }
 }
