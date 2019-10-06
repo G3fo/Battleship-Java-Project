@@ -35,9 +35,6 @@ public class SalvoApplication {
             playerRepository.save(player4);
             playerRepository.save(player5);
 
-
-
-
             Date date1 = new Date();
             Date date2 = Date.from(date1.toInstant().plusSeconds(3600));
             Date date3 = Date.from(date2.toInstant().plusSeconds(3600));
@@ -84,15 +81,15 @@ public class SalvoApplication {
             //List<String> locations3 = new ArrayList(Arrays.asList("C4", "C5"));
             List<String> locations4 = new ArrayList(Arrays.asList("C5", "D5", "E5"));
             List<String> locations5 = new ArrayList(Arrays.asList("G1","G2","G3","G4"));
-            //List<String> locations6 = new ArrayList(Arrays.asList("D6", "D7"));
+            List<String> locations6 = new ArrayList(Arrays.asList("D6", "D7"));
             //List<String> locations7 = new ArrayList(Arrays.asList("B2", "B3", "B4"));
             List<String> locations8 = new ArrayList(Arrays.asList("A6","B6"));
 
             Ship ship1_1_1 = new Ship(ShipType.CARRIER, locations1, gp1);
             Ship ship2_1_1 = new Ship(ShipType.BATTLESHIP, locations2, gp1);
-            Ship ship3_1_1 = new Ship(ShipType.CRUISER, locations4, gp1);
-            Ship ship1_1_2 = new Ship(ShipType.SUBMARINE, locations5, gp1);
-            Ship ship2_1_2 = new Ship(ShipType.DESTROYER, locations8, gp1);
+            Ship ship3_1_1 = new Ship(ShipType.CRUISER, locations4, gp2);
+            Ship ship1_1_2 = new Ship(ShipType.SUBMARINE, locations5, gp2);
+            Ship ship2_1_2 = new Ship(ShipType.DESTROYER, locations6, gp1);
 
             shipRepository.save(ship2_1_1);
             shipRepository.save(ship3_1_1);
@@ -100,13 +97,13 @@ public class SalvoApplication {
             shipRepository.save(ship1_1_2);
             shipRepository.save(ship2_1_2);
 
-            Salvo salvo1 = new Salvo(1, Arrays.asList("H2","H3","H4","H5"), gp1);
+            Salvo salvo1 = new Salvo(1, Arrays.asList("H2","H3","H4","H1"), gp1);
             Salvo salvo2 = new Salvo(1, Arrays.asList("H4","H5","H6"), gp2);
-            Salvo salvo3 = new Salvo(1, Arrays.asList("A2","B2","C3"), gp1);
-            Salvo salvo4 = new Salvo(1, Arrays.asList("B2","B3","B4"), gp2);
-            Salvo salvo5 = new Salvo(1, Arrays.asList("A1","A2","A3"), gp1);
+            Salvo salvo3 = new Salvo(2, Arrays.asList("A2","B2","C3"), gp1);
+            Salvo salvo4 = new Salvo(3, Arrays.asList("B2","B3","B4"), gp2);
+            Salvo salvo5 = new Salvo(4, Arrays.asList("A1","A2","A3"), gp1);
 
-            salvoRepository.save(salvo1);
+            salvoRepository.saveAll(Arrays.asList(salvo1,salvo2,salvo3,salvo4,salvo5));
 
             Score score1_1 = new Score(g1, player1, 1, date1);
             Score score1_2 = new Score(g1, player2, 0, date2);
