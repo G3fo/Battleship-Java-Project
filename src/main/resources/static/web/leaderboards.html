@@ -6,40 +6,38 @@
   <meta charset="utf-8" />
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <title>Salvo! Games</title> 
+  <title>Salvo! Games</title>
   <link rel="stylesheet" type="text/css" href="game.css">
 </head>
 
 <body>
-  <div class ="container" id="app">
-    <img src="Battleship_2.png" alt="battleshipLogo" >  
+  <div class="container" id="app">
 
-    <h2  class="text-center" id="title">Leaderboards</h2>
+    <h2 class="text-center" id="title">Leaderboards</h2>
     <table class="table table-bordered table-dark">
       <thead>
         <tr>
-          <th >Player</th>
-          <th >Victories</th>
-          <th >Defeats</th>
-          <th >Ties</th>
-          <th >Total Score</th>
+          <th>Player</th>
+          <th>Victories</th>
+          <th>Defeats</th>
+          <th>Ties</th>
+          <th>Total Score</th>
         </tr>
       </thead>
 
       <tbody>
-          <tr v-for="player in vueScores">
-            <td >{{player.player}}</td>
-            <td >{{player.victories}}</td>
-            <td >{{player.defeats}}</td>
-            <td >{{player.ties}}</td>
-            <td >{{player.total_score}}</td>
-          </tr>
+        <tr v-for="player in vueScores">
+          <td>{{player.name}}</td>
+          <td>{{player.won}}</td>
+          <td>{{player.lost}}</td>
+          <td>{{player.tied}}</td>
+          <td>{{player.total}}</td>
+        </tr>
       </tbody>
 
     </table>
   </div>
-  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js" Vue.config.devtools = true
-  ></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js" Vue.config.devtools=true></script>
 
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"
     integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
