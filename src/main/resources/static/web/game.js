@@ -1,37 +1,5 @@
-// $(function() {
-//     loadData();
-// });
-
-// function getParameterByName(name) {
-//     var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
-//     return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
-// };
 
 var recievedData;
-
-// function loadData(){
-//     $.get('/api/game_view/'+getParameterByName('gp'))
-//         .done(function(data) {
-//             recievedData = data;
-//             console.log(data);
-//             let playerInfo;
-//             if(recievedData.gamePlayers[0].id == getParameterByName('gp'))
-//                 playerInfo = [recievedData.gamePlayers[0].Player.user,recievedData.gamePlayers[1].Player.user];
-//             else
-//                 playerInfo = [recievedData.gamePlayers[1].Player.user,recievedData.gamePlayers[0].Player.user];
-
-//             $('#playerInfo').text(playerInfo[0] + '(you) vs ' + playerInfo[1]);
-
-//             data.ships.forEach(function(shipPiece){
-//                 shipPiece.locations.forEach(function(shipLocation){
-//                     $('#'+shipLocation).addClass('ship-piece');
-//                 })
-//             });
-//         })
-//         .fail(function( jqXHR, textStatus ) {
-//           alert( "Failed: " + textStatus );
-//         });
-// };
 
 $(function() {
     loadData();
