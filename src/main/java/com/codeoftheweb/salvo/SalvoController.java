@@ -31,7 +31,11 @@ public class SalvoController {
     @RequestMapping("/games")
     public Map<String, Object> getAllGames() {
         Map<String, Object> dto = new HashMap<>();
-        dto.put("games", gameRepository.findAll().stream().map(Game::createGameDTO).collect(toList()));
+        dto.put("games", gameRepository
+                .findAll()
+                .stream()
+                .map(Game::createGameDTO)
+                .collect(toList()));
         return dto;
     }
 
