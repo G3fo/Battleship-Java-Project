@@ -22,6 +22,30 @@
           {{ games.gamePlayers[1].Player.user }}
         </li>
       </ul>
+
+      <h2 class="text-center" id="title">Leaderboards</h2>
+    <table class="table table-bordered table-dark">
+      <thead>
+        <tr>
+          <th>Player</th>
+          <th>Victories</th>
+          <th>Defeats</th>
+          <th>Ties</th>
+          <th>Total Score</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr v-for="player in vueScores">
+          <td>{{player.name}}</td>
+          <td>{{player.won}}</td>
+          <td>{{player.lost}}</td>
+          <td>{{player.tied}}</td>
+          <td>{{player.total}}</td>
+        </tr>
+      </tbody>
+
+    </table>
     </div>
 
     <script src="https://code.jquery.com/jquery-2.2.0.js"></script>

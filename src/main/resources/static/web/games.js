@@ -1,24 +1,17 @@
 var gamesJSON = [];
+var scoresJSON = [];
 
 var app = new Vue({
   el: "#app",
   data: {
-    vueGames: gamesJSON
+    vueScores: scoresJSON,
+    vueGames: gamesJSON,
   }
-});
-
-//Idealmente quiero usar fetch en vez del metodo get de jquery, lo dejo para más adelante
-
-// fetch("http://localhost:8080/api/games", { method: "get" })
-//   .then(function(games) {
-//     gamesJSON = games;
-//   })
-//   .then(function(games) {
-//     console.log(games);
-//   });
+})
+Vue.config.devtools = true;
 
 $.get("/api/games")
-  .done(function(games) {
+  .done(function (games) {
     gamesJSON = games;
     var date;
     gamesJSON.games.forEach(game => {
@@ -27,8 +20,7 @@ $.get("/api/games")
     });
 
     app.vueGames = gamesJSON;
-    //console.log(gamesJSON);
   })
-  .fail(function(jqXHR, textStatus) {
+  .fail(function (jqXHR, textStatus) {
     showOutput("Failed: " + textStatus);
   });
