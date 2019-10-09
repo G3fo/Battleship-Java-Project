@@ -24,3 +24,11 @@ $.get("/api/games")
   .fail(function (jqXHR, textStatus) {
     showOutput("Failed: " + textStatus);
   });
+$.get("/api/leaderboard")
+  .done(function (scores) {
+    app.vueScores = scores;
+    console.log(app.vueScores);
+  })
+  .fail(function (jqXHR, textStatus) {
+    showOutput("Failed: " + textStatus);
+  });
