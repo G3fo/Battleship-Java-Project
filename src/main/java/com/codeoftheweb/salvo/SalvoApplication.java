@@ -1,9 +1,11 @@
 package com.codeoftheweb.salvo;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.*;
 
@@ -14,6 +16,9 @@ public class SalvoApplication {
         SpringApplication.run(SalvoApplication.class);
     }
 
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
     @Bean
     public CommandLineRunner initData(PlayerRepository playerRepository,
                                       GameRepository gameRepository,
@@ -23,11 +28,11 @@ public class SalvoApplication {
                                       SalvoRepository salvoRepository) {
         return (args) -> {
 
-            Player player1 = new Player("Jackbauer@gmail.com");
-            Player player2 = new Player("Chloe@Brian.com");
-            Player player3 = new Player("KimBauer@gmail.com");
-            Player player4 = new Player("DavidPalmer@gmail.com");
-            Player player5 = new Player("MichelleDessler@gmail.com");
+            Player player1 = new Player("Jackbauer@gmail.com", passwordEncoder.encode("24"));
+            Player player2 = new Player("Chloe@Brian.com", passwordEncoder.encode("42"));
+            Player player3 = new Player("KimBauer@gmail.com", passwordEncoder.encode("kb"));
+            Player player4 = new Player("DavidPalmer@gmail.com", passwordEncoder.encode("mole"));
+            Player player5 = new Player("MichelleDessler@gmail.com", passwordEncoder.encode("panchito"));
 
             playerRepository.save(player1);
             playerRepository.save(player2);
