@@ -49,8 +49,6 @@ public class SalvoController {
         dto.put("salvoes", gamePlayer.getGame().getGamePlayers().stream()
                 .flatMap(gp->gp.getSalvoes().stream().map(Salvo::createGameDTO_Salvo))
                 .collect(Collectors.toList()));
-
         return dto;
-
     }
 }
