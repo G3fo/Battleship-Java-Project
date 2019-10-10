@@ -17,32 +17,34 @@
   <body>
     <div id="app">
       <div class="container">
-        <h3 data-shadow="Login!">Login!</h3>
-        <form>
-          <div class="form-group">
-            <input
-              type="email"
-              class="form-control"
-              id="loginEmail"
-              aria-describedby="emailHelp"
-              placeholder="Enter email"
-              required
-            />
-          </div>
-          <div class="form-group">
-            <input
-              type="password"
-              class="form-control"
-              id="loginPassword"
-              placeholder="Password"
-              required
-            />
-          </div>
-          <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
+        <div class="content">
+          <form id="loginForm">
+            <h3 data-shadow="login">login</h3>
+            <div class="form-group">
+              <input
+                type="email"
+                class="form-control"
+                id="loginEmail"
+                aria-describedby="emailHelp"
+                placeholder="Enter email"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <input
+                type="password"
+                class="form-control"
+                id="loginPassword"
+                placeholder="Password"
+                required
+              />
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        </div>
 
-        <h1 data-shadow="Games!" class="text-center" id="title">
-          Games!
+        <h1 data-shadow="GAMES" class="text-center" id="title">
+          GAMES
         </h1>
         <table class="table table-bordered table-dark content rounded">
           <thead>
@@ -70,8 +72,8 @@
           </tbody>
         </table>
 
-        <h2 data-shadow="Leaderboards!" class="text-center" id="title">
-          Leaderboards!
+        <h2 data-shadow="Leaderboards" class="text-center" id="title">
+          Leaderboards
         </h2>
         <table class="table table-bordered table-dark content rounded">
           <thead>

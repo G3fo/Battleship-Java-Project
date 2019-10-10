@@ -11,6 +11,14 @@
 
 input {
   border-radius: 3px;
+  min-width: 50%;
+}
+
+#loginForm {
+  max-width: 40%;
+  position: relative;
+  margin-right: 30%;
+  margin-left: 30%;
 }
 
 body {
@@ -38,7 +46,7 @@ h2 {
   display: inline-block;
   color: white;
   font-family: "Righteous", serif;
-  font-size: 5em;
+  font-size: 4em;
   text-shadow: 0.01em 0.01em 0 hsla(230, 40%, 50%, 1);
 }
 h1:after,
