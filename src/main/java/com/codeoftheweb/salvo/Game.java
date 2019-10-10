@@ -29,7 +29,7 @@ public class Game {
     }
 
     public Game(Date gameDate) {
-        this.gameDate = new Date();
+        this.gameDate = gameDate;
     }
 
     /*public Game(int hours){

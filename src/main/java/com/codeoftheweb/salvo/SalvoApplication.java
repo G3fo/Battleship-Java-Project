@@ -59,14 +59,14 @@ public class SalvoApplication {
             playerRepository.save(player3);
             playerRepository.save(player4);
 
-            Date date1 = new Date();
-            Date date2 = Date.from(date1.toInstant().plusSeconds(3600));
-            Date date3 = Date.from(date2.toInstant().plusSeconds(3600));
-            Date date4 = Date.from(date3.toInstant().plusSeconds(3600));
-            Date date5 = Date.from(date4.toInstant().plusSeconds(3600));
-            Date date6 = Date.from(date5.toInstant().plusSeconds(3600));
-            Date date7 = Date.from(date6.toInstant().plusSeconds(3600));
-            Date date8 = Date.from(date7.toInstant().plusSeconds(3600));
+            Date date8 = new Date();
+            Date date7 = Date.from(date8.toInstant().minusSeconds(3600));
+            Date date6 = Date.from(date7.toInstant().minusSeconds(3600));
+            Date date5 = Date.from(date6.toInstant().minusSeconds(3600));
+            Date date4 = Date.from(date5.toInstant().minusSeconds(3600));
+            Date date3 = Date.from(date4.toInstant().minusSeconds(3600));
+            Date date2 = Date.from(date3.toInstant().minusSeconds(3600));
+            Date date1 = Date.from(date2.toInstant().minusSeconds(3600));
 
             Game g1 = new Game(date1);
             Game g2 = new Game(date2);
