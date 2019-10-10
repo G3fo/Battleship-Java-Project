@@ -9,6 +9,10 @@
   position: relative;
 }
 
+input {
+  border-radius: 3px;
+}
+
 body {
   text-align: center;
   background-color: hsla(230, 40%, 50%, 1);
@@ -21,9 +25,16 @@ body:before {
   height: 100%;
 }
 
-h1,
-h2,
 h3 {
+  display: inline-block;
+  color: white;
+  font-family: "Righteous", serif;
+  font-size: 2em;
+  text-shadow: 0.01em 0.01em 0 hsla(230, 40%, 50%, 1);
+}
+
+h1,
+h2 {
   display: inline-block;
   color: white;
   font-family: "Righteous", serif;
