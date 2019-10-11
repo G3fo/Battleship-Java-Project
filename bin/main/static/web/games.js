@@ -33,3 +33,27 @@ $.get("/api/leaderboard")
   .fail(function(jqXHR, textStatus) {
     showOutput("Failed: " + textStatus);
   });
+
+function logout() {
+  $.post("/api/logout").done(function() {
+    console.log("logged out");
+  });
+}
+
+function logIn() {
+  $.post("/api/login", {
+    username: document.getElementById("loginEmail").value,
+    password: document.getElementById("loginPassword").value
+  }).done(function() {
+    console.log("logged in!");
+  });
+}
+
+function signUp() {
+  $.post("/api/players", {
+    username: document.getElementById("loginEmail").value,
+    password: document.getElementById("loginPassword").value
+  }).done(function() {
+    console.log("Signed up");
+  });
+}

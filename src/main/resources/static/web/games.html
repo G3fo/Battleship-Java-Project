@@ -1,106 +1,133 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Salvo!</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="games.css" />
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-  <title>Salvo!</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
-  <link rel="stylesheet" href="games.css" />
-</head>
+  <body>
+    <div id="app">
+      <div class="container">
+        <p>
+          Hello
+          {{
+            vueGames.player.user == undefined
+              ? vueGames.player
+              : vueGames.player.user
+          }}!
+        </p>
 
-<body>
-  <div id="app">
-    <div class="container">
+        <div class="content">
+          <form id="logoutForm">
+            <button class="btn btn-danger" onclick="logout()">Logout</button>
+          </form>
+        </div>
 
-      <div class="content">
-        <form id="logoutForm">
-          <button type="submit" class="btn btn-danger" onclick="logout()">Logout</button>
-        </form>
-      </div>
+        <div class="content">
+          <form id="loginForm">
+            <h3 data-shadow="login">login</h3>
+            <div class="form-group">
+              <input
+                type="email"
+                class="form-control"
+                id="loginEmail"
+                aria-describedby="emailHelp"
+                placeholder="Enter email"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <input
+                type="password"
+                class="form-control"
+                id="loginPassword"
+                placeholder="Enter password"
+                required
+              />
+            </div>
+            <button class="btn btn-success" onclick="logIn()">Log In</button>
 
-      <div class="content">
-        <form id="loginForm">
-          <h3 data-shadow="login">login</h3>
-          <div class="form-group">
-            <input type="email" class="form-control" id="loginEmail" aria-describedby="emailHelp"
-              placeholder="Enter email" required />
-          </div>
-          <div class="form-group">
-            <input type="password" class="form-control" id="loginPassword" placeholder="Password" required />
-          </div>
-          <button class="btn btn-success" onclick="logIn()">Log In</button>
-          <button class="btn btn-primary" onclick="logIn()">Sign Up</button>
-        </form>
-      </div>
+            <button class="btn btn-primary" onclick="signUp()">Sign Up</button>
+          </form>
+        </div>
 
-      <h1 data-shadow="GAMES" class="text-center" id="title">
-        GAMES
-      </h1>
-      <table class="table table-bordered table-dark content rounded">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Date</th>
-            <th>Player 1</th>
-            <th>Player 2</th>
-          </tr>
-        </thead>
+        <h1 data-shadow="GAMES" class="text-center" id="title">
+          GAMES
+        </h1>
+        <table class="table table-bordered table-dark content rounded">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Date</th>
+              <th>Player 1</th>
+              <th>Player 2</th>
+            </tr>
+          </thead>
 
-        <tbody>
-          <tr v-for="games in vueGames.games">
-            <td>{{ games.id }}</td>
-            <td>{{ games.created }}</td>
-            <td>{{ games.gamePlayers[0].Player.user }}</td>
-            <td>
-              {{
+          <tbody>
+            <tr v-for="games in vueGames.games">
+              <td>{{ games.id }}</td>
+              <td>{{ games.created }}</td>
+              <td>{{ games.gamePlayers[0].Player.user }}</td>
+              <td>
+                {{
                   games.gamePlayers[1]
                     ? games.gamePlayers[1].Player.user
                     : "Waiting oponent"
                 }}
-            </td>
-          </tr>
-        </tbody>
-      </table>
+              </td>
+            </tr>
+          </tbody>
+        </table>
 
-      <h2 data-shadow="Leaderboards" class="text-center" id="title">
-        Leaderboards
-      </h2>
-      <table class="table table-bordered table-dark content rounded">
-        <thead>
-          <tr>
-            <th>Player</th>
-            <th>Victories</th>
-            <th>Defeats</th>
-            <th>Ties</th>
-            <th>Total Score</th>
-          </tr>
-        </thead>
+        <h2 data-shadow="Leaderboards" class="text-center" id="title">
+          Leaderboards
+        </h2>
+        <table class="table table-bordered table-dark content rounded">
+          <thead>
+            <tr>
+              <th>Player</th>
+              <th>Victories</th>
+              <th>Defeats</th>
+              <th>Ties</th>
+              <th>Total Score</th>
+            </tr>
+          </thead>
 
-        <tbody>
-          <tr v-for="player in vueScores">
-            <td>{{ player.name }}</td>
-            <td>{{ player.won }}</td>
-            <td>{{ player.lost }}</td>
-            <td>{{ player.tied }}</td>
-            <td>{{ player.total }}</td>
-          </tr>
-        </tbody>
-      </table>
+          <tbody>
+            <tr v-for="player in vueScores">
+              <td>{{ player.name }}</td>
+              <td>{{ player.won }}</td>
+              <td>{{ player.lost }}</td>
+              <td>{{ player.tied }}</td>
+              <td>{{ player.total }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
-  </div>
 
-  <script src="https://code.jquery.com/jquery-2.2.0.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
-  </script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-  <script src="games.js"></script>
-</body>
-
+    <script src="https://code.jquery.com/jquery-2.2.0.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="games.js"></script>
+  </body>
 </html>

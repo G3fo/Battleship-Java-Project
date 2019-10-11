@@ -17,6 +17,21 @@
   <body>
     <div id="app">
       <div class="container">
+        <p>
+          Hello
+          {{
+            vueGames.player.user == undefined
+              ? vueGames.player
+              : vueGames.player.user
+          }}!
+        </p>
+
+        <div class="content">
+          <form id="logoutForm">
+            <button class="btn btn-danger" onclick="logout()">Logout</button>
+          </form>
+        </div>
+
         <div class="content">
           <form id="loginForm">
             <h3 data-shadow="login">login</h3>
@@ -35,11 +50,13 @@
                 type="password"
                 class="form-control"
                 id="loginPassword"
-                placeholder="Password"
+                placeholder="Enter password"
                 required
               />
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button class="btn btn-success" onclick="logIn()">Log In</button>
+
+            <button class="btn btn-primary" onclick="signUp()">Sign Up</button>
           </form>
         </div>
 
