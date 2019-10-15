@@ -74,6 +74,7 @@
               <th>Date</th>
               <th>Player 1</th>
               <th>Player 2</th>
+              <th>Join</th>
             </tr>
           </thead>
 
@@ -88,6 +89,13 @@
                     ? games.gamePlayers[1].Player.user
                     : "Waiting oponent"
                 }}
+              </td>
+              <td
+                v-show="vueGames.player.user ==
+                  vueGames.games[0].gamePlayers[0].Player.user
+                 ||  vueGames.games[1].gamePlayers[1].Player.user"
+              >
+                hola
               </td>
             </tr>
           </tbody>

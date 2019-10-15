@@ -80,6 +80,8 @@ public class SalvoController {
     return new ResponseEntity<>(newPlayer.getUserName(), HttpStatus.CREATED);
   }
 
+//  @RequestMapping(path = "/games")
+
   @RequestMapping("/game_view/{gamePlayerId}")
   public Map<String, Object> getGameView(@PathVariable Long gamePlayerId) {
 
