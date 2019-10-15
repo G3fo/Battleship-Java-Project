@@ -26,13 +26,13 @@
           }}!
         </p>
 
-        <div class="content">
+        <div v-show="vueGames.player !== 'Guest'" class="content">
           <form id="logoutForm">
             <button class="btn btn-danger" onclick="logout()">Logout</button>
           </form>
         </div>
 
-        <div class="content">
+        <div v-show="vueGames.player == 'Guest'" class="content">
           <form id="loginForm">
             <h3 data-shadow="login">login</h3>
             <div class="form-group">
@@ -54,9 +54,13 @@
                 required
               />
             </div>
-            <button class="btn btn-success" onclick="logIn()">Log In</button>
+            <button type="button" class="btn btn-success" onclick="login()">
+              Log In
+            </button>
 
-            <button class="btn btn-primary" onclick="signUp()">Sign Up</button>
+            <button type="button" class="btn btn-primary" onclick="signup()">
+              Sign Up
+            </button>
           </form>
         </div>
 
