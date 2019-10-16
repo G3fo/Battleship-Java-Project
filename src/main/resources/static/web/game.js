@@ -48,7 +48,8 @@ function loadData() {
       });
     })
     .fail(function (jqXHR, textStatus) {
-      alert("Failed: " + textStatus);
+      alert("You need to login before you enter a game!");
+      window.location.href = "http://localhost:8080/web/games.html"
     });
 }
 

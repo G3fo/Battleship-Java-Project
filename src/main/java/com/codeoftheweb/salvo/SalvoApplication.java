@@ -170,7 +170,7 @@ public class SalvoApplication {
 class WebSecurityAuthorization extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/web/games.html", "/api/games", "/api/login", "/api/players", "/api/leaderboard").permitAll()
+                .antMatchers( "/web/**", "/web/*", "/api/games" , "/api/logout", "/api/login", "/api/players", "/api/leaderboard").permitAll()
                 .antMatchers("/rest/**").hasAuthority("ADMIN")
                 .antMatchers("/api/**", "/web/game.html**").hasAuthority("USER")
                 .anyRequest().denyAll();
