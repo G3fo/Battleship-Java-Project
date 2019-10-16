@@ -66,7 +66,7 @@ public class SalvoController {
 
   @RequestMapping(path = "/players", method = RequestMethod.POST)
   public ResponseEntity<String> createUser(@RequestParam String username,
-                                                        @RequestParam String password) {
+                                           @RequestParam String password) {
 
     if (username.isEmpty()) {
       return new ResponseEntity<>("No username given",HttpStatus.FORBIDDEN);
@@ -80,7 +80,26 @@ public class SalvoController {
     return new ResponseEntity<>(newPlayer.getUserName(), HttpStatus.CREATED);
   }
 
-//  @RequestMapping(path = "/games")
+  @RequestMapping(path = "/games", method = RequestMethod.POST)
+  @ResponseBody
+  public ResponseEntity<Object> createGame(Authentication authentication) {
+    ResponseEntity<Object> response;
+    if (!authentication.isAuthenticated()) {
+      response = new ResponseEntity<>(makeMap("error", "Not authenticated"), HttpStatus.FORBIDDEN);
+    }
+    Player player = playerRepository.findByUserName(authentication.getName());
+    if (player != null) {
+        Game newGame = gameRepository.save(new Game(new Date()));
+        GamePlayer newGamePlayer;
+        newGamePlayer =  new GamePlayer(player, newGame);
+        gamePlayerRepository.save(newGamePlayer);
+        response = new ResponseEntity<>(makeMap("gpid", newGamePlayer.getGamePlayerId()), HttpStatus.CREATED);
+      }
+    else{
+      response = new ResponseEntity<>(makeMap("error", "No User Found"), HttpStatus.FORBIDDEN);
+    }
+    return response;
+  }
 
   @RequestMapping("/game_view/{gamePlayerId}")
   public Map<String, Object> getGameView(@PathVariable Long gamePlayerId) {
@@ -93,5 +112,11 @@ public class SalvoController {
             .flatMap(gp -> gp.getSalvoes().stream().map(Salvo::createGameDTO_Salvo))
             .collect(Collectors.toList()));
     return dto;
+  }
+
+  private Map<String, Object>makeMap(String key, Object value){
+    Map<String, Object> map = new HashMap<>();
+    map.put(key,value);
+    return map;
   }
 }
