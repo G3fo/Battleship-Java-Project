@@ -99,6 +99,9 @@ public class SalvoController {
     return response;
   }
 
+//  @RequestMapping("/games/{id}/players")
+  //public Map<String, Object>
+
   @RequestMapping("/game_view/{gamePlayerId}")
   public Map<String, Object> getGameView(@PathVariable Long gamePlayerId) {
 
