@@ -99,7 +99,7 @@ public class SalvoController {
     return response;
   }
 
-  @RequestMapping(path = "/games", method = RequestMethod.POST)
+  /*@RequestMapping(path = "/games", method = RequestMethod.POST)
   @ResponseBody
   public ResponseEntity<Object> joinGame(Authentication authentication) {
     ResponseEntity<Object> response;
@@ -119,7 +119,7 @@ public class SalvoController {
     }
     return response;
   }
-
+*/
 
   @RequestMapping("/game_view/{gamePlayerId}")
   public Map<String, Object> getGameView(@PathVariable Long gamePlayerId) {

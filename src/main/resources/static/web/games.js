@@ -6,9 +6,17 @@ var app = new Vue({
   data: {
     vueScores: scoresJSON,
     vueGames: gamesJSON
+  },
+  methods: {
+    joinGame(id) {
+      alert(id)
+    }
   }
+
 });
 Vue.config.devtools = true;
+
+
 
 $.get("/api/games")
   .done(function (games) {
@@ -39,6 +47,8 @@ function logout() {
     console.log("logged out");
   });
 }
+
+
 
 function login() {
   $.post("/api/login", {

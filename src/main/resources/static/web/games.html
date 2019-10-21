@@ -31,134 +31,96 @@
 
       <div v-show="vueGames.player == 'Guest'" class="content">
 
-
-
-        <div class="span12">
-          <div class="" id="loginModal">
-            <ul class="nav nav-tabs">
-              <li class="active"><a href="#login" data-toggle="tab">Login</a></li>
-              <li><a href="#create" data-toggle="tab">Create Account</a></li>
-            </ul>
-            <div id="myTabContent" class="tab-content">
-              <div class="tab-pane active in" id="login">
-                <div class="control-group">
-                  <!-- Username -->
-                  <label class="control-label" for="username">Username</label>
-                  <div class="controls">
-                    <input type="email" id="username" name="username" placeholder="" class="input-xlarge">
-                  </div>
-                </div>
-
-                <div class="control-group">
-                  <!-- Password-->
-                  <label class="control-label" for="password">Password</label>
-                  <div class="controls">
-                    <input type="password" id="password" name="password" placeholder="" class="input-xlarge">
-                  </div>
-                </div>
-
-                <div class="control-group">
-                  <!-- Button -->
-                  <div class="controls">
-                    <button type="button" class="btn btn-success">Login</button>
-                  </div>
-                </div>
-              </div>
-              <div class="tab-pane fade" id="create">
-                <form id="tab">
-                  <label>Username</label>
-                  <input type="text" value="" class="input-xlarge">
-                  <label>Email</label>
-                  <input type="text" value="" class="input-xlarge">
-                  <div>
-                    <button type="button" class="btn btn-primary">Create Account</button>
-                  </div>
-                </form>
-              </div>
-            </div>
+        <form id="loginForm">
+          <h3 data-shadow="login">login</h3>
+          <div class="form-group">
+            <input type="email" class="form-control" id="loginEmail" aria-describedby="emailHelp"
+              placeholder="Enter email" required />
           </div>
-        </div>
+          <div class="form-group">
+            <input type="password" class="form-control" id="loginPassword" placeholder="Enter password" required />
+          </div>
+          <button type="button" class="btn btn-success" onclick="login()">
+            Log In
+          </button>
+
+          <button type="button" class="btn btn-primary" onclick="signup()">
+            Sign Up
+          </button>
+        </form>
       </div>
-    </div>
 
+      <h1 data-shadow="GAMES" class="text-center" id="title">
+        GAMES
+      </h1>
+      <table class="table table-bordered table-dark content rounded">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Date</th>
+            <th>Player 1</th>
+            <th>Player 2</th>
+            <th v-show="vueGames.player !== 'Guest'">Join</th>
+          </tr>
+        </thead>
 
-    <form id="loginForm">
-      <h3 data-shadow="login">login</h3>
-      <div class="form-group">
-        <input type="email" class="form-control" id="loginEmail" aria-describedby="emailHelp" placeholder="Enter email"
-          required />
-      </div>
-      <div class="form-group">
-        <input type="password" class="form-control" id="loginPassword" placeholder="Enter password" required />
-      </div>
-      <button type="button" class="btn btn-success" onclick="login()">
-        Log In
-      </button>
+        <tbody>
+          <tr v-for="games in vueGames.games">
+            <td>{{ games.id }}</td>
+            <td>{{ games.created }}</td>
+            <td>
+              <div v-if=""></div>
+              {{ games.players[0].user }}
 
-      <button type="button" class="btn btn-primary" onclick="signup()">
-        Sign Up
-      </button>
-    </form>
-  </div>
+              <button type="button" class="btn btn-primary" v-on:click="joinGame(games.players[1].gpid)">Return to
+                Game</button>
+            </td>
 
-  <h1 data-shadow="GAMES" class="text-center" id="title">
-    GAMES
-  </h1>
-  <table class="table table-bordered table-dark content rounded">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Date</th>
-        <th>Player 1</th>
-        <th>Player 2</th>
-        <th>Join</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <tr v-for="games in vueGames.games">
-        <td>{{ games.id }}</td>
-        <td>{{ games.created }}</td>
-        <td>{{ games.players[0].user }}</td>
-        <td>
-          {{
+            </td>
+            <td>
+              {{
                   games.players[1]
                     ? games.players[1].user
                     : "Waiting oponent"
                 }}
-        </td>
-        <span>
-          <td></td>
-        </span>
-      </tr>
-    </tbody>
-  </table>
+            </td>
+            <td v-show="vueGames.player !== 'Guest'">
+              <div v-if="games.players[1]!=null">Game Full</div>
+              <div v-else>
+                <button type="button" class="btn btn-primary" v-on:click="joinGame(games.players[1].gpid)">Join
+                  Game</button>
+              </div>
+            </td>
 
-  <h2 data-shadow="LEADERBOARDS" class="text-center" id="title">
-    LEADERBOARDS
-  </h2>
-  <table class="table table-bordered table-dark content rounded">
-    <thead>
-      <tr>
-        <th>Player</th>
-        <th>Victories</th>
-        <th>Defeats</th>
-        <th>Ties</th>
-        <th>Total Score</th>
-      </tr>
-    </thead>
+          </tr>
+        </tbody>
+      </table>
 
-    <tbody>
-      <tr v-for="player in vueScores">
-        <td>{{ player.name }}</td>
-        <td>{{ player.won }}</td>
-        <td>{{ player.lost }}</td>
-        <td>{{ player.tied }}</td>
-        <td>{{ player.total }}</td>
-      </tr>
-    </tbody>
-  </table>
-  </div>
+      <h2 data-shadow="LEADERBOARDS" class="text-center" id="title">
+        LEADERBOARDS
+      </h2>
+      <table class="table table-bordered table-dark content rounded">
+        <thead>
+          <tr>
+            <th>Player</th>
+            <th>Victories</th>
+            <th>Defeats</th>
+            <th>Ties</th>
+            <th>Total Score</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr v-for="player in vueScores">
+            <td>{{ player.name }}</td>
+            <td>{{ player.won }}</td>
+            <td>{{ player.lost }}</td>
+            <td>{{ player.tied }}</td>
+            <td>{{ player.total }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 
   <script src="https://code.jquery.com/jquery-2.2.0.js"></script>
