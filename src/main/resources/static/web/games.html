@@ -69,20 +69,36 @@
             <td>{{ games.id }}</td>
             <td>{{ games.created }}</td>
             <td>
-              <div v-if=""></div>
-              {{ games.players[0].user }}
+              <div v-if="games.players[0].id !== vueGames.player.id ">
+                {{ games.players[0].user }}
+              </div>
 
-              <button type="button" class="btn btn-primary" v-on:click="joinGame(games.players[1].gpid)">Return to
-                Game</button>
+              <div v-else><button type="button" class="btn btn-primary"
+                  v-on:click="joinGame(games.players[1].gpid)">Return to
+                  Game</button></div>
+
             </td>
 
             </td>
             <td>
-              {{
-                  games.players[1]
-                    ? games.players[1].user
-                    : "Waiting oponent"
-                }}
+
+              <!-- <div v-show="games.players[1] ? games.players[1].user
+              : 'Waiting oponent'">
+                <div v-if="games.players[1].id !== vueGames.player.id ">
+                  {{
+                          games.players[1]
+                            ? games.players[1].user
+                            : "Waiting oponent"
+                        }}
+                </div>
+              </div> -->
+
+
+              <div v-else><button type="button" class="btn btn-primary"
+                  v-on:click="joinGame(games.players[1].gpid)">Return to
+                  Game</button>
+              </div>
+
             </td>
             <td v-show="vueGames.player !== 'Guest'">
               <div v-if="games.players[1]!=null">Game Full</div>
