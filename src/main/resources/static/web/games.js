@@ -9,17 +9,14 @@ var app = new Vue({
   },
   methods: {
     joinGame(id) {
-      alert(id)
+      window.location.href = "http://localhost:8080/web/game.html?gp=" + id;
     }
   }
-
 });
 Vue.config.devtools = true;
 
-
-
 $.get("/api/games")
-  .done(function (games) {
+  .done(function(games) {
     gamesJSON = games;
     var date;
     gamesJSON.games.forEach(game => {
@@ -29,51 +26,49 @@ $.get("/api/games")
 
     app.vueGames = gamesJSON;
   })
-  .fail(function (jqXHR, textStatus) {
+  .fail(function(jqXHR, textStatus) {
     showOutput("Failed: " + textStatus);
   });
 $.get("/api/leaderboard")
-  .done(function (scores) {
+  .done(function(scores) {
     scores.sort((a, b) => b["total"] - a["total"]);
     app.vueScores = scores;
     console.log(app.vueScores);
   })
-  .fail(function (jqXHR, textStatus) {
+  .fail(function(jqXHR, textStatus) {
     showOutput("Failed: " + textStatus);
   });
 
 function logout() {
-  $.post("/api/logout").done(function () {
+  $.post("/api/logout").done(function() {
     console.log("logged out");
   });
 }
 
-
-
 function login() {
   $.post("/api/login", {
-      username: document.getElementById("loginEmail").value,
-      password: document.getElementById("loginPassword").value
-    })
-    .done(function () {
+    username: document.getElementById("loginEmail").value,
+    password: document.getElementById("loginPassword").value
+  })
+    .done(function() {
       alert("Logged in!");
       window.location.reload();
     })
-    .fail(function () {
+    .fail(function() {
       alert("Incorrect username or password");
     });
 }
 
 function signup() {
   $.post("/api/players", {
-      username: document.getElementById("loginEmail").value,
-      password: document.getElementById("loginPassword").value
-    })
-    .done(function () {
+    username: document.getElementById("loginEmail").value,
+    password: document.getElementById("loginPassword").value
+  })
+    .done(function() {
       alert("Signed up!");
       login();
     })
-    .fail(function () {
+    .fail(function() {
       alert("Incorrect sign up!");
     });
 }

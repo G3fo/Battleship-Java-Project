@@ -6,6 +6,11 @@ var app = new Vue({
   data: {
     vueScores: scoresJSON,
     vueGames: gamesJSON
+  },
+  methods: {
+    joinGame(id) {
+      window.location.href = "http://localhost:8080/web/game.html?gp=" + id;
+    }
   }
 });
 Vue.config.devtools = true;
@@ -40,20 +45,30 @@ function logout() {
   });
 }
 
-function logIn() {
+function login() {
   $.post("/api/login", {
     username: document.getElementById("loginEmail").value,
     password: document.getElementById("loginPassword").value
-  }).done(function() {
-    console.log("logged in!");
-  });
+  })
+    .done(function() {
+      alert("Logged in!");
+      window.location.reload();
+    })
+    .fail(function() {
+      alert("Incorrect username or password");
+    });
 }
 
-function signUp() {
+function signup() {
   $.post("/api/players", {
     username: document.getElementById("loginEmail").value,
     password: document.getElementById("loginPassword").value
-  }).done(function() {
-    console.log("Signed up");
-  });
+  })
+    .done(function() {
+      alert("Signed up!");
+      login();
+    })
+    .fail(function() {
+      alert("Incorrect sign up!");
+    });
 }

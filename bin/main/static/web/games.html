@@ -26,13 +26,13 @@
           }}!
         </p>
 
-        <div class="content">
+        <div v-show="vueGames.player !== 'Guest'" class="content">
           <form id="logoutForm">
             <button class="btn btn-danger" onclick="logout()">Logout</button>
           </form>
         </div>
 
-        <div class="content">
+        <div v-show="vueGames.player == 'Guest'" class="content">
           <form id="loginForm">
             <h3 data-shadow="login">login</h3>
             <div class="form-group">
@@ -54,9 +54,13 @@
                 required
               />
             </div>
-            <button class="btn btn-success" onclick="logIn()">Log In</button>
+            <button type="button" class="btn btn-success" onclick="login()">
+              Log In
+            </button>
 
-            <button class="btn btn-primary" onclick="signUp()">Sign Up</button>
+            <button type="button" class="btn btn-primary" onclick="signup()">
+              Sign Up
+            </button>
           </form>
         </div>
 
@@ -70,6 +74,7 @@
               <th>Date</th>
               <th>Player 1</th>
               <th>Player 2</th>
+              <th v-show="vueGames.player !== 'Guest'">Join</th>
             </tr>
           </thead>
 
@@ -77,20 +82,56 @@
             <tr v-for="games in vueGames.games">
               <td>{{ games.id }}</td>
               <td>{{ games.created }}</td>
-              <td>{{ games.gamePlayers[0].Player.user }}</td>
               <td>
-                {{
-                  games.gamePlayers[1]
-                    ? games.gamePlayers[1].Player.user
-                    : "Waiting oponent"
-                }}
+                <div v-if="games.players[0].id !== vueGames.player.id ">
+                  {{ games.players[0].user }}
+                </div>
+
+                <div v-else>
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    v-on:click="joinGame(games.players[0].gpid)"
+                  >
+                    Return to Game
+                  </button>
+                </div>
+              </td>
+
+              <td>
+                <div v-if="games.players[1]!=null">
+                  <div v-if="games.players[1].id == vueGames.player.id">
+                    <button
+                      type="button"
+                      class="btn btn-primary"
+                      v-on:click="joinGame(games.players[1].gpid)"
+                    >
+                      Return to Game
+                    </button>
+                  </div>
+                  <div v-else>{{ games.players[1].user }}</div>
+                </div>
+                <div v-else>Waiting for oponent</div>
+              </td>
+
+              <td v-show="vueGames.player !== 'Guest'">
+                <div v-if="games.players[1]!=null">Game Full</div>
+                <div v-else>
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    v-on:click="joinGame(games.players[1].gpid)"
+                  >
+                    Join Game
+                  </button>
+                </div>
               </td>
             </tr>
           </tbody>
         </table>
 
-        <h2 data-shadow="Leaderboards" class="text-center" id="title">
-          Leaderboards
+        <h2 data-shadow="LEADERBOARDS" class="text-center" id="title">
+          LEADERBOARDS
         </h2>
         <table class="table table-bordered table-dark content rounded">
           <thead>
