@@ -67,6 +67,17 @@
         <h1 data-shadow="GAMES" class="text-center" id="title">
           GAMES
         </h1>
+
+        <div class="content">
+          <button
+            v-show="vueGames.player !== 'Guest'"
+            type="button"
+            class="btn btn-success"
+            onclick="createGame()"
+          >
+            Create Game!
+          </button>
+        </div>
         <table class="table table-bordered table-dark content rounded">
           <thead>
             <tr>
@@ -91,7 +102,7 @@
                   <button
                     type="button"
                     class="btn btn-primary"
-                    v-on:click="joinGame(games.players[0].gpid)"
+                    v-on:click="returnToGame(games.players[0].gpid)"
                   >
                     Return to Game
                   </button>
@@ -104,7 +115,7 @@
                     <button
                       type="button"
                       class="btn btn-primary"
-                      v-on:click="joinGame(games.players[1].gpid)"
+                      v-on:click="returnToGame(games.players[1].gpid)"
                     >
                       Return to Game
                     </button>
@@ -120,7 +131,7 @@
                   <button
                     type="button"
                     class="btn btn-primary"
-                    v-on:click="joinGame(games.players[1].gpid)"
+                    v-on:click="joinGame(games.id)"
                   >
                     Join Game
                   </button>

@@ -8,8 +8,16 @@ var app = new Vue({
     vueGames: gamesJSON
   },
   methods: {
-    joinGame(id) {
+    returnToGame(id) {
       window.location.href = "http://localhost:8080/web/game.html?gp=" + id;
+    },
+    joinGame(gameid) {
+      $.post("/api/game/" + gameid + "/players")
+        .done(function(json) {
+          window.location.href =
+            "http://localhost:8080/web/game.html?gp=" + json.gpid;
+        })
+        .fail(alert("Could not join game!"));
     }
   }
 });
@@ -70,5 +78,15 @@ function signup() {
     })
     .fail(function() {
       alert("Incorrect sign up!");
+    });
+}
+
+function createGame() {
+  $.post("/api/games")
+    .done(function(json) {
+      window.location.href = "game.html?gp=" + json.gpid;
+    })
+    .fail(function() {
+      alert("Couldnt create game!");
     });
 }

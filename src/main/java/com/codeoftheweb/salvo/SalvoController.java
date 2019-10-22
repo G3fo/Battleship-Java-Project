@@ -89,7 +89,7 @@ public class SalvoController {
     if (player != null) {
         Game newGame = gameRepository.save(new Game(new Date()));
         GamePlayer newGamePlayer;
-        newGamePlayer =  new GamePlayer(player, newGame);
+        newGamePlayer =  new GamePlayer(new Date(), player, newGame);
         gamePlayerRepository.save(newGamePlayer);
         response = new ResponseEntity<>(makeMap("gpid", newGamePlayer.getGamePlayerId()), HttpStatus.CREATED);
       }
@@ -99,27 +99,39 @@ public class SalvoController {
     return response;
   }
 
-  /*@RequestMapping(path = "/games", method = RequestMethod.POST)
+
+  @RequestMapping(path = "/game/{game_id}/players", method = RequestMethod.POST)
   @ResponseBody
-  public ResponseEntity<Object> joinGame(Authentication authentication) {
+  public ResponseEntity<Object> joinGame(@PathVariable Long game_id, Authentication authentication) {
     ResponseEntity<Object> response;
-    if (!authentication.isAuthenticated()) {
-      response = new ResponseEntity<>(makeMap("error", "Not authenticated"), HttpStatus.FORBIDDEN);
+    if (isGuest(authentication)) {
+      response = new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
-    Player player = playerRepository.findByUserName(authentication.getName());
-    if (player != null) {
-      Game newGame = gameRepository.save(new Game(new Date()));
-      GamePlayer newGamePlayer;
-      newGamePlayer =  new GamePlayer(player, newGame);
-      gamePlayerRepository.save(newGamePlayer);
-      response = new ResponseEntity<>(makeMap("gpid", newGamePlayer.getGamePlayerId()), HttpStatus.CREATED);
-    }
-    else{
-      response = new ResponseEntity<>(makeMap("error", "No User Found"), HttpStatus.FORBIDDEN);
+    else {
+      Optional<Game> OptionalGame = gameRepository.findById(game_id);
+      Game game = new Game();
+      if (OptionalGame.isPresent()) {
+        game = OptionalGame.get();
+        if (game.getGamePlayers().stream().count() > 1) {
+          response = new ResponseEntity<>("The game is full", HttpStatus.FORBIDDEN);
+        }
+
+        else {
+          Player player = playerRepository.findByUserName(authentication.getName());
+          GamePlayer gamePlayer;
+
+
+          gamePlayer =  new GamePlayer(new Date(), player, game);
+          gamePlayerRepository.save(gamePlayer);
+          response = new ResponseEntity<>(makeMap("gpid", gamePlayer.getGamePlayerId()), HttpStatus.CREATED);
+        }
+      }
+      else {
+        response = new ResponseEntity<>("The game does not exist", HttpStatus.FORBIDDEN);
+      }
     }
     return response;
   }
-*/
 
   @RequestMapping("/game_view/{gamePlayerId}")
   public Map<String, Object> getGameView(@PathVariable Long gamePlayerId) {

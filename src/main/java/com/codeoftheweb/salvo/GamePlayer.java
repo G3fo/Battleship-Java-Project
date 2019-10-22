@@ -37,8 +37,8 @@ public class GamePlayer {
     public GamePlayer() {
     }
 
-    public GamePlayer(Player player, Game game) {
-        this.joinDate = new Date();
+    public GamePlayer(Date joinDate, Player player, Game game) {
+        this.joinDate = joinDate;
         this.player = player;
         this.game = game;
     }
