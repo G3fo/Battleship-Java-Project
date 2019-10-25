@@ -153,4 +153,31 @@ public class SalvoController {
     map.put(key,value);
     return map;
   }
+
+  @RequestMapping(path = "/games/players/{gamePlayerid}/ships", method = RequestMethod.POST)
+  @ResponseBody
+  public ResponseEntity<Object> addShips(@PathVariable long gamePlayerid, Authentication authentication, @RequestBody List<Ship> ships) {
+    Optional<GamePlayer> optGP = gamePlayerRepository.findById(gamePlayerid);
+    ResponseEntity<Object> responseEntity;
+    Player currentUser = playerRepository.findByUserName(authentication.getName());
+
+    if (this.isGuest(authentication)) {
+      responseEntity = new ResponseEntity<>("No game player created", HttpStatus.FORBIDDEN);
+    } else if (!optGP.isPresent()) {
+      responseEntity = new ResponseEntity<>("Not logged", HttpStatus.FORBIDDEN);
+    } else if (optGP.get().getPlayer().getPlayerId() != currentUser.getPlayerId()) {
+      responseEntity = new ResponseEntity<>("Reached limit of salvoes", HttpStatus.FORBIDDEN);
+    } else if (optGP.get().getShips().size() > 0) {
+      responseEntity = new ResponseEntity<>("This player has already place ships", HttpStatus.FORBIDDEN);
+    } else {
+      GamePlayer gamePlayer = optGP.get();
+      ships.stream().forEach((ship ->{gamePlayer.addShip(ship);}));
+
+      gamePlayerRepository.save(gamePlayer);
+
+      responseEntity = new ResponseEntity<>("Ships created", HttpStatus.CREATED);
+
+    }
+    return responseEntity;
+  }
 }
