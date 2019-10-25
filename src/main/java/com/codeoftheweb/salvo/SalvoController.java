@@ -162,18 +162,17 @@ public class SalvoController {
     Player currentUser = playerRepository.findByUserName(authentication.getName());
 
     if (this.isGuest(authentication)) {
-      responseEntity = new ResponseEntity<>("No game player created", HttpStatus.FORBIDDEN);
+      responseEntity = new ResponseEntity<>("Gameplayer not created", HttpStatus.FORBIDDEN);
     } else if (!optGP.isPresent()) {
-      responseEntity = new ResponseEntity<>("Not logged", HttpStatus.FORBIDDEN);
+      responseEntity = new ResponseEntity<>("Not logged in", HttpStatus.FORBIDDEN);
     } else if (optGP.get().getPlayer().getPlayerId() != currentUser.getPlayerId()) {
-      responseEntity = new ResponseEntity<>("Reached limit of salvoes", HttpStatus.FORBIDDEN);
+      responseEntity = new ResponseEntity<>("", HttpStatus.FORBIDDEN);
     } else if (optGP.get().getShips().size() > 0) {
-      responseEntity = new ResponseEntity<>("This player has already place ships", HttpStatus.FORBIDDEN);
+      responseEntity = new ResponseEntity<>("This player has already placed ships", HttpStatus.FORBIDDEN);
     } else {
       GamePlayer gamePlayer = optGP.get();
       ships.stream().forEach((ship ->{gamePlayer.addShip(ship);}));
 
-      gamePlayerRepository.save(gamePlayer);
 
       responseEntity = new ResponseEntity<>("Ships created", HttpStatus.CREATED);
 
