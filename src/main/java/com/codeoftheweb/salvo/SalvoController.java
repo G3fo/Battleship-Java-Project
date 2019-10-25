@@ -115,11 +115,13 @@ public class SalvoController {
         if (game.getGamePlayers().stream().count() > 1) {
           response = new ResponseEntity<>("The game is full", HttpStatus.FORBIDDEN);
         }
-
         else {
           Player player = playerRepository.findByUserName(authentication.getName());
           GamePlayer gamePlayer;
 
+          if (game.getGamePlayers().stream().map(gp -> gp.getPlayer().getUserName()).collect(Collectors.toList()).contains(player.getUserName())){
+            return new ResponseEntity<>("You are already in that game", HttpStatus.FORBIDDEN);
+          }
 
           gamePlayer =  new GamePlayer(new Date(), player, game);
           gamePlayerRepository.save(gamePlayer);
