@@ -77,7 +77,7 @@ h3:after {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 
-  animation: shad-anim 50s linear infinite;
+  animation: shad-anim 25s linear infinite;
 }
 
 @keyframes shad-anim {
