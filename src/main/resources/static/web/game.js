@@ -15,10 +15,10 @@ function loadData() {
       console.log(data)
       recievedData = data;
       let playerInfo;
-      if (recievedData.gamePlayers[0].id == getParameterByName('gp')) {
-        playerInfo1 = [recievedData.gamePlayers[0].Player.user, recievedData.gamePlayers[1].Player.user];
+      if (recievedData.players[0].id == getParameterByName('gp')) {
+        playerInfo1 = [recievedData.players[0].user, recievedData.players[1].user];
       } else {
-        playerInfo = [recievedData.gamePlayers[1].Player.user, recievedData.gamePlayers[0].Player.user];
+        playerInfo = [recievedData.players[1].user, recievedData.players[0].user];
       }
 
       $('#player1Info').text(playerInfo[0] + '(you)');
