@@ -17,7 +17,6 @@
   <body>
     <div id="app">
 
-      //Mensaje de bienvenida
       <div class="container">
         <p>
           Hello
@@ -28,14 +27,12 @@
           }}!
         </p>
 
-        //Logout
         <div v-show="vueGames.player !== 'Guest'" class="content">
           <form id="logoutForm">
             <button class="btn btn-danger" onclick="logout()">Logout</button>
           </form>
         </div>
 
-        //Login Form
         <div v-show="vueGames.player == 'Guest'" class="content">
           <form id="loginForm">
             <h3 data-shadow="login">login</h3>
@@ -59,12 +56,12 @@
               />
             </div>
             
-            //Login
+
             <button type="button" class="btn btn-success" onclick="login()">
               Log In
             </button>
 
-            //signup
+
             <button type="button" class="btn btn-primary" onclick="signup()">
               Sign Up
             </button>

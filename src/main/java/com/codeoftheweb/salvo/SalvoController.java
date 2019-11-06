@@ -22,6 +22,8 @@ public class SalvoController {
   @Autowired
   private PlayerRepository playerRepository;
   @Autowired
+  private ShipRepository shipRepo;
+  @Autowired
   PasswordEncoder passwordEncoder;
 
   @RequestMapping("/leaderboard")
@@ -171,7 +173,7 @@ public class SalvoController {
       responseEntity = new ResponseEntity<>("This player has already placed ships", HttpStatus.FORBIDDEN);
     } else {
       GamePlayer gamePlayer = optGP.get();
-      ships.stream().forEach((ship ->{gamePlayer.addShip(ship);}));
+      ships.stream().forEach((ship ->{gamePlayer.addShip(ship); shipRepo.save(ship);}));
 
 
       responseEntity = new ResponseEntity<>("Ships created", HttpStatus.CREATED);
