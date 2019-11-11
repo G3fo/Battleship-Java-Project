@@ -168,13 +168,13 @@ public class SalvoController {
     } else if (!optGP.isPresent()) {
       responseEntity = new ResponseEntity<>("Not logged in", HttpStatus.FORBIDDEN);
     } else if (optGP.get().getPlayer().getPlayerId() != currentUser.getPlayerId()) {
-      responseEntity = new ResponseEntity<>("", HttpStatus.FORBIDDEN);
+      responseEntity = new ResponseEntity<>("asdasd", HttpStatus.FORBIDDEN);
     } else if (optGP.get().getShips().size() > 0) {
       responseEntity = new ResponseEntity<>("This player has already placed ships", HttpStatus.FORBIDDEN);
     } else {
       GamePlayer gamePlayer = optGP.get();
-      ships.stream().forEach((ship ->{gamePlayer.addShip(ship); shipRepo.save(ship);}));
-
+      ships.stream().forEach((ship ->{gamePlayer.addShip(ship);}));
+      //shipRepo.save(ship);
 
       responseEntity = new ResponseEntity<>("Ships created", HttpStatus.CREATED);
 

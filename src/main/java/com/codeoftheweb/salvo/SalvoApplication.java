@@ -109,7 +109,7 @@ public class SalvoApplication {
 
             Ship ship1_1_1 = new Ship(ShipType.CARRIER, locations1, gp1);
             Ship ship2_1_1 = new Ship(ShipType.BATTLESHIP, locations2, gp1);
-            Ship ship3_1_1 = new Ship(ShipType.CRUISER, locations4, gp2);
+            Ship ship3_1_1 = new Ship(ShipType.PATROL_BOAT, locations4, gp2);
             Ship ship1_1_2 = new Ship(ShipType.SUBMARINE, locations5, gp2);
             Ship ship2_1_2 = new Ship(ShipType.DESTROYER, locations6, gp1);
 
