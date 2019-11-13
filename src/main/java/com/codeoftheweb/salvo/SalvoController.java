@@ -170,8 +170,8 @@ public class SalvoController {
 
       if (!gamePlayer.isPresent()) {
         response = new ResponseEntity<>(makeMap("error", "There is no such game!"), HttpStatus.NOT_FOUND);
-      //} else if (gamePlayer.get().getPlayer().getPlayerId() != currentUser.getPlayerId()) {
-       // response = new ResponseEntity<>(makeMap("error", "You don't belong in this game!"), HttpStatus.UNAUTHORIZED);
+      } else if (gamePlayer.get().getPlayer().getPlayerId() != currentUser.getPlayerId()){
+          response = new ResponseEntity<>(makeMap("error", "You don't belong in this game!"), HttpStatus.UNAUTHORIZED);
       } else if (gamePlayer.get().getShips().size() > 0) {
         response = new ResponseEntity<>(makeMap("error", "You have already placed ships!"), HttpStatus.FORBIDDEN);
       } else if (ships == null || ships.size() != 5) {
