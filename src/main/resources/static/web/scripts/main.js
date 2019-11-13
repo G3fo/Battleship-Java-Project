@@ -49,6 +49,8 @@ function shipPOST() {
       response.status;
       if (response.status == 201) {
         console.log("Ships Fetched");
+
+
       } else {
         console.log("invalid");
       }
