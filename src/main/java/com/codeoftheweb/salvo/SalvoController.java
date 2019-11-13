@@ -157,28 +157,38 @@ public class SalvoController {
   }
 
   @RequestMapping(path = "/games/players/{gamePlayerid}/ships", method = RequestMethod.POST)
-  @ResponseBody
   public ResponseEntity<Object> addShips(@PathVariable long gamePlayerid, Authentication authentication, @RequestBody List<Ship> ships) {
-    Optional<GamePlayer> optGP = gamePlayerRepository.findById(gamePlayerid);
-    ResponseEntity<Object> responseEntity;
-    Player currentUser = playerRepository.findByUserName(authentication.getName());
+
+    Optional<GamePlayer> gamePlayer = gamePlayerRepository.findById(gamePlayerid);
+    ResponseEntity<Object> response;
 
     if (this.isGuest(authentication)) {
-      responseEntity = new ResponseEntity<>("Gameplayer not created", HttpStatus.FORBIDDEN);
-    } else if (!optGP.isPresent()) {
-      responseEntity = new ResponseEntity<>("Not logged in", HttpStatus.FORBIDDEN);
-    } else if (optGP.get().getPlayer().getPlayerId() != currentUser.getPlayerId()) {
-      responseEntity = new ResponseEntity<>("", HttpStatus.FORBIDDEN);
-    } else if (optGP.get().getShips().size() > 0) {
-      responseEntity = new ResponseEntity<>("This player has already placed ships", HttpStatus.FORBIDDEN);
-    } else {
-      GamePlayer gamePlayer = optGP.get();
-      ships.stream().forEach((ship ->{gamePlayer.addShip(ship); shipRepo.save(ship);}));
-
-
-      responseEntity = new ResponseEntity<>("Ships created", HttpStatus.CREATED);
-
+      response = new ResponseEntity<>(makeMap("error", "You need to login!"), HttpStatus.UNAUTHORIZED);
     }
-    return responseEntity;
+    else {
+      Player currentUser = playerRepository.findByUserName(authentication.getName());
+
+      if (!gamePlayer.isPresent()) {
+        response = new ResponseEntity<>(makeMap("error", "There is no such game!"), HttpStatus.NOT_FOUND);
+      //} else if (gamePlayer.get().getPlayer().getPlayerId() != currentUser.getPlayerId()) {
+       // response = new ResponseEntity<>(makeMap("error", "You don't belong in this game!"), HttpStatus.UNAUTHORIZED);
+      } else if (gamePlayer.get().getShips().size() > 0) {
+        response = new ResponseEntity<>(makeMap("error", "You have already placed ships!"), HttpStatus.FORBIDDEN);
+      } else if (ships == null || ships.size() != 5) {
+        response = new ResponseEntity<>(makeMap("error", "You need to place 5 ships!"), HttpStatus.FORBIDDEN);
+      } else {
+        GamePlayer thisGamePlayer = gamePlayer.get();
+
+        ships.forEach(ship -> {
+          thisGamePlayer.addShip(ship);
+        });
+
+        gamePlayerRepository.save(thisGamePlayer);
+
+        response = new ResponseEntity<>(makeMap("success", "The ships have been placed!"), HttpStatus.CREATED);
+
+      }
+    }
+    return response;
   }
 }
