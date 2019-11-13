@@ -1,6 +1,3 @@
-
-  
-
 function shipPOST() {
   let shipTypeArray = [
     "battleship",
