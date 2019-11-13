@@ -1,3 +1,6 @@
+
+  
+
 function shipPOST() {
   let shipTypeArray = [
     "battleship",
@@ -8,9 +11,10 @@ function shipPOST() {
   ];
 
   let shipArray = [];
-  let gpId = window.location.search.slice(-1);
+  let gpId = window.location.search.match(/\d+/g).map(Number);
 
   for (let i = 0; i < shipTypeArray.length; i++) {
+
     let ship = document.querySelector("#" + shipTypeArray[i]);
 
     let width = ship.getAttribute("data-gs-width");
@@ -33,7 +37,7 @@ function shipPOST() {
       }
     }
     shipArray.push({
-      type: shipTypeArray[i].toUpperCase(),
+      shipType: shipTypeArray[i].toUpperCase(),
       locations: locations
     });
   }
