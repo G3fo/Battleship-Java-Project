@@ -181,7 +181,7 @@ public class SalvoController {
 
 
 
-        ships.forEach(ship -> thisGamePlayer.addShip(ship));
+        ships.forEach(ship -> thisGamePlayer.addShip(new Ship(ship.getShipType(), ship.getLocations(), thisGamePlayer)));
 
         shipRepo.saveAll(ships);
 

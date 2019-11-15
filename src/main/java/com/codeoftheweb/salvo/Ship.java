@@ -31,6 +31,8 @@ public class Ship {
         this.gamePlayer = gamePlayer;
     }
 
+
+
     public GamePlayer getGamePlayer() {
         return gamePlayer;
     }
