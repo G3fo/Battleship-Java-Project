@@ -179,10 +179,12 @@ public class SalvoController {
       } else {
         GamePlayer thisGamePlayer = gamePlayer.get();
 
-        ships.forEach(ship -> {
-          thisGamePlayer.addShip(ship);
-        });
+
+
+        ships.forEach(ship -> thisGamePlayer.addShip(ship));
+
         shipRepo.saveAll(ships);
+
         gamePlayerRepository.save(thisGamePlayer);
 
         response = new ResponseEntity<>(makeMap("success", "The ships have been placed!"), HttpStatus.CREATED);

@@ -72,7 +72,7 @@ public class GamePlayer {
     }
 
     public void addShip(Ship ship){
-        ships.add(ship);
+        this.ships.add(ship);
     }
 
     public Map<String, Object> createGameDTO_GamePlayer() {
