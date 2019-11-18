@@ -1,3 +1,5 @@
+function reload() {}
+
 function shipPOST() {
   let shipTypeArray = [
     "battleship",
@@ -11,7 +13,6 @@ function shipPOST() {
   let gpId = window.location.search.match(/\d+/g).map(Number);
 
   for (let i = 0; i < shipTypeArray.length; i++) {
-
     let ship = document.querySelector("#" + shipTypeArray[i]);
 
     let width = ship.getAttribute("data-gs-width");
@@ -49,8 +50,6 @@ function shipPOST() {
       response.status;
       if (response.status == 201) {
         console.log("Ships Fetched");
-
-
       } else {
         console.log("invalid");
       }
