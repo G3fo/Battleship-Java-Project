@@ -3,8 +3,6 @@ all the functionalities are explained in the gridstack github
 https://github.com/gridstack/gridstack.js/tree/develop/doc
 */
 
-$(() => loadGrid(true));
-
 //Función principal que dispara el frame gridstack.js y carga la matriz con los barcos
 const loadGrid = function(static) {
   var options = {
@@ -35,57 +33,7 @@ const loadGrid = function(static) {
 
   grid = $("#grid").data("gridstack");
 
-  //Aqui se inicializan los widgets(nuestros barcos) en la matriz
-  //.addWidget(elemento,pos x, pos y, ancho, alto) **
-  grid.addWidget(
-    $(
-      '<div id="patrol_boat"><div class="grid-stack-item-content patrol_boatHorizontal"></div><div/>'
-    ),
-    0,
-    1,
-    2,
-    1
-  );
-
-  grid.addWidget(
-    $(
-      '<div id="carrier"><div class="grid-stack-item-content carrierHorizontal"></div><div/>'
-    ),
-    1,
-    5,
-    5,
-    1
-  );
-
-  grid.addWidget(
-    $(
-      '<div id="battleship"><div class="grid-stack-item-content battleshipHorizontal"></div><div/>'
-    ),
-    3,
-    1,
-    4,
-    1
-  );
-
-  grid.addWidget(
-    $(
-      '<div id="submarine"><div class="grid-stack-item-content submarineVertical"></div><div/>'
-    ),
-    8,
-    2,
-    1,
-    3
-  );
-
-  grid.addWidget(
-    $(
-      '<div id="destroyer"><div class="grid-stack-item-content destroyerHorizontal"></div><div/>'
-    ),
-    7,
-    8,
-    3,
-    1
-  );
+  setShips();
 
   //createGrid construye la estructura de la matriz
   createGrid(11, $(".grid-ships"), "ships");
@@ -93,15 +41,48 @@ const loadGrid = function(static) {
   //Inicializo los listenener para rotar los barcos, el numero del segundo rgumento
   //representa la cantidad de celdas que ocupa tal barco
 
-  if (static == false) {
-    rotateShips("carrier", 5);
-    rotateShips("battleship", 4);
-    rotateShips("submarine", 3);
-    rotateShips("destroyer", 3);
-    rotateShips("patrol_boat", 2);
+  listenBusyCells("ships");
+  $(".grid-stack").on("change", () => listenBusyCells("ships"));
+};
 
-    listenBusyCells("ships");
-    $(".grid-stack").on("change", () => listenBusyCells("ships"));
+const setShips = function() {
+  for (i = 0; i < gamesJSON.ships.length; i++) {
+    //Solo necesito la primera posicion, el resto de la informacion se deduce de la cantidad de celdas
+    let shipType = gamesJSON.ships[i].shipType.toLowerCase();
+    let x = +gamesJSON.ships[i].locations[0][1] - 1;
+    let y = stringToInt(gamesJSON.ships[i].locations[0][0].toUpperCase());
+    let w;
+    let h;
+    let orientation;
+
+    if (
+      gamesJSON.ships[i].locations[0][0] == gamesJSON.ships[i].locations[1][0]
+    ) {
+      //if the letter of the first position is equal to letter of the second position, the ship orientation is horizontal.
+      //Therefore, the width is equal to the length of the location array and the height is equal to 1
+      w = gamesJSON.ships[i].locations.length;
+      h = 1;
+      orientation = "Horizontal";
+    } else {
+      h = gamesJSON.ships[i].locations.length;
+      w = 1;
+      orientation = "Vertical";
+    }
+
+    grid.addWidget(
+      $(
+        '<div id="' +
+          shipType +
+          '"><div class="grid-stack-item-content ' +
+          shipType +
+          orientation +
+          '"></div><div/>'
+      ),
+      x,
+      y,
+      w,
+      h
+    );
   }
 };
 

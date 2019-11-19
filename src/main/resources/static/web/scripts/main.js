@@ -1,4 +1,74 @@
-function reload() {}
+var gpId = window.location.search.match(/\d+/g).map(Number);
+
+var defaultShipsArray = [
+  { shipType: "CARRIER", locations: ["A1", "A2", "A3", "A4", "A5"] },
+  { shipType: "BATTLESHIP", locations: ["C1", "C2", "C3", "C4"] },
+  { shipType: "SUBMARINE", locations: ["E1", "E2", "E3"] },
+  { shipType: "DESTROYER", locations: ["G1", "G2", "G3"] },
+  { shipType: "PATROL_BOAT", locations: ["I1", "I2"] }
+];
+
+loadGamesJSON();
+
+function loadGamesJSON() {
+  fetch("/api/game_view/" + gpId)
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(json) {
+      gamesJSON = json;
+      var ships = gamesJSON.ships;
+
+      if (ships == "") {
+        //Si el jugador no puso ships previamente, carga la grilla en modo dinamico y los ships default
+        loadGrid(false);
+        defaultShips();
+        createGrid(11, $(".grid-salvoes"), "salvoes");
+      } else {
+        //Sino, en modo estatico, y no puede mover los ships
+        document.getElementById("POSTships").style.display = "none";
+        loadGrid(true);
+        createGrid(11, $(".grid-salvoes"), "salvoes");
+      }
+    })
+    .catch(function(error) {
+      console.log(error);
+    });
+}
+
+function defaultShips() {
+  for (var i = 0; i < defaultShipsArray.length; i++) {
+    let shipType = defaultShipsArray[i].shipType.toLowerCase();
+    let x = +defaultShipsArray[i].locations[0][1] - 1;
+    let y = stringToInt(defaultShipsArray[i].locations[0][0].toUpperCase()); //Transformo la string a numero para ubicarla en el axis Y
+
+    var w = defaultShipsArray[i].locations.length;
+    var h = 1;
+    var orientation = "Horizontal";
+
+    grid.addWidget(
+      $(
+        '<div id="' +
+          shipType +
+          '"><div class="grid-stack-item-content ' +
+          shipType +
+          orientation +
+          '"></div><div/>'
+      ),
+      x,
+      y,
+      w,
+      h
+    );
+  }
+
+  //Activo los listeners para la rotacion de los barcos
+  rotateShips("carrier", 5);
+  rotateShips("battleship", 4);
+  rotateShips("submarine", 3);
+  rotateShips("destroyer", 3);
+  rotateShips("patrol_boat", 2);
+}
 
 function shipPOST() {
   let shipTypeArray = [
@@ -10,7 +80,6 @@ function shipPOST() {
   ];
 
   let shipArray = [];
-  let gpId = window.location.search.match(/\d+/g).map(Number);
 
   for (let i = 0; i < shipTypeArray.length; i++) {
     let ship = document.querySelector("#" + shipTypeArray[i]);
@@ -54,7 +123,35 @@ function shipPOST() {
         console.log("invalid");
       }
     })
+    .then(function() {
+      location.reload();
+    })
     .catch(function(error) {
       console.log(error);
     });
 }
+
+const stringToInt = function(str) {
+  switch (str) {
+    case "A":
+      return 0;
+    case "B":
+      return 1;
+    case "C":
+      return 2;
+    case "D":
+      return 3;
+    case "E":
+      return 4;
+    case "F":
+      return 5;
+    case "G":
+      return 6;
+    case "H":
+      return 7;
+    case "I":
+      return 8;
+    case "J":
+      return 9;
+  }
+};

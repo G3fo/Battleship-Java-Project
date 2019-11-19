@@ -1,208 +1,206 @@
 @import url(https://fonts.googleapis.com/css?family=Righteous);
 
 .grid-stack-item-content {
-    background-repeat: no-repeat;
-    cursor: -webkit-grab;
-    cursor: -moz-grab;
+  background-repeat: no-repeat;
+  cursor: -webkit-grab;
+  cursor: -moz-grab;
 }
 
 .carrierHorizontal {
-    background-image: url('ships/carrier.png');
-    background-size: 85% 100%;
-    background-position: center;
+  background-image: url("ships/carrier.png");
+  background-size: 85% 100%;
+  background-position: center;
 }
 
 .carrierVertical {
-    background-image: url('ships/carrier_vertical.png');
-    background-size: 100% 85%;
-    background-position: center;
-    width: 45px !important;
+  background-image: url("ships/carrier_vertical.png");
+  background-size: 100% 85%;
+  background-position: center;
+  width: 45px !important;
 }
 
 .battleshipHorizontal {
-    background-image: url('ships/battleship.png');
-    background-size: 85% 100%;
-    background-position: center;
+  background-image: url("ships/battleship.png");
+  background-size: 85% 100%;
+  background-position: center;
 }
 
 .battleshipVertical {
-    background-image: url('ships/battleship_vertical.png');
-    background-size: 100% 85%;
-    background-position: center;
-    width: 45px !important;
+  background-image: url("ships/battleship_vertical.png");
+  background-size: 100% 85%;
+  background-position: center;
+  width: 45px !important;
 }
 
 .submarineHorizontal {
-    background-image: url('ships/submarine.png');
-    background-size: 90% 100%;
-    background-position: center;
+  background-image: url("ships/submarine.png");
+  background-size: 90% 100%;
+  background-position: center;
 }
 
 .submarineVertical {
-    background-image: url('ships/submarine_vertical.png');
-    background-size: 100% 90%;
-    background-position: center;
-    width: 45px !important;
+  background-image: url("ships/submarine_vertical.png");
+  background-size: 100% 90%;
+  background-position: center;
+  width: 45px !important;
 }
 
 .destroyerHorizontal {
-    background-image: url('ships/destroyer.png');
-    background-size: 100% 150%;
-    background-position: center;
+  background-image: url("ships/destroyer.png");
+  background-size: 100% 150%;
+  background-position: center;
 }
 
 .destroyerVertical {
-    background-image: url('ships/destroyer_vertical.png');
-    background-size: 150% 100%;
-    background-position: center;
-    width: 45px !important;
+  background-image: url("ships/destroyer_vertical.png");
+  background-size: 150% 100%;
+  background-position: center;
+  width: 45px !important;
 }
 
 .patrol_boatHorizontal {
-    background-image: url('ships/patrol_boat.png');
-    background-size: 100% 150%;
-    background-position: center;
+  background-image: url("ships/patrol_boat.png");
+  background-size: 100% 150%;
+  background-position: center;
 }
 
 .patrol_boatVertical {
-    background-image: url('ships/patrol_boat_vertical.png');
-    background-size: 150% 100%;
-    background-position: center;
-    width: 45px !important;
+  background-image: url("ships/patrol_boat_vertical.png");
+  background-size: 150% 100%;
+  background-position: center;
+  width: 45px !important;
 }
 
-
-
-.grid-ships {
-    background-image: url(ocean.gif);
-    background-size: cover;
-    border: 2px solid rgb(128, 128, 128);
-    border-radius: 10px;
-    height: 495px;
-    width: 495px;
-    margin: auto;
-    margin-top: 10vh
+.grid-ships,
+.grid-salvoes {
+  background-image: url(ocean.gif);
+  background-size: cover;
+  border: 2px solid rgb(128, 128, 128);
+  border-radius: 10px;
+  height: 495px;
+  width: 495px;
+  margin: auto;
+  margin-top: 10vh;
 }
 
 #grid {
-    margin: 45px 0 0 45px;
-    position: absolute;
-    width: 450px;
-
+  margin: 45px 0 0 45px;
+  position: absolute;
+  width: 450px;
 }
 
 .grid-wrapper {
-    display: absolute;
-    display: flex;
-    flex-direction: column;
+  display: absolute;
+  display: flex;
+  flex-direction: column;
 }
 
 .grid-row {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 
 .grid-cell {
-    display: flex;
-    box-sizing: border-box;
-    width: 45px;
-    height: 45px;
-    border: 1.3px solid rgb(128, 128, 128);
-    border-radius: 5px;
-    vertical-align: middle;
-    font-weight: bold;
-    text-align: center;
-    align-items: center;
+  display: flex;
+  box-sizing: border-box;
+  width: 45px;
+  height: 45px;
+  border: 1.3px solid rgb(128, 128, 128);
+  border-radius: 5px;
+  vertical-align: middle;
+  font-weight: bold;
+  text-align: center;
+  align-items: center;
 }
 
 .grid-cell span {
-
-    margin: auto
+  margin: auto;
 }
 
 .busy-cell {
-    background-color: rgba(0, 119, 190, 0.5);
-
+  background-color: rgba(0, 119, 190, 0.5);
 }
 
 .grid-row:first-child .grid-cell {
-    background-color: rgba(170, 169, 173, 0.7);
+  background-color: rgba(170, 169, 173, 0.7);
 }
 
 .grid-cell:first-child {
-    background-color: rgba(170, 169, 173, 0.7);
+  background-color: rgba(170, 169, 173, 0.7);
 }
 
 #alert-text {
-    color: red;
-    text-align: center;
-    display: block;
+  color: red;
+  text-align: center;
+  display: block;
 }
 
 body {
-    text-align: center;
-    background-color: hsla(230, 40%, 50%, 1);
+  text-align: center;
+  background-color: hsla(230, 40%, 50%, 1);
 }
 
 body:before {
-    content: "";
-    display: inline-block;
-    vertical-align: middle;
-    font-size: 0;
-    height: 100%;
+  content: "";
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 0;
+  height: 100%;
 }
 
 p {
-    display: inline-block;
-    color: white;
-    font-family: "Righteous", serif;
-    font-size: 1em;
-    text-shadow: 0.01em 0.01em 0 hsla(230, 40%, 50%, 1);
+  display: inline-block;
+  color: white;
+  font-family: "Righteous", serif;
+  font-size: 1em;
+  text-shadow: 0.01em 0.01em 0 hsla(230, 40%, 50%, 1);
 }
 
 h3 {
-    display: inline-block;
-    color: white;
-    font-family: "Righteous", serif;
-    font-size: 2em;
-    text-shadow: 0.01em 0.01em 0 hsla(230, 40%, 50%, 1);
+  display: inline-block;
+  color: white;
+  font-family: "Righteous", serif;
+  font-size: 2em;
+  text-shadow: 0.01em 0.01em 0 hsla(230, 40%, 50%, 1);
 }
 
 h1,
 h2 {
-    display: inline-block;
-    color: white;
-    font-family: "Righteous", serif;
-    font-size: 4em;
-    text-shadow: 0.01em 0.01em 0 hsla(230, 40%, 50%, 1);
+  display: inline-block;
+  color: white;
+  font-family: "Righteous", serif;
+  font-size: 4em;
+  text-shadow: 0.01em 0.01em 0 hsla(230, 40%, 50%, 1);
 }
 
 h1:after,
 h2:after,
 h3:after {
-    content: attr(data-shadow);
-    position: absolute;
-    top: 0.06em;
-    left: 0.06em;
-    z-index: -1;
-    text-shadow: none;
-    background-image: linear-gradient(45deg,
-            transparent 45%,
-            hsla(48, 20%, 90%, 1) 45%,
-            hsla(48, 20%, 90%, 1) 55%,
-            transparent 0);
-    background-size: 0.05em 0.05em;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+  content: attr(data-shadow);
+  position: absolute;
+  top: 0.06em;
+  left: 0.06em;
+  z-index: -1;
+  text-shadow: none;
+  background-image: linear-gradient(
+    45deg,
+    transparent 45%,
+    hsla(48, 20%, 90%, 1) 45%,
+    hsla(48, 20%, 90%, 1) 55%,
+    transparent 0
+  );
+  background-size: 0.05em 0.05em;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 
-    animation: shad-anim 25s linear infinite;
+  animation: shad-anim 25s linear infinite;
 }
 
 @keyframes shad-anim {
-    0% {
-        background-position: 0 0;
-    }
-    0% {
-        background-position: 100% -100%;
-    }
+  0% {
+    background-position: 0 0;
+  }
+  0% {
+    background-position: 100% -100%;
+  }
 }
