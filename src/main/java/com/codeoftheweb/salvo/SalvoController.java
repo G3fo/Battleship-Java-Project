@@ -1,5 +1,9 @@
 package com.codeoftheweb.salvo;
 
+import com.codeoftheweb.salvo.repos.GamePlayerRepository;
+import com.codeoftheweb.salvo.repos.GameRepository;
+import com.codeoftheweb.salvo.repos.PlayerRepository;
+import com.codeoftheweb.salvo.repos.ShipRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
