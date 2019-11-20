@@ -38,9 +38,6 @@ const loadGrid = function(static) {
   //createGrid construye la estructura de la matriz
   createGrid(11, $(".grid-ships"), "ships");
 
-  //Inicializo los listenener para rotar los barcos, el numero del segundo rgumento
-  //representa la cantidad de celdas que ocupa tal barco
-
   listenBusyCells("ships");
   $(".grid-stack").on("change", () => listenBusyCells("ships"));
 };
