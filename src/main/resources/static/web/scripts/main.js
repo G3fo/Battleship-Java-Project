@@ -182,7 +182,7 @@ function salvoesFetch() {
     })
     .then(function() {
       toBeSalvo = document.querySelectorAll(".toBeSalvo");
-      for (var i = 0; i < salvoFreez.length; i++) {
+      for (var i = 0; i < toBeSalvo.length; i++) {
         toBeSalvo[i].classList.add("sentSalvo");
         toBeSalvo[i].classList.remove("toBeSalvo");
       }

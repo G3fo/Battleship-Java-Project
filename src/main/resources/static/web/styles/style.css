@@ -160,7 +160,8 @@
   z-index: 10;
 }
 
-.smash {
+.toBeSalvo {
+  background-color: orange;
   color: orange;
   background-size: cover;
   background-position: center center;
@@ -184,7 +185,8 @@
   display: block;
   line-height: 495px;
 }
-.smashFreez {
+.sentSalvo {
+  background-color: purple;
   color: purple;
   background-size: cover;
   background-position: center center;
