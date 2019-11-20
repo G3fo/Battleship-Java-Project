@@ -83,6 +83,14 @@
   margin-top: 10vh;
 }
 
+.grid-ships .grid-cell {
+  border: 1.3px solid #13535d;
+}
+
+.grid-salvoes .grid-cell {
+  border: 1.3px solid #6f372f;
+}
+
 #grid {
   margin: 45px 0 0 45px;
   position: absolute;
@@ -115,24 +123,73 @@
 
 .grid-cell span {
   margin: auto;
+  color: white;
 }
-
 .busy-cell {
-  background-color: rgba(0, 119, 190, 0.5);
+  background-color: rgba(0, 103, 175, 0.5);
 }
 
-.grid-row:first-child .grid-cell {
-  background-color: rgba(170, 169, 173, 0.7);
+.grid-ships .grid-row:first-child .grid-cell {
+  background-color: rgb(28, 76, 84);
 }
 
-.grid-cell:first-child {
-  background-color: rgba(170, 169, 173, 0.7);
+.grid-ships .grid-cell:first-child {
+  background-color: rgb(28, 76, 84);
+}
+
+.grid-salvoes .grid-row:first-child .grid-cell {
+  background-color: rgb(80, 37, 29);
+}
+
+.grid-salvoes .grid-cell:first-child {
+  background-color: rgb(80, 37, 29);
 }
 
 #alert-text {
   color: red;
   text-align: center;
   display: block;
+}
+
+.salvo {
+  background-color: purple;
+}
+
+.ship-down {
+  color: red;
+  z-index: 10;
+}
+
+.smash {
+  color: orange;
+  background-size: cover;
+  background-position: center center;
+  z-index: 10;
+}
+
+#unableGrid {
+  width: 495px;
+  height: 495px;
+  /* background-color: rgba(16, 49, 55, 0.7); */
+  position: absolute;
+  border-radius: 10px;
+  z-index: 10;
+  text-align: center;
+}
+
+.prepareText {
+  color: #fffdf5;
+  text-transform: uppercase;
+  font-weight: bold;
+  display: block;
+  line-height: 495px;
+}
+.smashFreez {
+  color: purple;
+  background-size: cover;
+  background-position: center center;
+  z-index: 10;
+  pointer-events: none;
 }
 
 body {

@@ -29,6 +29,7 @@ function loadGamesJSON() {
         document.getElementById("POSTships").style.display = "none";
         loadGrid(true);
         createGrid(11, $(".grid-salvoes"), "salvoes");
+        setSalvoes();
       }
     })
     .catch(function(error) {
@@ -125,6 +126,69 @@ function shipPOST() {
     })
     .then(function() {
       location.reload();
+    })
+    .catch(function(error) {
+      console.log(error);
+    });
+}
+
+var counter = 0;
+
+function salvoesClick() {
+  const salvo_cell = document.getElementsByClassName("grid-cell");
+  for (var i = 0; i < salvo_cell.length; i++) {
+    salvo_cell[i].addEventListener("click", function(e) {
+      e.preventDefault();
+      var cellId = e.target.id;
+      var cellShot = document.getElementById(cellId);
+      document.getElementById("shoot").classList.remove("hideEl");
+
+      if (cellShot.classList.contains("toBeSalvo")) {
+        cellShot = document
+          .getElementById(cellId)
+          .classList.remove("toBeSalvo");
+        counter--;
+      } else if (!cellShot.classList.contains("toBeSalvo") && counter < 5) {
+        cellShot = document.getElementById(cellId).classList.add("toBeSalvo");
+        counter++;
+      }
+    });
+  }
+}
+
+function salvoesFetch() {
+  salvoLocations = [];
+  let salvoes = document.querySelectorAll(".toBeSalvo");
+  for (let i = 0; i < salvoes.length; i++) {
+    var salvoId = salvoes[i].id.slice(-2);
+    let x = +salvoId[1] + 1;
+    let y = intToString(parseInt(salvoId[0]));
+    salvoLocations.push(y + x);
+  }
+
+  fetch("/api/games/players/" + gpId + "/salvoes", {
+    method: "POST",
+    body: JSON.stringify(salvoLocations),
+    headers: { "Content-Type": "application/json" },
+    credentials: "same-origin"
+  })
+    .then(function(response) {
+      response.status;
+      if (response.status == 201) {
+        console.log("Salvoes Fetched");
+      } else {
+        console.log("Invalid");
+      }
+    })
+    .then(function() {
+      toBeSalvo = document.querySelectorAll(".toBeSalvo");
+      for (var i = 0; i < salvoFreez.length; i++) {
+        toBeSalvo[i].classList.add("sentSalvo");
+        toBeSalvo[i].classList.remove("toBeSalvo");
+      }
+    })
+    .then(function() {
+      counter = 0;
     })
     .catch(function(error) {
       console.log(error);

@@ -58,8 +58,6 @@ const setShips = function() {
     if (
       gamesJSON.ships[i].locations[0][0] == gamesJSON.ships[i].locations[1][0]
     ) {
-      //if the letter of the first position is equal to letter of the second position, the ship orientation is horizontal.
-      //Therefore, the width is equal to the length of the location array and the height is equal to 1
       w = gamesJSON.ships[i].locations.length;
       h = 1;
       orientation = "Horizontal";
@@ -83,6 +81,42 @@ const setShips = function() {
       w,
       h
     );
+  }
+};
+
+const setSalvoes = function() {
+  var actualPlayer;
+  var opponent;
+  for (let i = 0; i < gamesJSON.players.length; i++) {
+    if (gamesJSON.players[i].gpid == gpId) {
+      actualPlayer = gamesJSON.players[i].gpid;
+    } else {
+      opponent = gamesJSON.players[i].gpid;
+    }
+  }
+
+  for (i = 0; i < gamesJSON.salvoes.length; i++) {
+    for (j = 0; j < gamesJSON.salvoes[i].locations.length; j++) {
+      let turn = gamesJSON.salvoes[i].turn;
+      let player = gamesJSON.salvoes[i].game_player_id;
+      let x = +gamesJSON.salvoes[i].locations[j][1] - 1;
+      let y = stringToInt(gamesJSON.salvoes[i].locations[j][0].toUpperCase());
+
+      if (player == actualPlayer.id) {
+        document.getElementById(`salvoes${y}${x}`).classList.add("toBeSalvo");
+      } else {
+        if (
+          document
+            .getElementById(`ships${y}${x}`)
+            .className.indexOf("busy-cell") != -1
+        ) {
+          document
+            .getElementById(`ships${y}${x}`)
+            .classList.remove("busy-cell");
+          document.getElementById(`ships${y}${x}`).classList.add("ship-down");
+        }
+      }
+    }
   }
 };
 

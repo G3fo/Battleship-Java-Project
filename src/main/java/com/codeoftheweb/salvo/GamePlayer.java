@@ -75,6 +75,10 @@ public class GamePlayer {
         this.ships.add(ship);
     }
 
+    public void addSalvo(Salvo salvo){
+        this.salvoes.add(salvo);
+    }
+
     public Map<String, Object> createGameDTO_GamePlayer() {
         Map<String, Object> dto = new LinkedHashMap<>();
         dto.put("gpid", this.getGamePlayerId());
