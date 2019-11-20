@@ -100,7 +100,7 @@ const setSalvoes = function() {
       let y = stringToInt(gamesJSON.salvoes[i].locations[j][0].toUpperCase());
 
       if (player == actualPlayer.id) {
-        document.getElementById(`salvoes${y}${x}`).classList.add("toBeSalvo");
+        document.getElementById("salvoes"+y+x).classList.add("toBeSalvo");
       } else {
         if (
           document
