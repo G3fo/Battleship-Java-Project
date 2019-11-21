@@ -1,4 +1,6 @@
 var gpId = window.location.search.match(/\d+/g).map(Number);
+var player;
+var opponent;
 
 var defaultShipsArray = [
   { shipType: "CARRIER", locations: ["A1", "A2", "A3", "A4", "A5"] },
@@ -17,18 +19,33 @@ function loadGamesJSON() {
     })
     .then(function(json) {
       gamesJSON = json;
-      var ships = gamesJSON.ships;
 
-      if (ships == "") {
+      if (gamesJSON.ships.length > 0) {
+        //Sino, en modo estatico, y no puede mover los ships
+        document.getElementById("POSTships").style.display = "none";
+        document.getElementById("disableGrid").style.display = "none";
+        loadGrid(true);
+        createGrid(11, $(".grid-salvoes"), "salvoes");
+        setSalvoes();
+        salvoesClick();
+      } else {
         //Si el jugador no puso ships previamente, carga la grilla en modo dinamico y los ships default
+        document.getElementById("POSTsalvoes").style.display = "none";
+        document.getElementById("disableGrid").style.display = "block";
         loadGrid(false);
         defaultShips();
         createGrid(11, $(".grid-salvoes"), "salvoes");
-      } else {
-        //Sino, en modo estatico, y no puede mover los ships
-        document.getElementById("POSTships").style.display = "none";
-        loadGrid(true);
-        createGrid(11, $(".grid-salvoes"), "salvoes");
+      }
+
+      for (let i = 0; i < gamesJSON.players.length; i++) {
+        if (gamesJSON.players[i].gpid == gpId) {
+          player = gamesJSON.players[i].gpid;
+        } else {
+          opponent = gamesJSON.players[i].gpid;
+        }
+      }
+
+      if (gamesJSON.salvoes.length > 0) {
         setSalvoes();
       }
     })
@@ -133,15 +150,20 @@ function shipPOST() {
 }
 
 var counter = 0;
+salvo_cell = [];
 
 function salvoesClick() {
-  const salvo_cell = document.getElementsByClassName("grid-cell");
+  for (let i = 0; i < 10; i++) {
+    for (let j = 0; j < 10; j++) {
+      salvo_cell.push(document.getElementById("salvoes" + i + j));
+    }
+  }
+
   for (var i = 0; i < salvo_cell.length; i++) {
     salvo_cell[i].addEventListener("click", function(e) {
       e.preventDefault();
       var cellId = e.target.id;
       var cellShot = document.getElementById(cellId);
-      document.getElementById("shoot").classList.remove("hideEl");
 
       if (cellShot.classList.contains("toBeSalvo")) {
         cellShot = document
@@ -156,7 +178,7 @@ function salvoesClick() {
   }
 }
 
-function salvoesFetch() {
+function salvoesPOST() {
   salvoLocations = [];
   let salvoes = document.querySelectorAll(".toBeSalvo");
   for (let i = 0; i < salvoes.length; i++) {
@@ -189,6 +211,7 @@ function salvoesFetch() {
     })
     .then(function() {
       counter = 0;
+      location.reload();
     })
     .catch(function(error) {
       console.log(error);

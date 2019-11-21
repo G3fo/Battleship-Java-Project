@@ -33,88 +33,13 @@ const loadGrid = function(static) {
 
   grid = $("#grid").data("gridstack");
 
-  setShips();
-
   //createGrid construye la estructura de la matriz
   createGrid(11, $(".grid-ships"), "ships");
 
+  setShips();
+
   listenBusyCells("ships");
   $(".grid-stack").on("change", () => listenBusyCells("ships"));
-};
-
-const setShips = function() {
-  for (i = 0; i < gamesJSON.ships.length; i++) {
-    //Solo necesito la primera posicion, el resto de la informacion se deduce de la cantidad de celdas
-    let shipType = gamesJSON.ships[i].shipType.toLowerCase();
-    let x = +gamesJSON.ships[i].locations[0][1] - 1;
-    let y = stringToInt(gamesJSON.ships[i].locations[0][0].toUpperCase());
-    let w;
-    let h;
-    let orientation;
-
-    if (
-      gamesJSON.ships[i].locations[0][0] == gamesJSON.ships[i].locations[1][0]
-    ) {
-      w = gamesJSON.ships[i].locations.length;
-      h = 1;
-      orientation = "Horizontal";
-    } else {
-      h = gamesJSON.ships[i].locations.length;
-      w = 1;
-      orientation = "Vertical";
-    }
-
-    grid.addWidget(
-      $(
-        '<div id="' +
-          shipType +
-          '"><div class="grid-stack-item-content ' +
-          shipType +
-          orientation +
-          '"></div><div/>'
-      ),
-      x,
-      y,
-      w,
-      h
-    );
-  }
-};
-
-const setSalvoes = function() {
-  var actualPlayer;
-  var opponent;
-  for (let i = 0; i < gamesJSON.players.length; i++) {
-    if (gamesJSON.players[i].gpid == gpId) {
-      actualPlayer = gamesJSON.players[i].gpid;
-    } else {
-      opponent = gamesJSON.players[i].gpid;
-    }
-  }
-
-  for (i = 0; i < gamesJSON.salvoes.length; i++) {
-    for (j = 0; j < gamesJSON.salvoes[i].locations.length; j++) {
-      let turn = gamesJSON.salvoes[i].turn;
-      let player = gamesJSON.salvoes[i].game_player_id;
-      let x = +gamesJSON.salvoes[i].locations[j][1] - 1;
-      let y = stringToInt(gamesJSON.salvoes[i].locations[j][0].toUpperCase());
-
-      if (player == actualPlayer.id) {
-        document.getElementById("salvoes"+y+x).classList.add("toBeSalvo");
-      } else {
-        if (
-          document
-            .getElementById(`ships${y}${x}`)
-            .className.indexOf("busy-cell") != -1
-        ) {
-          document
-            .getElementById(`ships${y}${x}`)
-            .classList.remove("busy-cell");
-          document.getElementById(`ships${y}${x}`).classList.add("ship-down");
-        }
-      }
-    }
-  }
 };
 
 //createGrid construye la estructura de la matriz
@@ -311,5 +236,95 @@ const listenBusyCells = function(id) {
           .addClass("empty-cell");
       }
     }
+  }
+};
+
+const setShips = function() {
+  for (i = 0; i < gamesJSON.ships.length; i++) {
+    //Solo necesito la primera posicion, el resto de la informacion se deduce de la cantidad de celdas
+    let shipType = gamesJSON.ships[i].shipType.toLowerCase();
+    let x = +gamesJSON.ships[i].locations[0][1] - 1;
+    let y = stringToInt(gamesJSON.ships[i].locations[0][0].toUpperCase());
+    let w;
+    let h;
+    let orientation;
+
+    if (
+      gamesJSON.ships[i].locations[0][0] == gamesJSON.ships[i].locations[1][0]
+    ) {
+      w = gamesJSON.ships[i].locations.length;
+      h = 1;
+      orientation = "Horizontal";
+    } else {
+      h = gamesJSON.ships[i].locations.length;
+      w = 1;
+      orientation = "Vertical";
+    }
+
+    grid.addWidget(
+      $(
+        '<div id="' +
+          shipType +
+          '"><div class="grid-stack-item-content ' +
+          shipType +
+          orientation +
+          '"></div><div/>'
+      ),
+      x,
+      y,
+      w,
+      h
+    );
+  }
+};
+
+const setSalvoes = function() {
+  for (i = 0; i < gamesJSON.salvoes.length; i++) {
+    for (j = 0; j < gamesJSON.salvoes[i].locations.length; j++) {
+      let turn = gamesJSON.salvoes[i].turn;
+      let player1 = gamesJSON.salvoes[i].game_player_id;
+      let x = +gamesJSON.salvoes[i].locations[j][1] - 1;
+      let y = stringToInt(gamesJSON.salvoes[i].locations[j][0].toUpperCase());
+
+      if (player1 == player) {
+        document.getElementById("salvoes" + y + x).classList.add("sentSalvo");
+      } else {
+        if (
+          document
+            .getElementById(`ships${y}${x}`)
+            .className.indexOf("busy-cell") != -1
+        ) {
+          document
+            .getElementById(`ships${y}${x}`)
+            .classList.remove("busy-cell");
+          document.getElementById(`ships${y}${x}`).classList.add("ship-down");
+        }
+      }
+    }
+  }
+};
+
+const intToString = function(int) {
+  switch (int) {
+    case 0:
+      return "A";
+    case 1:
+      return "B";
+    case 2:
+      return "C";
+    case 3:
+      return "D";
+    case 4:
+      return "E";
+    case 5:
+      return "F";
+    case 6:
+      return "G";
+    case 7:
+      return "H";
+    case 8:
+      return "I";
+    case 9:
+      return "J";
   }
 };
