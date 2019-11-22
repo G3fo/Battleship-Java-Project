@@ -12,12 +12,26 @@ var app = new Vue({
       window.location.href = "http://localhost:8080/web/game.html?gp=" + id;
     },
     joinGame(gameid) {
-      $.post("/api/game/" + gameid + "/players")
-        .done(function(json) {
+      fetch("/api/games/" + gameid + "/players", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "same-origin"
+      })
+        .then(function(json) {
           window.location.href =
             "http://localhost:8080/web/game.html?gp=" + json.gpid;
         })
-        .fail(alert("Could not join game!"));
+        .catch(function(error) {
+          console.log(error);
+          alert("Could not join game!");
+        });
+
+      //   $.post("/api/game/" + gameid + "/players")
+      //     .done(function(json) {
+      //       window.location.href =
+      //         "http://localhost:8080/web/game.html?gp=" + json.gpid;
+      //     })
+      //     .fail(alert("Could not join game!"));
     }
   }
 });
