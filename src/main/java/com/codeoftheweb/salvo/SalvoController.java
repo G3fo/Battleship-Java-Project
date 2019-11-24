@@ -191,12 +191,12 @@ public class SalvoController {
 
         gamePlayerRepository.save(gamePlayer);
 
+      }
         response = new ResponseEntity<>(makeMap("success", "The ships have been placed!"), HttpStatus.CREATED);
 
       }
     }
     return response;
-  }
 
   @RequestMapping(path = "/games/players/{gamePlayerid}/salvoes", method = RequestMethod.POST)
   @ResponseBody
