@@ -12,26 +12,15 @@ var app = new Vue({
       window.location.href = "http://localhost:8080/web/game.html?gp=" + id;
     },
     joinGame(gameid) {
-      fetch("/api/games/" + gameid + "/players", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "same-origin"
-      })
-        .then(function(json) {
+      $.post("/api/game/" + gameid + "/players")
+        .done(function(json) {
           window.location.href =
             "http://localhost:8080/web/game.html?gp=" + json.gpid;
         })
-        .catch(function(error) {
-          console.log(error);
-          alert("Could not join game!");
+        .fail(function(jqXHR, textStatus) {
+          showOutput("Failed: " + textStatus);
+          alert("Could not join the game!");
         });
-
-      //   $.post("/api/game/" + gameid + "/players")
-      //     .done(function(json) {
-      //       window.location.href =
-      //         "http://localhost:8080/web/game.html?gp=" + json.gpid;
-      //     })
-      //     .fail(alert("Could not join game!"));
     }
   }
 });
@@ -72,12 +61,16 @@ function login() {
     username: document.getElementById("loginEmail").value,
     password: document.getElementById("loginPassword").value
   })
-    .done(function() {
-      alert("Logged in!");
-      window.location.reload();
+    .done(function(username) {
+      (username = document.getElementById("loginEmail").value),
+        swal("Logged in!", "Welcome back " + username + "!", "success").then(
+          function() {
+            window.location.reload();
+          }
+        );
     })
     .fail(function() {
-      alert("Incorrect username or password");
+      swal("Whoops", "Incorrect username or password", "error");
     });
 }
 
@@ -87,11 +80,13 @@ function signup() {
     password: document.getElementById("loginPassword").value
   })
     .done(function() {
-      alert("Signed up!");
-      login();
+      (username = document.getElementById("loginEmail").value),
+        swal("Signed up!", "").then(function() {
+          login();
+        });
     })
     .fail(function() {
-      alert("Incorrect sign up!");
+      swal("Whoops", "Incorrect sign up!", "error");
     });
 }
 
@@ -101,6 +96,6 @@ function createGame() {
       window.location.href = "game.html?gp=" + json.gpid;
     })
     .fail(function() {
-      alert("Couldnt create game!");
+      swal("Whoops", "Couldn't create game!", "error");
     });
 }

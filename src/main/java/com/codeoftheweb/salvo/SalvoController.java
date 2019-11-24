@@ -209,7 +209,7 @@ public class SalvoController {
       response = new ResponseEntity<>(makeMap("error", "You need to login!"), HttpStatus.UNAUTHORIZED);
     } else if(!OPTgamePlayer.isPresent()){
       response = new ResponseEntity<>(makeMap("error", "There is no such game!"), HttpStatus.FORBIDDEN);
-    }else if(locations.size()>5){
+    }else if(locations.size() != 5){
       response = new ResponseEntity<>(makeMap("error", "You can only place 5 salvoes!"), HttpStatus.FORBIDDEN);
     }else if (OPTgamePlayer.get().getPlayer().getPlayerId() != currentUser.getPlayerId()) {
       response = new ResponseEntity<>(makeMap("error", "You cannot see your opponent's salvoes!"), HttpStatus.FORBIDDEN);

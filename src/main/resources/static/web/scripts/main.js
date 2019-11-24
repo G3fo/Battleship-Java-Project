@@ -198,8 +198,14 @@ function salvoesPOST() {
       response.status;
       if (response.status == 201) {
         console.log("Salvoes Fetched");
+        location.reload();
       } else {
         console.log("Invalid");
+        swal("Whoops", "You need to place 5 salvoes!", "error").then(
+          function() {
+            location.reload();
+          }
+        );
       }
     })
     .then(function() {
@@ -211,7 +217,6 @@ function salvoesPOST() {
     })
     .then(function() {
       counter = 0;
-      location.reload();
     })
     .catch(function(error) {
       console.log(error);
