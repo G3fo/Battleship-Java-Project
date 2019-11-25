@@ -186,7 +186,7 @@ public class SalvoController {
         ships.forEach(ship -> gamePlayer.addShip(new Ship(ship.getShipType(), ship.getLocations(), gamePlayer)));
         shipRepo.saveAll(ships);
         gamePlayerRepository.save(gamePlayer);
-        
+
         response = new ResponseEntity<>(makeMap("success", "The ships have been placed!"), HttpStatus.CREATED);
 
       }

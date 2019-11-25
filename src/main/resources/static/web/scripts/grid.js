@@ -280,10 +280,21 @@ const setShips = function() {
 
 const setSalvoes = function() {
   for (i = 0; i < gamesJSON.salvoes.length; i++) {
+    var player;
+    var opponent;
+
+    for (let i = 0; i < gamesJSON.players.length; i++) {
+      if (gamesJSON.players[i].gpid == gpId) {
+        player = gamesJSON.players[i].gpid;
+      } else {
+        opponent = gamesJSON.players[i].gpid;
+      }
+    }
+
     for (j = 0; j < gamesJSON.salvoes[i].locations.length; j++) {
       let turn = gamesJSON.salvoes[i].turn;
       let player1 = gamesJSON.salvoes[i].game_player_id;
-      let x = +gamesJSON.salvoes[i].locations[j][1] - 1;
+      let x = +gamesJSON.salvoes[i].locations[j].substring(1) -1;
       let y = stringToInt(gamesJSON.salvoes[i].locations[j][0].toUpperCase());
 
       if (player1 == player) {

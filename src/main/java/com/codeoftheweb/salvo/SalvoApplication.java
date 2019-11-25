@@ -110,15 +110,27 @@ public class SalvoApplication {
 
             Ship ship1_1_1 = new Ship(ShipType.CARRIER, locations1, gp1);
             Ship ship2_1_1 = new Ship(ShipType.BATTLESHIP, locations2, gp1);
-            Ship ship3_1_1 = new Ship(ShipType.PATROL_BOAT, locations4, gp2);
-            Ship ship1_1_2 = new Ship(ShipType.SUBMARINE, locations5, gp2);
+            Ship ship3_1_1 = new Ship(ShipType.PATROL_BOAT, locations4, gp1);
+            Ship ship1_1_2 = new Ship(ShipType.SUBMARINE, locations5, gp1);
             Ship ship2_1_2 = new Ship(ShipType.DESTROYER, locations6, gp1);
+
+            Ship ship1_1_15 = new Ship(ShipType.CARRIER, locations1, gp2);
+            Ship ship2_1_15 = new Ship(ShipType.BATTLESHIP, locations2, gp2);
+            Ship ship3_1_15 = new Ship(ShipType.PATROL_BOAT, locations4, gp2);
+            Ship ship1_1_25 = new Ship(ShipType.SUBMARINE, locations5, gp2);
+            Ship ship2_1_25 = new Ship(ShipType.DESTROYER, locations6, gp2);
 
             shipRepository.save(ship2_1_1);
             shipRepository.save(ship3_1_1);
             shipRepository.save(ship1_1_1);
             shipRepository.save(ship1_1_2);
             shipRepository.save(ship2_1_2);
+
+            shipRepository.save(ship2_1_15);
+            shipRepository.save(ship3_1_15);
+            shipRepository.save(ship1_1_15);
+            shipRepository.save(ship1_1_25);
+            shipRepository.save(ship2_1_25);
 
             Salvo salvo1 = new Salvo(1, Arrays.asList("H2","H3","H4","H1"), gp1);
             Salvo salvo2 = new Salvo(1, Arrays.asList("H4","H5","H6"), gp2);
