@@ -183,21 +183,16 @@ public class SalvoController {
       } else {
         GamePlayer gamePlayer = OPTgamePlayer.get();
 
-
-
         ships.forEach(ship -> gamePlayer.addShip(new Ship(ship.getShipType(), ship.getLocations(), gamePlayer)));
-
         shipRepo.saveAll(ships);
-
         gamePlayerRepository.save(gamePlayer);
-
-      }
+        
         response = new ResponseEntity<>(makeMap("success", "The ships have been placed!"), HttpStatus.CREATED);
 
       }
     }
     return response;
-
+  }
   @RequestMapping(path = "/games/players/{gamePlayerid}/salvoes", method = RequestMethod.POST)
   @ResponseBody
   public ResponseEntity<Object> addSalvoes(@PathVariable long gamePlayerid, Authentication authentication, @RequestBody List<String> locations) {
