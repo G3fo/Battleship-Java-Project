@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static com.codeoftheweb.salvo.Ship.areValid;
+
+
 @RestController
 @RequestMapping("/api")
 public class SalvoController {
@@ -178,7 +181,11 @@ public class SalvoController {
           response = new ResponseEntity<>(makeMap("error", "You don't belong in this game!"), HttpStatus.UNAUTHORIZED);
       } else if (OPTgamePlayer.get().getShips().size() > 0) {
         response = new ResponseEntity<>(makeMap("error", "You have already placed ships!"), HttpStatus.FORBIDDEN);
-      } else if (ships == null || ships.size() != 5) {
+      }else if(areValid(ships)){
+        response = new ResponseEntity<>(makeMap("error", "You have already placed ships!"), HttpStatus.FORBIDDEN);
+
+      }
+      else if (ships == null || ships.size() != 5) {
         response = new ResponseEntity<>(makeMap("error", "You need to place 5 ships!"), HttpStatus.FORBIDDEN);
       } else {
         GamePlayer gamePlayer = OPTgamePlayer.get();

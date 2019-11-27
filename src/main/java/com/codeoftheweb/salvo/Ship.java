@@ -14,6 +14,8 @@ public class Ship {
     @GenericGenerator(name = "native", strategy = "native")
     private long id;
     private ShipType shipType;
+    public static boolean  checkShipsLength;
+    private static Map<String, Integer> shipLengths;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="gamePlayer_id")
@@ -50,6 +52,40 @@ public class Ship {
         dto.put("shipType", this.getShipType());
         dto.put("locations", this.getLocations());
         return dto;
+    }
+
+    private static Map<String, Integer> shipTypeLengths = Collections.unmodifiableMap(
+            new HashMap<String, Integer>(){{
+                put("CARRIER", 5);
+                put("BATTLESHIP", 4);
+                put("SUBMARINE",3);
+                put("DESTROYER",3);
+                put("PATROL_BOAT",2);
+            }}
+    );
+
+
+    public static boolean areValid(List<Ship> ships) {
+       boolean isOk = ships.stream().map(ship -> ship.getShipType()).distinct().count() == 5;
+
+       int i = 0;
+
+       while (isOk && i < ships.stream().count()){
+           String shipType = ships.get(i).getShipType().name();
+           Integer elNumeroCorrecto = shipTypeLengths.get(shipType);
+           isOk = ships.get(i).locations.size() == elNumeroCorrecto;
+           i++;
+       }
+
+       if(isOk){
+           List<String> allLocations = ships.stream().flatMap(ship -> ship.locations.stream()).collect(toList());
+           Integer totalCount = shipTypeLengths.values().stream().reduce((Integer x, Integer y) -> x + y).get();
+
+           isOk = allLocations.size() == totalCount;
+       }
+
+       return isOk;
+
     }
 
 }
