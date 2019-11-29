@@ -66,52 +66,49 @@ public class Ship {
 
 
     public static boolean areValid(List<Ship> ships) {
-       boolean isOk = ships.stream().map(ship -> ship.getShipType()).distinct().count() == 5;
+        boolean isOk = ships.stream().map(ship -> ship.getShipType()).distinct().count() == 5;
 
-       int i = 0;
+        int i = 0;
 
-       while (isOk && i < ships.stream().count()){
-           String shipType = ships.get(i).getShipType().name();
-           Integer elNumeroCorrecto = shipTypeLengths.get(shipType);
-           isOk = ships.get(i).locations.size() == elNumeroCorrecto;
-           i++;
-       }
+        while (isOk && i < ships.stream().count()) {
+            String shipType = ships.get(i).getShipType().name();
+            Integer elNumeroCorrecto = shipTypeLengths.get(shipType);
+            isOk = ships.get(i).locations.size() == elNumeroCorrecto;
+            i++;
+        }
 
-       List<String> allLocations = ships.stream().flatMap(ship -> ship.locations.stream()).collect(toList());
+        List<String> allLocations = ships.stream().flatMap(ship -> ship.locations.stream()).collect(toList());
 
-       if(isOk){
-           Integer totalCount = shipTypeLengths.values().stream().reduce((Integer x, Integer y) -> x + y).get();
+        if (isOk) {
+            Integer totalCount = shipTypeLengths.values().stream().reduce((Integer x, Integer y) -> x + y).get();
 
-           isOk = allLocations.size() == totalCount;
-       }
+            isOk = allLocations.size() == totalCount;
+        }
 
-       for(String celda : allLocations){
+        int j = 0;
 
-           if (isOk){
+        while (isOk && j < allLocations.stream().count()) {
 
-            if(!(celda instanceof String) || celda.length() < 2){
-                return isOk = false;
+            String celda = allLocations.get(i);
+            isOk = celda.length() == 2;
+
+            if(isOk){
+
+                char y = celda.substring(0, 1).charAt(0);
+                int x = -1;
+
+                try {
+                    x = Integer.parseInt(celda.substring(1));
+                } catch (NumberFormatException e) {
+                    isOk = false;
+                }
+
+                isOk = isOk && x >= 0 && x <= 9 && y >= 'A' && y <= 'J';
             }
 
-            char y = celda.substring(0,1).charAt(0);
-            int x;
+            j++;
+        }
 
-            try{
-                x = Integer.parseInt(celda.substring(1));
-            }catch(NumberFormatException e){
-                x = 99;
-            };
-
-            if(x < 1 || x > 10 || y < 'A' || y > 'J'){
-                return isOk = false;
-            }
-            }else{
-               return isOk;
-           }
-       }
-
-       return isOk;
-
+        return isOk;
     }
-
 }
