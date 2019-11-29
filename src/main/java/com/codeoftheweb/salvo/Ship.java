@@ -77,11 +77,37 @@ public class Ship {
            i++;
        }
 
+       List<String> allLocations = ships.stream().flatMap(ship -> ship.locations.stream()).collect(toList());
+
        if(isOk){
-           List<String> allLocations = ships.stream().flatMap(ship -> ship.locations.stream()).collect(toList());
            Integer totalCount = shipTypeLengths.values().stream().reduce((Integer x, Integer y) -> x + y).get();
 
            isOk = allLocations.size() == totalCount;
+       }
+
+       for(String celda : allLocations){
+
+           if (isOk){
+
+            if(!(celda instanceof String) || celda.length() < 2){
+                return isOk = false;
+            }
+
+            char y = celda.substring(0,1).charAt(0);
+            int x;
+
+            try{
+                x = Integer.parseInt(celda.substring(1));
+            }catch(NumberFormatException e){
+                x = 99;
+            };
+
+            if(x < 1 || x > 10 || y < 'A' || y > 'J'){
+                return isOk = false;
+            }
+            }else{
+               return isOk;
+           }
        }
 
        return isOk;
