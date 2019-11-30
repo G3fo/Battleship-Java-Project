@@ -66,26 +66,49 @@ public class Ship {
 
 
     public static boolean areValid(List<Ship> ships) {
-       boolean isOk = ships.stream().map(ship -> ship.getShipType()).distinct().count() == 5;
+        boolean isOk = ships.stream().map(ship -> ship.getShipType()).distinct().count() == 5;
 
-       int i = 0;
+        int i = 0;
 
-       while (isOk && i < ships.stream().count()){
-           String shipType = ships.get(i).getShipType().name();
-           Integer elNumeroCorrecto = shipTypeLengths.get(shipType);
-           isOk = ships.get(i).locations.size() == elNumeroCorrecto;
-           i++;
-       }
+        while (isOk && i < ships.stream().count()) {
+            String shipType = ships.get(i).getShipType().name();
+            Integer elNumeroCorrecto = shipTypeLengths.get(shipType);
+            isOk = ships.get(i).locations.size() == elNumeroCorrecto;
+            i++;
+        }
 
-       if(isOk){
-           List<String> allLocations = ships.stream().flatMap(ship -> ship.locations.stream()).collect(toList());
-           Integer totalCount = shipTypeLengths.values().stream().reduce((Integer x, Integer y) -> x + y).get();
+        List<String> allLocations = ships.stream().flatMap(ship -> ship.locations.stream()).collect(toList());
 
-           isOk = allLocations.size() == totalCount;
-       }
+        if (isOk) {
+            Integer totalCount = shipTypeLengths.values().stream().reduce((Integer x, Integer y) -> x + y).get();
 
-       return isOk;
+            isOk = allLocations.size() == totalCount;
+        }
 
+        int j = 0;
+
+        while (isOk && j < allLocations.stream().count()) {
+
+            String celda = allLocations.get(i);
+            isOk = celda.length() == 2;
+
+            if(isOk){
+
+                char y = celda.substring(0, 1).charAt(0);
+                int x = -1;
+
+                try {
+                    x = Integer.parseInt(celda.substring(1));
+                } catch (NumberFormatException e) {
+                    isOk = false;
+                }
+
+                isOk = isOk && x >= 0 && x <= 9 && y >= 'A' && y <= 'J';
+            }
+
+            j++;
+        }
+
+        return isOk;
     }
-
 }
