@@ -182,8 +182,7 @@ public class SalvoController {
       } else if (OPTgamePlayer.get().getShips().size() > 0) {
         response = new ResponseEntity<>(makeMap("error", "You have already placed ships!"), HttpStatus.FORBIDDEN);
       }else if(areValid(ships)){
-        response = new ResponseEntity<>(makeMap("error", "You have already placed ships!"), HttpStatus.FORBIDDEN);
-
+        response = new ResponseEntity<>(makeMap("error", "The ships sent are not valid"), HttpStatus.FORBIDDEN);
       }
       else if (ships == null || ships.size() != 5) {
         response = new ResponseEntity<>(makeMap("error", "You need to place 5 ships!"), HttpStatus.FORBIDDEN);
