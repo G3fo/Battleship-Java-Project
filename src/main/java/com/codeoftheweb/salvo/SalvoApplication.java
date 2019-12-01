@@ -108,35 +108,35 @@ public class SalvoApplication {
             //List<String> locations7 = new ArrayList(Arrays.asList("B2", "B3", "B4"));
             List<String> locations8 = new ArrayList(Arrays.asList("A6","B6"));
 
-            Ship ship1_1_1 = new Ship(ShipType.CARRIER, locations1, gp1);
-            Ship ship2_1_1 = new Ship(ShipType.BATTLESHIP, locations2, gp1);
-            Ship ship3_1_1 = new Ship(ShipType.PATROL_BOAT, locations4, gp1);
-            Ship ship1_1_2 = new Ship(ShipType.SUBMARINE, locations5, gp1);
-            Ship ship2_1_2 = new Ship(ShipType.DESTROYER, locations6, gp1);
+            Ship ship11 = new Ship(ShipType.CARRIER, locations1, gp1);
+            Ship ship12 = new Ship(ShipType.BATTLESHIP, locations2, gp1);
+            Ship ship13 = new Ship(ShipType.PATROL_BOAT, locations6, gp1);
+            Ship ship14 = new Ship(ShipType.SUBMARINE, locations5, gp1);
+            Ship ship15 = new Ship(ShipType.DESTROYER, locations4, gp1);
 
-            Ship ship1_1_15 = new Ship(ShipType.CARRIER, locations1, gp2);
-            Ship ship2_1_15 = new Ship(ShipType.BATTLESHIP, locations2, gp2);
-            Ship ship3_1_15 = new Ship(ShipType.PATROL_BOAT, locations4, gp2);
-            Ship ship1_1_25 = new Ship(ShipType.SUBMARINE, locations5, gp2);
-            Ship ship2_1_25 = new Ship(ShipType.DESTROYER, locations6, gp2);
+            Ship ship21 = new Ship(ShipType.CARRIER, locations1, gp2);
+            Ship ship22 = new Ship(ShipType.BATTLESHIP, locations2, gp2);
+            Ship ship23 = new Ship(ShipType.PATROL_BOAT, locations6, gp2);
+            Ship ship24 = new Ship(ShipType.SUBMARINE, locations5, gp2);
+            Ship ship25 = new Ship(ShipType.DESTROYER, locations4, gp2);
 
-            shipRepository.save(ship2_1_1);
-            shipRepository.save(ship3_1_1);
-            shipRepository.save(ship1_1_1);
-            shipRepository.save(ship1_1_2);
-            shipRepository.save(ship2_1_2);
+            shipRepository.save(ship11);
+            shipRepository.save(ship12);
+            shipRepository.save(ship13);
+            shipRepository.save(ship14);
+            shipRepository.save(ship15);
 
-            shipRepository.save(ship2_1_15);
-            shipRepository.save(ship3_1_15);
-            shipRepository.save(ship1_1_15);
-            shipRepository.save(ship1_1_25);
-            shipRepository.save(ship2_1_25);
+            shipRepository.save(ship21);
+            shipRepository.save(ship22);
+            shipRepository.save(ship23);
+            shipRepository.save(ship24);
+            shipRepository.save(ship25);
 
-            Salvo salvo1 = new Salvo(1, Arrays.asList("H2","H3","H4","H1"), gp1);
-            Salvo salvo2 = new Salvo(1, Arrays.asList("H4","H5","H6"), gp2);
-            Salvo salvo3 = new Salvo(2, Arrays.asList("A2","B2","C3"), gp1);
-            Salvo salvo4 = new Salvo(3, Arrays.asList("B2","B3","B4"), gp2);
-            Salvo salvo5 = new Salvo(4, Arrays.asList("A1","A2","A3"), gp1);
+            Salvo salvo1 = new Salvo(1, Arrays.asList("A2","A3","A4","A5","A6"), gp1);
+            Salvo salvo2 = new Salvo(1, Arrays.asList("H4","H5","H6","D3","F1"), gp2);
+            Salvo salvo3 = new Salvo(2, Arrays.asList("A0","B2","C3","D9","F0"), gp1);
+            Salvo salvo4 = new Salvo(2, Arrays.asList("B1","B2","B3","B4","F4"), gp2);
+            Salvo salvo5 = new Salvo(3, Arrays.asList("H1","H2","H3","H8","H6"), gp1);
 
             salvoRepository.saveAll(Arrays.asList(salvo1,salvo2,salvo3,salvo4,salvo5));
 
