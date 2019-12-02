@@ -103,10 +103,10 @@ public class SalvoApplication {
             List<String> locations2 = new ArrayList(Arrays.asList("F1", "G1", "H1"));
             //List<String> locations3 = new ArrayList(Arrays.asList("C4", "C5"));
             List<String> locations4 = new ArrayList(Arrays.asList("C5", "D5", "E5"));
-            List<String> locations5 = new ArrayList(Arrays.asList("G1","G2","G3","G4"));
+            List<String> locations5 = new ArrayList(Arrays.asList("G2","G3","G4","G5"));
             List<String> locations6 = new ArrayList(Arrays.asList("D6", "D7"));
             //List<String> locations7 = new ArrayList(Arrays.asList("B2", "B3", "B4"));
-            List<String> locations8 = new ArrayList(Arrays.asList("A6","B6"));
+            List<String> locations8 = new ArrayList(Arrays.asList("A7","B7"));
 
             Ship ship11 = new Ship(ShipType.CARRIER, locations1, gp1);
             Ship ship12 = new Ship(ShipType.BATTLESHIP, locations2, gp1);
@@ -136,9 +136,8 @@ public class SalvoApplication {
             Salvo salvo2 = new Salvo(1, Arrays.asList("H4","H5","H6","D3","F1"), gp2);
             Salvo salvo3 = new Salvo(2, Arrays.asList("A0","B2","C3","D9","F0"), gp1);
             Salvo salvo4 = new Salvo(2, Arrays.asList("B1","B2","B3","B4","F4"), gp2);
-            Salvo salvo5 = new Salvo(3, Arrays.asList("H1","H2","H3","H8","H6"), gp1);
 
-            salvoRepository.saveAll(Arrays.asList(salvo1,salvo2,salvo3,salvo4,salvo5));
+            salvoRepository.saveAll(Arrays.asList(salvo1,salvo2,salvo3,salvo4));
 
             Score score1_1 = new Score(g1, player1, 1, date1);
             Score score1_2 = new Score(g1, player2, 0, date2);

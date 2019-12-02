@@ -156,8 +156,11 @@
 }
 
 .ship-down {
-  color: red;
-  z-index: 10;
+  background-color: red;
+  background-size: cover;
+  background-position: center center;
+  z-index: 19;
+  pointer-events: none;
 }
 
 .toBeSalvo {
@@ -184,11 +187,12 @@
   display: block;
   line-height: 495px;
 }
+
 .sentSalvo {
   background-color: blue;
   background-size: cover;
   background-position: center center;
-  z-index: 10;
+  z-index: 9;
   pointer-events: none;
 }
 

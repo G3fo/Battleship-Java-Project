@@ -151,8 +151,8 @@ public class SalvoController {
 
     Map<String, Object> dto = gamePlayer.getGame().createGameDTO();
     dto.put("ships", gamePlayer.getShips().stream().map(Ship::createGameDTO_Ship));
-    dto.put("salvoes", gamePlayer.getGame().getGamePlayers().stream()
-            .flatMap(gp -> gp.getSalvoes().stream().map(Salvo::createGameDTO_Salvo))
+    dto.put("salvoes", gamePlayer.getGame().getGamePlayers().stream().sorted(Comparator.comparing(GamePlayer::getGamePlayerId))
+            .flatMap(gp -> gp.getSalvoes().stream().sorted(Comparator.comparing(Salvo::getTurn)).map(Salvo::createGameDTO_Salvo))
             .collect(Collectors.toList()));
     return dto;
   }
