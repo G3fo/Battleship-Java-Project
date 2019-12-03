@@ -279,41 +279,62 @@ const setShips = function() {
 };
 
 const setSalvoes = function() {
-  // for (i = 0; i < gamesJSON.salvoes.length; i++) {
-  //   var player;
-  //   var opponent;
-  //   let turn = gamesJSON.salvoes[i].turn;
-  //   let player1 = gamesJSON.salvoes[i].game_player_id;
-  //   for (let l = 0; l < gamesJSON.players.length; i++) {
-  //     if (gamesJSON.players[l].gpid == gpId) {
-  //       player = gamesJSON.players[l].gpid;
-  //     } else {
-  //       opponent = gamesJSON.players[l].gpid;
-  //     }
-  //   }
-  //   for (j = 0; j < gamesJSON.salvoes[i].locations.length; j++) {
-  //     let x = +gamesJSON.salvoes[i].locations[j].substring(1) - 1;
-  //     let y = stringToInt(gamesJSON.salvoes[i].locations[j][0].toUpperCase());
-  //     if (player1 == player) {
-  //       document.getElementById("salvoes" + y + x).classList.add("sentSalvo");
-  //     } else {
-  //       document.getElementById("ships" + y + x).classList.add("sentSalvo");
-  //     }
-  //   }
-  // if (gamesJSON.salvoes[i].hits) {
-  //   for (k = 0; k < gamesJSON.salvoes[i].hits.length; k++) {
-  //     x = +gamesJSON.salvoes[i].hits[k].substring(1) - 1;
-  //     y = stringToInt(gamesJSON.salvoes[i].hits[k][0].toUpperCase());
-  //     if (player1 == player) {
-  //       document.getElementById("salvoes" + y + x).classList.remove("sentSalvo");
-  //       document.getElementById("salvoes" + y + x).classList.add("ship-down");
-  //     } else {
-  //       document.getElementById("ships" + y + x).classList.remove("sentSalvo");
-  //       document.getElementById("ships" + y + x).classList.add("ship-down");
-  //     }
-  //   }
-  // }
-  // }
+  var actualPlayer;
+  var opponent;
+  for (let i = 0; i < gamesJSON.players.length; i++) {
+    if (gamesJSON.players[i].gpid == gpId) {
+      actualPlayer = gamesJSON.players[i].gpid;
+    } else {
+      opponent = gamesJSON.players[i].gpid;
+    }
+  }
+
+  for (i = 0; i < gamesJSON.salvoes.length; i++) {
+    for (j = 0; j < gamesJSON.salvoes[i].locations.length; j++) {
+      let turn = gamesJSON.salvoes[i].turn;
+      let player = gamesJSON.salvoes[i].game_player_id;
+
+      let x = +gamesJSON.salvoes[i].locations[j].substring(1);
+      let y = stringToInt(gamesJSON.salvoes[i].locations[j][0].toUpperCase());
+
+      if (player == actualPlayer) {
+        document.getElementById(`salvoes${y}${x}`).classList.add("sentSalvo");
+      } else {
+        document.getElementById(`ships` + y + x).classList.add("sentSalvo");
+      }
+    }
+  }
+
+  getHits();
+};
+
+const getHits = function() {
+  var actualPlayer;
+  var opponent;
+  for (let i = 0; i < gamesJSON.players.length; i++) {
+    if (gamesJSON.players[i].gpid == gpId) {
+      actualPlayer = gamesJSON.players[i].gpid;
+    } else {
+      opponent = gamesJSON.players[i].gpid;
+    }
+  }
+  for (i = 0; i < gamesJSON.salvoes.length; i++) {
+    for (j = 0; j < gamesJSON.salvoes[i].hits.length; j++) {
+      let player = gamesJSON.salvoes[i].game_player_id;
+      let x = +gamesJSON.salvoes[i].hits[j][1] - 1;
+      let y = stringToInt(gamesJSON.salvoes[i].hits[j][0].toUpperCase());
+
+      if (player == actualPlayer) {
+        document
+          .getElementById(`salvoes${y}${x}`)
+          .classList.remove("sentSalvo");
+        document.getElementById(`salvoes${y}${x}`).classList.add("hit");
+      } else {
+        document.getElementById(`ships${y}${x}`).classList.remove("sentSalvo");
+        document.getElementById(`ships${y}${x}`).classList.add("hit");
+      }
+    }
+  }
 };
 
 const intToString = function(int) {

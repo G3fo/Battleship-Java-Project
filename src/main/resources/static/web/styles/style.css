@@ -155,7 +155,7 @@
   background-color: purple;
 }
 
-.ship-down {
+.hit {
   background-color: red;
   background-size: cover;
   background-position: center center;
@@ -168,6 +168,14 @@
   background-size: cover;
   background-position: center center;
   z-index: 10;
+}
+
+.sentSalvo {
+  background-color: blue;
+  background-size: cover;
+  background-position: center center;
+  z-index: 9;
+  pointer-events: none;
 }
 
 #disableGrid {
@@ -186,14 +194,6 @@
   font-weight: bold;
   display: block;
   line-height: 495px;
-}
-
-.sentSalvo {
-  background-color: blue;
-  background-size: cover;
-  background-position: center center;
-  z-index: 9;
-  pointer-events: none;
 }
 
 body {
