@@ -243,7 +243,7 @@ const setShips = function() {
   for (i = 0; i < gamesJSON.ships.length; i++) {
     //Solo necesito la primera posicion, el resto de la informacion se deduce de la cantidad de celdas
     let shipType = gamesJSON.ships[i].shipType.toLowerCase();
-    let x = +gamesJSON.ships[i].locations[0][1] - 1;
+    let x = +gamesJSON.ships[i].locations[0][1];
     let y = stringToInt(gamesJSON.ships[i].locations[0][0].toUpperCase());
     let w;
     let h;
@@ -321,7 +321,7 @@ const getHits = function() {
   for (i = 0; i < gamesJSON.salvoes.length; i++) {
     for (j = 0; j < gamesJSON.salvoes[i].hits.length; j++) {
       let player = gamesJSON.salvoes[i].game_player_id;
-      let x = +gamesJSON.salvoes[i].hits[j][1] - 1;
+      let x = +gamesJSON.salvoes[i].hits[j][1];
       let y = stringToInt(gamesJSON.salvoes[i].hits[j][0].toUpperCase());
 
       if (player == actualPlayer) {

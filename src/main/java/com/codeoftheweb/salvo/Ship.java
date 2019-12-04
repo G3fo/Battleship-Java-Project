@@ -89,8 +89,9 @@ public class Ship {
 
         while (isOk && j < allLocations.stream().count()) {
 
-            String celda = allLocations.get(i);
+            String celda = allLocations.get(j);
             isOk = celda.length() == 2;
+
 
             if(isOk){
 

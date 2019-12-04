@@ -2,22 +2,36 @@ var gpId = window.location.search.match(/\d+/g).map(Number);
 var player;
 var opponent;
 
-var defaultShipsArray = [
-  { shipType: "CARRIER", locations: ["A1", "A2", "A3", "A4", "A5"] },
-  { shipType: "BATTLESHIP", locations: ["C1", "C2", "C3", "C4"] },
-  { shipType: "SUBMARINE", locations: ["E1", "E2", "E3"] },
-  { shipType: "DESTROYER", locations: ["G1", "G2", "G3"] },
-  { shipType: "PATROL_BOAT", locations: ["I1", "I2"] }
+var defaultShipsArray = [{
+    shipType: "CARRIER",
+    locations: ["A1", "A2", "A3", "A4", "A5"]
+  },
+  {
+    shipType: "BATTLESHIP",
+    locations: ["C1", "C2", "C3", "C4"]
+  },
+  {
+    shipType: "SUBMARINE",
+    locations: ["E1", "E2", "E3"]
+  },
+  {
+    shipType: "DESTROYER",
+    locations: ["G1", "G2", "G3"]
+  },
+  {
+    shipType: "PATROL_BOAT",
+    locations: ["I1", "I2"]
+  }
 ];
 
 loadGamesJSON();
 
 function loadGamesJSON() {
   fetch("/api/game_view/" + gpId)
-    .then(function(response) {
+    .then(function (response) {
       return response.json();
     })
-    .then(function(json) {
+    .then(function (json) {
       gamesJSON = json;
 
       if (gamesJSON.ships.length > 0) {
@@ -49,10 +63,22 @@ function loadGamesJSON() {
         setSalvoes();
       }
     })
-    .catch(function(error) {
+    .catch(function (error) {
       console.log(error);
     });
 }
+
+function reload() {
+  fetch("/api/game_view/" + gpId)
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (json) {
+        gamesJSON = json;
+        setSalvoes()
+    })
+};
+
 
 function defaultShips() {
   for (var i = 0; i < defaultShipsArray.length; i++) {
@@ -67,11 +93,11 @@ function defaultShips() {
     grid.addWidget(
       $(
         '<div id="' +
-          shipType +
-          '"><div class="grid-stack-item-content ' +
-          shipType +
-          orientation +
-          '"></div><div/>'
+        shipType +
+        '"><div class="grid-stack-item-content ' +
+        shipType +
+        orientation +
+        '"></div><div/>'
       ),
       x,
       y,
@@ -110,14 +136,14 @@ function shipPOST() {
 
     if (height == 1) {
       for (let j = 1; j <= width; j++) {
-        let currentX = x + j;
+        let currentX = x + j -1;
         let yLetter = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".charAt(y);
         locations.push(yLetter + currentX);
       }
     } else if (width == 1) {
       for (let j = 0; j < height; j++) {
         let currentY = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".charAt(y + j);
-        let xPlusOne = x + 1;
+        let xPlusOne = x;
         locations.push(currentY + xPlusOne);
       }
     }
@@ -128,12 +154,14 @@ function shipPOST() {
   }
 
   fetch("/api/games/players/" + gpId + "/ships", {
-    method: "POST",
-    body: JSON.stringify(shipArray),
-    headers: { "Content-Type": "application/json" },
-    credentials: "same-origin"
-  })
-    .then(function(response) {
+      method: "POST",
+      body: JSON.stringify(shipArray),
+      headers: {
+        "Content-Type": "application/json"
+      },
+      credentials: "same-origin"
+    })
+    .then(function (response) {
       response.status;
       if (response.status == 201) {
         console.log("Ships Fetched");
@@ -141,10 +169,10 @@ function shipPOST() {
         console.log("invalid");
       }
     })
-    .then(function() {
-      location.reload();
+    .then(function () {
+      reload()
     })
-    .catch(function(error) {
+    .catch(function (error) {
       console.log(error);
     });
 }
@@ -160,7 +188,7 @@ function salvoesClick() {
   }
 
   for (var i = 0; i < salvo_cell.length; i++) {
-    salvo_cell[i].addEventListener("click", function(e) {
+    salvo_cell[i].addEventListener("click", function (e) {
       e.preventDefault();
       var cellId = e.target.id;
       var cellShot = document.getElementById(cellId);
@@ -183,47 +211,49 @@ function salvoesPOST() {
   let salvoes = document.querySelectorAll(".toBeSalvo");
   for (let i = 0; i < salvoes.length; i++) {
     var salvoId = salvoes[i].id.slice(-2);
-    let x = +salvoId[1] + 1;
+    let x = +salvoId[1];
     let y = intToString(parseInt(salvoId[0]));
     salvoLocations.push(y + x);
   }
 
   fetch("/api/games/players/" + gpId + "/salvoes", {
-    method: "POST",
-    body: JSON.stringify(salvoLocations),
-    headers: { "Content-Type": "application/json" },
-    credentials: "same-origin"
-  })
-    .then(function(response) {
+      method: "POST",
+      body: JSON.stringify(salvoLocations),
+      headers: {
+        "Content-Type": "application/json"
+      },
+      credentials: "same-origin"
+    })
+    .then(function (response) {
       response.status;
       if (response.status == 201) {
         console.log("Salvoes Fetched");
-        location.reload();
+        reload()
       } else {
         console.log("Invalid");
         swal("Whoops", "You need to place 5 salvoes!", "error").then(
-          function() {
-            location.reload();
+          function () {
+            reload()
           }
         );
       }
     })
-    .then(function() {
+    .then(function () {
       toBeSalvo = document.querySelectorAll(".toBeSalvo");
       for (var i = 0; i < toBeSalvo.length; i++) {
         toBeSalvo[i].classList.add("sentSalvo");
         toBeSalvo[i].classList.remove("toBeSalvo");
       }
     })
-    .then(function() {
+    .then(function () {
       counter = 0;
     })
-    .catch(function(error) {
+    .catch(function (error) {
       console.log(error);
     });
 }
 
-const stringToInt = function(str) {
+const stringToInt = function (str) {
   switch (str) {
     case "A":
       return 0;

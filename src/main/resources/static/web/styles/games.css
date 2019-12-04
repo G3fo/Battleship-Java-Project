@@ -14,6 +14,10 @@ input {
   min-width: 50%;
 }
 
+.btn-success{
+  margin: 2%;
+}
+
 #loginForm {
   max-width: 40%;
   position: relative;

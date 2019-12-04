@@ -135,7 +135,7 @@ public class SalvoApplication {
             Salvo salvo1 = new Salvo(1, Arrays.asList("A2","A3","A4","A5","A6"), gp1);
             Salvo salvo2 = new Salvo(1, Arrays.asList("H4","H5","H6","D3","F1"), gp2);
             Salvo salvo3 = new Salvo(2, Arrays.asList("A0","B2","C3","D9","F0"), gp1);
-            Salvo salvo4 = new Salvo(2, Arrays.asList("B1","B2","B3","B4","F4"), gp2);
+            Salvo salvo4 = new Salvo(2, Arrays.asList("A1","B2","A3","B4","C4"), gp2);
 
             salvoRepository.saveAll(Arrays.asList(salvo1,salvo2,salvo3,salvo4));
 
