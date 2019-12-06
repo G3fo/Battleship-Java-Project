@@ -122,7 +122,7 @@ public class GamePlayer {
         return sinks; //retorna n° de sinks
     }
 
-    private String gameState() {
+    public String gameState() {
 
         String gameState="";
         int turn = this.getSalvoes().size() + 1;
@@ -153,20 +153,20 @@ public class GamePlayer {
                     gameState = "shoot";
                 }else if(turn == enemyTurn) {
                     if (this.getShips().size() < 5) {
-                        gameState = "place ships"; //place ships
+                        gameState = "place ships";
                     } else if (this.getShips().size() == 5 && this.getEnemyGamePlayer().getShips().size() < 5) {
-                        gameState = "wait opponent ships"; //wait for enemy ships
+                        gameState = "wait opponent ships";
                     } else {
                         gameState = "wait";
                     }
                 }
             }
             if (mysinks == 5 && turn == enemyTurn) {
-                gameState = "win"; //G.O Win
+                gameState = "win";
             } else if (enemySinks == 5 && turn == enemyTurn) {
-                gameState = "lose"; //G.O Lose
+                gameState = "lose";
             } else if (mysinks == 5 && enemySinks == 5 && enemyTurn == turn) {
-                gameState = "tie"; //G.O tie
+                gameState = "tie";
             }
 
         }else{ enemyTurn = 0;
@@ -174,9 +174,9 @@ public class GamePlayer {
             enemySinks = 0;
 
             if (this.getShips().size() < 5) {
-                gameState = "place ships"; //place ships
+                gameState = "place ships"; // Esperando a que se enien los ships
             }else if (this.getShips().size() == 5 && this.getEnemyGamePlayer() == null) {
-                gameState = "wait opponent"; //wait for enemy ships
+                gameState = "wait opponent"; // Esperando a que se conecte el oponente
             }
         }
         return gameState;

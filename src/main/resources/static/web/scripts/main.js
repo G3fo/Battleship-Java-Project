@@ -33,7 +33,7 @@ function loadGamesJSON() {
     })
     .then(function (json) {
       gamesJSON = json;
-
+      var st = gamesJSON.gameState;
       if (gamesJSON.ships.length > 0) {
         //Sino, en modo estatico, y no puede mover los ships
         document.getElementById("POSTships").style.display = "none";
@@ -41,7 +41,9 @@ function loadGamesJSON() {
         loadGrid(true);
         createGrid(11, $(".grid-salvoes"), "salvoes");
         setSalvoes();
+        getHits();
         salvoesClick();
+        gameState(st)
       } else {
         //Si el jugador no puso ships previamente, carga la grilla en modo dinamico y los ships default
         document.getElementById("POSTsalvoes").style.display = "none";
@@ -49,6 +51,7 @@ function loadGamesJSON() {
         loadGrid(false);
         defaultShips();
         createGrid(11, $(".grid-salvoes"), "salvoes");
+        gameState(st)
       }
 
       for (let i = 0; i < gamesJSON.players.length; i++) {
@@ -61,6 +64,7 @@ function loadGamesJSON() {
 
       if (gamesJSON.salvoes.length > 0) {
         setSalvoes();
+        getHits();
       }
     })
     .catch(function (error) {
@@ -74,8 +78,11 @@ function reload() {
       return response.json();
     })
     .then(function (json) {
-        gamesJSON = json;
-        setSalvoes()
+      gamesJSON = json;
+      gameState(gamesJSON.gameState);
+
+      setSalvoes();
+      getHits();
     })
 };
 
@@ -136,7 +143,7 @@ function shipPOST() {
 
     if (height == 1) {
       for (let j = 1; j <= width; j++) {
-        let currentX = x + j -1;
+        let currentX = x + j - 1;
         let yLetter = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".charAt(y);
         locations.push(yLetter + currentX);
       }
@@ -233,20 +240,15 @@ function salvoesPOST() {
         console.log("Invalid");
         swal("Whoops", "You need to place 5 salvoes!", "error").then(
           function () {
-            reload()
+            toBeSalvo = document.querySelectorAll(".toBeSalvo");
+            for (var i = 0; i < toBeSalvo.length; i++) {
+              toBeSalvo[i].classList.remove("toBeSalvo");
+            }
+            counter = 0;
+            reload();
           }
         );
       }
-    })
-    .then(function () {
-      toBeSalvo = document.querySelectorAll(".toBeSalvo");
-      for (var i = 0; i < toBeSalvo.length; i++) {
-        toBeSalvo[i].classList.add("sentSalvo");
-        toBeSalvo[i].classList.remove("toBeSalvo");
-      }
-    })
-    .then(function () {
-      counter = 0;
     })
     .catch(function (error) {
       console.log(error);
@@ -277,3 +279,68 @@ const stringToInt = function (str) {
       return 9;
   }
 };
+
+const gameState = function (state) {
+  switch (state) {
+    case 'place ships':
+      document.getElementById("startGame").style.display = 'block';
+      document.getElementById("disableGrid").style.display = 'block';
+      document.getElementById("POSTsalvoes").style.display = 'none';
+      document.getElementById("logger").innerHTML = "Wating opponent";
+      document.getElementById("waitText").innerText = 'Waiting Opponent';
+      break;
+    case 'wait opponent':
+      document.getElementById("POSTsalvoes").style.display = 'none';
+      document.getElementById("logger").innerHTML = "Wating opponent";
+      document.getElementById("disableGrid").style.display = 'block';
+      document.getElementById("waitText").innerText = 'Waiting Opponent';
+
+      break;
+    case 'wait opponent ships':
+      document.getElementById("logger").innerHTML = "In battle";
+      document.getElementById("POSTsalvoes").style.display = 'none';
+      document.getElementById("disableGrid").style.display = 'block';
+      document.getElementById("waitText").innerText = 'Waiting opponent ships';
+      break;
+    case "shoot":
+      setSalvoes();
+      salvoesClick();
+      document.getElementById("logger").innerHTML = "In battle";
+      document.getElementById("POSTsalvoes").style.display = 'block';
+      document.getElementById("disableGrid").style.display = 'none';
+
+      break;
+    case "wait":
+      getHits();
+      document.getElementById("logger").innerHTML = "In battle";
+      document.getElementById("POSTsalvoes").style.display = 'none';
+      document.getElementById("disableGrid").style.display = 'block';
+      document.getElementById("waitText").innerText = 'Opponent turn';
+
+      break;
+    case "win":
+      document.getElementById("gameView").style.display = 'none';
+      break;
+    case "lose":
+      document.getElementById("gameView").style.display = 'none';
+      break;
+    case "tie":
+      document.getElementById("gameView").style.display = 'none';
+      break;
+  }
+};
+
+
+// var shoot = function(){
+//   setSalvoes();
+//   salvoesClick();
+//   document.getElementById("logger").innerHTML = "In battle";
+//   document.getElementById("POSTsalvoes").style.display = 'block';
+//   document.getElementById("disableGrid").style.display = 'none';
+// }
+
+// var actions = {
+//   "shoot": shoot
+// }
+
+// actions[clave]()

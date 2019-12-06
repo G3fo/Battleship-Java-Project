@@ -178,6 +178,7 @@
   background-position: center center;
   z-index: 9;
   pointer-events: none;
+  opacity: 50%;
 }
 
 #disableGrid {

@@ -154,6 +154,7 @@ public class SalvoController {
     dto.put("salvoes", gamePlayer.getGame().getGamePlayers().stream().sorted(Comparator.comparing(GamePlayer::getGamePlayerId))
             .flatMap(gp -> gp.getSalvoes().stream().sorted(Comparator.comparing(Salvo::getTurn)).map(Salvo::createGameDTO_Salvo))
             .collect(Collectors.toList()));
+    dto.put("gameState", gamePlayer.gameState());
     return dto;
   }
 
