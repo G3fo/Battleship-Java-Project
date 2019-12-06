@@ -97,7 +97,89 @@ public class GamePlayer {
         dto.put("salvoes", this.game.getGamePlayers().stream()
                 .flatMap(gp->gp.getSalvoes().stream().map(Salvo::createGameDTO_Salvo))
                 .collect(Collectors.toList()));
+        dto.put("gameState", this.gameState());
         return dto;
+    }
+
+    private GamePlayer getEnemyGamePlayer(){
+        GamePlayer enemyGamePlayer = this.getGame().getGamePlayers().stream().filter(gamePlayer -> gamePlayer.getGamePlayerId() != this.getGamePlayerId()).findFirst().orElse(null);
+        return enemyGamePlayer;
+    }
+
+    private long getGamePlayerSink(int turn, Set <Salvo> salvo, Set <Ship> ships){
+        List<String> shoot = new LinkedList<>();
+        List<String> allEnemyLoc = new ArrayList<>();
+        long sinks = 0;
+
+
+        salvo.stream().filter(e -> e.getTurn()<= turn).forEach(x -> shoot.addAll(x.getSalvoLocations()));
+
+        sinks = ships.stream().filter(s ->shoot.containsAll(s.getLocations())).count();
+
+
+        // shoot = this.getEnemyGamePlayer().getShips().stream().filter(ship -> allEnemyLoc.containsAll(ship.getLocations())).map(Ship::makeGameDTO_Ship).collect(Collectors.toList());
+
+        return sinks; //retorna n° de sinks
+    }
+
+    private String gameState() {
+
+        String gameState="";
+        int turn = this.getSalvoes().size() + 1;
+        int enemyTurn;
+        long mysinks;
+        long enemySinks;
+        if(this.getEnemyGamePlayer() != null) {
+            enemyTurn = this.getEnemyGamePlayer().getSalvoes().size() + 1;
+            mysinks = this.getGamePlayerSink(turn, this.getSalvoes(), this.getEnemyGamePlayer().getShips());
+            enemySinks = this.getGamePlayerSink(turn, this.getEnemyGamePlayer().getSalvoes(), this.getShips());
+
+
+            if (this.getGamePlayerId() < this.getEnemyGamePlayer().getGamePlayerId()) {
+                if(turn > enemyTurn){
+                    gameState = "wait";
+                }else if(turn == enemyTurn) {
+                    if (this.getShips().size() < 5) {
+                        gameState = "place ships"; //place ships
+                    } else if (this.getShips().size() == 5 && this.getEnemyGamePlayer().getShips().size() < 5) {
+                        gameState = "wait opponent ships"; //wait for enemy ships
+                    } else {
+                        gameState = "shoot";
+                    }
+                }
+            }
+            if (this.getGamePlayerId() > this.getEnemyGamePlayer().getGamePlayerId()) {
+                if(turn < enemyTurn){
+                    gameState = "shoot";
+                }else if(turn == enemyTurn) {
+                    if (this.getShips().size() < 5) {
+                        gameState = "place ships"; //place ships
+                    } else if (this.getShips().size() == 5 && this.getEnemyGamePlayer().getShips().size() < 5) {
+                        gameState = "wait opponent ships"; //wait for enemy ships
+                    } else {
+                        gameState = "wait";
+                    }
+                }
+            }
+            if (mysinks == 5 && turn == enemyTurn) {
+                gameState = "win"; //G.O Win
+            } else if (enemySinks == 5 && turn == enemyTurn) {
+                gameState = "lose"; //G.O Lose
+            } else if (mysinks == 5 && enemySinks == 5 && enemyTurn == turn) {
+                gameState = "tie"; //G.O tie
+            }
+
+        }else{ enemyTurn = 0;
+            mysinks = 0;
+            enemySinks = 0;
+
+            if (this.getShips().size() < 5) {
+                gameState = "place ships"; //place ships
+            }else if (this.getShips().size() == 5 && this.getEnemyGamePlayer() == null) {
+                gameState = "wait opponent"; //wait for enemy ships
+            }
+        }
+        return gameState;
     }
 }
 
