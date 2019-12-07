@@ -2,7 +2,8 @@ var gpId = window.location.search.match(/\d+/g).map(Number);
 var player;
 var opponent;
 
-var defaultShipsArray = [{
+var defaultShipsArray = [
+  {
     shipType: "CARRIER",
     locations: ["A1", "A2", "A3", "A4", "A5"]
   },
@@ -28,10 +29,10 @@ loadGamesJSON();
 
 function loadGamesJSON() {
   fetch("/api/game_view/" + gpId)
-    .then(function (response) {
+    .then(function(response) {
       return response.json();
     })
-    .then(function (json) {
+    .then(function(json) {
       gamesJSON = json;
       var st = gamesJSON.gameState;
       if (gamesJSON.ships.length > 0) {
@@ -43,7 +44,7 @@ function loadGamesJSON() {
         setSalvoes();
         getHits();
         salvoesClick();
-        gameState(st)
+        gameState(st);
       } else {
         //Si el jugador no puso ships previamente, carga la grilla en modo dinamico y los ships default
         document.getElementById("POSTsalvoes").style.display = "none";
@@ -51,7 +52,7 @@ function loadGamesJSON() {
         loadGrid(false);
         defaultShips();
         createGrid(11, $(".grid-salvoes"), "salvoes");
-        gameState(st)
+        gameState(st);
       }
 
       for (let i = 0; i < gamesJSON.players.length; i++) {
@@ -67,25 +68,24 @@ function loadGamesJSON() {
         getHits();
       }
     })
-    .catch(function (error) {
+    .catch(function(error) {
       console.log(error);
     });
 }
 
 function reload() {
   fetch("/api/game_view/" + gpId)
-    .then(function (response) {
+    .then(function(response) {
       return response.json();
     })
-    .then(function (json) {
+    .then(function(json) {
       gamesJSON = json;
       gameState(gamesJSON.gameState);
 
       setSalvoes();
       getHits();
-    })
-};
-
+    });
+}
 
 function defaultShips() {
   for (var i = 0; i < defaultShipsArray.length; i++) {
@@ -100,11 +100,11 @@ function defaultShips() {
     grid.addWidget(
       $(
         '<div id="' +
-        shipType +
-        '"><div class="grid-stack-item-content ' +
-        shipType +
-        orientation +
-        '"></div><div/>'
+          shipType +
+          '"><div class="grid-stack-item-content ' +
+          shipType +
+          orientation +
+          '"></div><div/>'
       ),
       x,
       y,
@@ -161,14 +161,14 @@ function shipPOST() {
   }
 
   fetch("/api/games/players/" + gpId + "/ships", {
-      method: "POST",
-      body: JSON.stringify(shipArray),
-      headers: {
-        "Content-Type": "application/json"
-      },
-      credentials: "same-origin"
-    })
-    .then(function (response) {
+    method: "POST",
+    body: JSON.stringify(shipArray),
+    headers: {
+      "Content-Type": "application/json"
+    },
+    credentials: "same-origin"
+  })
+    .then(function(response) {
       response.status;
       if (response.status == 201) {
         console.log("Ships Fetched");
@@ -176,10 +176,10 @@ function shipPOST() {
         console.log("invalid");
       }
     })
-    .then(function () {
-      reload()
+    .then(function() {
+      reload();
     })
-    .catch(function (error) {
+    .catch(function(error) {
       console.log(error);
     });
 }
@@ -195,7 +195,7 @@ function salvoesClick() {
   }
 
   for (var i = 0; i < salvo_cell.length; i++) {
-    salvo_cell[i].addEventListener("click", function (e) {
+    salvo_cell[i].addEventListener("click", function(e) {
       e.preventDefault();
       var cellId = e.target.id;
       var cellShot = document.getElementById(cellId);
@@ -224,22 +224,22 @@ function salvoesPOST() {
   }
 
   fetch("/api/games/players/" + gpId + "/salvoes", {
-      method: "POST",
-      body: JSON.stringify(salvoLocations),
-      headers: {
-        "Content-Type": "application/json"
-      },
-      credentials: "same-origin"
-    })
-    .then(function (response) {
+    method: "POST",
+    body: JSON.stringify(salvoLocations),
+    headers: {
+      "Content-Type": "application/json"
+    },
+    credentials: "same-origin"
+  })
+    .then(function(response) {
       response.status;
       if (response.status == 201) {
         console.log("Salvoes Fetched");
-        reload()
+        reload();
       } else {
         console.log("Invalid");
         swal("Whoops", "You need to place 5 salvoes!", "error").then(
-          function () {
+          function() {
             toBeSalvo = document.querySelectorAll(".toBeSalvo");
             for (var i = 0; i < toBeSalvo.length; i++) {
               toBeSalvo[i].classList.remove("toBeSalvo");
@@ -250,12 +250,12 @@ function salvoesPOST() {
         );
       }
     })
-    .catch(function (error) {
+    .catch(function(error) {
       console.log(error);
     });
 }
 
-const stringToInt = function (str) {
+const stringToInt = function(str) {
   switch (str) {
     case "A":
       return 0;
@@ -280,67 +280,78 @@ const stringToInt = function (str) {
   }
 };
 
-const gameState = function (state) {
+const gameState = function(state) {
   switch (state) {
-    case 'place ships':
-      document.getElementById("startGame").style.display = 'block';
-      document.getElementById("disableGrid").style.display = 'block';
-      document.getElementById("POSTsalvoes").style.display = 'none';
+    case "place ships":
+      document.getElementById("startGame").style.display = "block";
+      document.getElementById("disableGrid").style.display = "block";
+      document.getElementById("POSTsalvoes").style.display = "none";
       document.getElementById("logger").innerHTML = "Wating opponent";
-      document.getElementById("waitText").innerText = 'Waiting Opponent';
+      document.getElementById("waitText").innerText = "Waiting Opponent";
       break;
-    case 'wait opponent':
-      document.getElementById("POSTsalvoes").style.display = 'none';
+    case "wait opponent":
+      document.getElementById("POSTsalvoes").style.display = "none";
       document.getElementById("logger").innerHTML = "Wating opponent";
-      document.getElementById("disableGrid").style.display = 'block';
-      document.getElementById("waitText").innerText = 'Waiting Opponent';
+      document.getElementById("disableGrid").style.display = "block";
+      document.getElementById("waitText").innerText = "Waiting Opponent";
 
       break;
-    case 'wait opponent ships':
+    case "wait opponent ships":
       document.getElementById("logger").innerHTML = "In battle";
-      document.getElementById("POSTsalvoes").style.display = 'none';
-      document.getElementById("disableGrid").style.display = 'block';
-      document.getElementById("waitText").innerText = 'Waiting opponent ships';
+      document.getElementById("POSTsalvoes").style.display = "none";
+      document.getElementById("disableGrid").style.display = "block";
+      document.getElementById("waitText").innerText = "Waiting opponent ships";
       break;
     case "shoot":
       setSalvoes();
       salvoesClick();
       document.getElementById("logger").innerHTML = "In battle";
-      document.getElementById("POSTsalvoes").style.display = 'block';
-      document.getElementById("disableGrid").style.display = 'none';
+      document.getElementById("POSTsalvoes").style.display = "block";
+      document.getElementById("disableGrid").style.display = "none";
 
       break;
     case "wait":
       getHits();
       document.getElementById("logger").innerHTML = "In battle";
-      document.getElementById("POSTsalvoes").style.display = 'none';
-      document.getElementById("disableGrid").style.display = 'block';
-      document.getElementById("waitText").innerText = 'Opponent turn';
+      document.getElementById("POSTsalvoes").style.display = "none";
+      document.getElementById("disableGrid").style.display = "block";
+      document.getElementById("waitText").innerText = "Opponent turn";
 
       break;
     case "win":
-      document.getElementById("gameView").style.display = 'none';
+      document.getElementById("gameView").style.display = "none";
       break;
     case "lose":
-      document.getElementById("gameView").style.display = 'none';
+      document.getElementById("gameView").style.display = "none";
       break;
     case "tie":
-      document.getElementById("gameView").style.display = 'none';
+      document.getElementById("gameView").style.display = "none";
       break;
   }
 };
 
-
-// var shoot = function(){
+// var shoot = function() {
 //   setSalvoes();
 //   salvoesClick();
 //   document.getElementById("logger").innerHTML = "In battle";
-//   document.getElementById("POSTsalvoes").style.display = 'block';
-//   document.getElementById("disableGrid").style.display = 'none';
-// }
+//   document.getElementById("POSTsalvoes").style.display = "block";
+//   document.getElementById("disableGrid").style.display = "none";
+// };
+
+// const place = function() {
+//   document.getElementById("startGame").style.display = "block";
+//   document.getElementById("disableGrid").style.display = "block";
+//   document.getElementById("POSTsalvoes").style.display = "none";
+//   document.getElementById("logger").innerHTML = "Wating opponent";
+//   document.getElementById("waitText").innerText = "Waiting Opponent";
+// };
 
 // var actions = {
-//   "shoot": shoot
-// }
+//   shoot: shoot,
+//   place: place,
+//   wait: wait,
+//   waitOpponent: waitOpponent,
+//   waitOpponentShips: waitOpponentShips
+// };
 
-// actions[clave]()
+// actions[state]();
