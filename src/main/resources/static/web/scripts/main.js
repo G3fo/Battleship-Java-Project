@@ -2,7 +2,67 @@ var gpId = window.location.search.match(/\d+/g).map(Number);
 var player;
 var opponent;
 
-var defaultShipsArray = [
+const shoot = function() {
+  setSalvoes();
+  salvoesClick();
+  document.getElementById("logger").innerHTML = "In battle";
+  document.getElementById("POSTsalvoes").style.display = "block";
+  document.getElementById("disableGrid").style.display = "none";
+};
+const placeShips = function() {
+  document.getElementById("startGame").style.display = "block";
+  document.getElementById("disableGrid").style.display = "block";
+  document.getElementById("POSTsalvoes").style.display = "none";
+  document.getElementById("logger").innerHTML = "Wating opponent";
+  document.getElementById("waitText").innerText = "Waiting Opponent";
+};
+const wait = function() {
+  getHits();
+  document.getElementById("logger").innerHTML = "In battle";
+  document.getElementById("POSTsalvoes").style.display = "none";
+  document.getElementById("disableGrid").style.display = "block";
+  document.getElementById("waitText").innerText = "Opponent turn";
+};
+const waitOpponent = function() {
+  document.getElementById("POSTsalvoes").style.display = "none";
+  document.getElementById("logger").innerHTML = "Wating opponent";
+  document.getElementById("disableGrid").style.display = "block";
+  document.getElementById("waitText").innerText = "Waiting Opponent";
+};
+const waitOpponentShips = function() {
+  document.getElementById("logger").innerHTML = "In battle";
+  document.getElementById("POSTsalvoes").style.display = "none";
+  document.getElementById("disableGrid").style.display = "block";
+  document.getElementById("waitText").innerText = "Waiting opponent ships";
+};
+const win = function() {
+  document.getElementById("gameView").style.display = "none";
+  document.getElementById("state").style.display = "block";
+  document.getElementById("state").innerText = state;
+};
+const tie = function() {
+  document.getElementById("gameView").style.display = "none";
+  document.getElementById("state").style.display = "block";
+  document.getElementById("state").innerText = state;
+};
+const lose = function() {
+  document.getElementById("gameView").style.display = "none";
+  document.getElementById("state").style.display = "block";
+  document.getElementById("state").innerText = state;
+};
+
+const gameState = {
+  shoot: shoot,
+  "place ships": placeShips,
+  wait: wait,
+  "wait opponent": waitOpponent,
+  "wait opponent ships": waitOpponentShips,
+  win: win,
+  tie: tie,
+  lose: lose
+};
+
+const defaultShipsArray = [
   {
     shipType: "CARRIER",
     locations: ["A1", "A2", "A3", "A4", "A5"]
@@ -29,9 +89,7 @@ var defaultShipsArray = [
 //-------------- Funcion inicial
 //-------------------------------------------------------------------------------------
 
-loadGamesJSON();
-
-function loadGamesJSON() {
+const loadGamesJSON = function() {
   fetch("/api/game_view/" + gpId)
     .then(function(response) {
       return response.json();
@@ -39,37 +97,42 @@ function loadGamesJSON() {
     .then(function(json) {
       gamesJSON = json;
       var st = gamesJSON.gameState;
-      if (gamesJSON.ships.length > 0) {
-        //Sino, en modo estatico, y no puede mover los ships
-        document.getElementById("startGame").style.display = "none";
-        document.getElementById("disableGrid").style.display = "none";
-        loadGrid(true);
+      whoIsWho();
+
+      if (st === "place ships") {
+        //Si el jugador ya envio sus ships, carga la grilla en modo estatico, y no puede mover los ships
         createGrid(11, $(".grid-salvoes"), "salvoes");
-        setSalvoes();
-        getHits();
-        salvoesClick();
-        gameState(st);
-      } else {
-        //Si el jugador no puso ships previamente, carga la grilla en modo dinamico y los ships default
-        document.getElementById("POSTsalvoes").style.display = "none";
-        document.getElementById("disableGrid").style.display = "block";
         loadGrid(false);
         defaultShips();
+      } else if (st === "wait opponent") {
         createGrid(11, $(".grid-salvoes"), "salvoes");
-        gameState(st);
-      }
-
-      for (let i = 0; i < gamesJSON.players.length; i++) {
-        if (gamesJSON.players[i].gpid == gpId) {
-          player = gamesJSON.players[i].gpid;
-        } else {
-          opponent = gamesJSON.players[i].gpid;
-        }
+        loadGrid(true);
+      } else {
+        //Si el jugador no puso ships previamente, carga la grilla en modo dinamico y los ships default
+        createGrid(11, $(".grid-salvoes"), "salvoes");
+        loadGrid(false);
+        document.getElementById("POSTsalvoes").style.display = "none";
+        document.getElementById("disableGrid").style.display = "none";
       }
     })
     .catch(function(error) {
       console.log(error);
     });
+};
+
+loadGamesJSON();
+
+function whoIsWho() {
+  for (let i = 0; i < gamesData.gamePlayers.length; i++) {
+    if (gamesData.gamePlayers[i].gpid == gpId) {
+      actualPlayer = gamesData.gamePlayers[i].Players;
+    } else {
+      opponent = gamesData.gamePlayers[i].Players;
+    }
+  }
+
+  let userN = document.getElementById("userInfo");
+  userN.innerHTML = ` ${actualPlayer.user_name}`;
 }
 
 //-------------------------------------------------------------------------------------
@@ -92,7 +155,7 @@ function reload() {
 
       setSalvoes();
       getHits();
-      gameState(gamesJSON.gameState);
+      gameState[gamesJSON.gameState]();
     });
 }
 
@@ -275,88 +338,3 @@ function salvoesClick() {
     });
   }
 }
-
-const gameState = function(state) {
-  switch (state) {
-    case "place ships":
-      document.getElementById("startGame").style.display = "block";
-      document.getElementById("disableGrid").style.display = "block";
-      document.getElementById("POSTsalvoes").style.display = "none";
-      document.getElementById("logger").innerHTML = "Wating opponent";
-      document.getElementById("waitText").innerText = "Waiting Opponent";
-      break;
-    case "wait opponent":
-      document.getElementById("POSTsalvoes").style.display = "none";
-      document.getElementById("logger").innerHTML = "Wating opponent";
-      document.getElementById("disableGrid").style.display = "block";
-      document.getElementById("waitText").innerText = "Waiting Opponent";
-
-      break;
-    case "wait opponent ships":
-      document.getElementById("logger").innerHTML = "In battle";
-      document.getElementById("POSTsalvoes").style.display = "none";
-      document.getElementById("disableGrid").style.display = "block";
-      document.getElementById("waitText").innerText = "Waiting opponent ships";
-      break;
-    case "shoot":
-      document.getElementById("startGame").style.display = "none";
-
-      setSalvoes();
-      salvoesClick();
-      document.getElementById("logger").innerHTML = "In battle";
-      document.getElementById("POSTsalvoes").style.display = "block";
-      document.getElementById("disableGrid").style.display = "none";
-
-      break;
-    case "wait":
-      getHits();
-      document.getElementById("logger").innerHTML = "In battle";
-      document.getElementById("POSTsalvoes").style.display = "none";
-      document.getElementById("disableGrid").style.display = "block";
-      document.getElementById("waitText").innerText = "Opponent turn";
-
-      break;
-    case "win":
-      document.getElementById("gameView").style.display = "none";
-      document.getElementById("state").style.display = "block";
-      document.getElementById("state").innerText = state;
-
-      break;
-    case "lose":
-      document.getElementById("gameView").style.display = "none";
-      document.getElementById("state").style.display = "block";
-      document.getElementById("state").innerText = state;
-      break;
-    case "tie":
-      document.getElementById("gameView").style.display = "none";
-      document.getElementById("state").style.display = "block";
-      document.getElementById("state").innerText = state;
-      break;
-  }
-};
-
-// var shoot = function() {
-//   setSalvoes();
-//   salvoesClick();
-//   document.getElementById("logger").innerHTML = "In battle";
-//   document.getElementById("POSTsalvoes").style.display = "block";
-//   document.getElementById("disableGrid").style.display = "none";
-// };
-
-// const place = function() {
-//   document.getElementById("startGame").style.display = "block";
-//   document.getElementById("disableGrid").style.display = "block";
-//   document.getElementById("POSTsalvoes").style.display = "none";
-//   document.getElementById("logger").innerHTML = "Wating opponent";
-//   document.getElementById("waitText").innerText = "Waiting Opponent";
-// };
-
-// var actions = {
-//   shoot: shoot,
-//   place: place,
-//   wait: wait,
-//   waitOpponent: waitOpponent,
-//   waitOpponentShips: waitOpponentShips
-// };
-
-// actions[state]();
