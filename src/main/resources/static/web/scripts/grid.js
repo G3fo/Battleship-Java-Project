@@ -240,7 +240,7 @@ const getHits = function() {
     for (j = 0; j < gamesJSON.salvoes[i].hits.length; j++) {
       let player = gamesJSON.salvoes[i].game_player_id;
       let x = +gamesJSON.salvoes[i].hits[j][1];
-      let y = stringToInt(gamesJSON.salvoes[i].hits[j][0].toUpperCase());
+      let y = stringToInt[gamesJSON.salvoes[i].hits[j][0].toUpperCase()];
 
       if (player == actualPlayer) {
         document

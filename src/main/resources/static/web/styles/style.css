@@ -155,16 +155,6 @@
   background-color: purple;
 }
 
-.hit {
-  background-color: red;
-  background-size: cover;
-  background-position: center center;
-  z-index: 19;
-  pointer-events: none;
-  opacity: 50%;
-  background-image: url("x.png");
-}
-
 .toBeSalvo {
   background-color: orange;
   background-size: cover;
@@ -182,13 +172,23 @@
   opacity: 50%;
 }
 
+.hit {
+  background-color: red;
+  background-size: cover;
+  background-position: center center;
+  z-index: 19;
+  pointer-events: none;
+  opacity: 50%;
+  background-image: url("x.png");
+}
+
 #disableGrid {
   width: 495px;
   height: 495px;
   background-color: rgba(16, 49, 55, 0.7);
   position: absolute;
   border-radius: 10px;
-  z-index: 20;
+  z-index: 50;
   text-align: center;
 }
 

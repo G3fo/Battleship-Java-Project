@@ -35,17 +35,17 @@ const waitOpponentShips = function() {
   document.getElementById("disableGrid").style.display = "block";
   document.getElementById("waitText").innerText = "Waiting opponent ships";
 };
-const win = function() {
+const win = function(state) {
   document.getElementById("gameView").style.display = "none";
   document.getElementById("state").style.display = "block";
   document.getElementById("state").innerText = state;
 };
-const tie = function() {
+const tie = function(state) {
   document.getElementById("gameView").style.display = "none";
   document.getElementById("state").style.display = "block";
   document.getElementById("state").innerText = state;
 };
-const lose = function() {
+const lose = function(state) {
   document.getElementById("gameView").style.display = "none";
   document.getElementById("state").style.display = "block";
   document.getElementById("state").innerText = state;
@@ -99,7 +99,8 @@ const loadGamesJSON = function() {
       var st = gamesJSON.gameState;
 
       if (st === "place ships") {
-        //Si el jugador ya envio sus ships, carga la grilla en modo estatico, y no puede mover los ships
+        //Si el jugador no puso ships previamente, carga la grilla en modo dinamico y los ships default
+
         createGrid(11, $(".grid-salvoes"), "salvoes");
         loadGrid(false);
         defaultShips();
@@ -107,16 +108,16 @@ const loadGamesJSON = function() {
         createGrid(11, $(".grid-salvoes"), "salvoes");
         loadGrid(true);
       } else {
-        //Si el jugador no puso ships previamente, carga la grilla en modo dinamico y los ships default
+        //Si el jugador ya envio sus ships, carga la grilla en modo estatico, y no puede mover los ships
+
         createGrid(11, $(".grid-salvoes"), "salvoes");
-        loadGrid(false);
-        document.getElementById("POSTsalvoes").style.display = "none";
-        document.getElementById("disableGrid").style.display = "none";
+        loadGrid(true);
+
         document.getElementById("startGame").style.display = "none";
+        document.getElementById("disableGrid").style.display = "none";
       }
 
-      whoIsWho();
-      gameState[st]();
+      reload();
     })
     .catch(function(error) {
       console.log(error);
@@ -138,18 +139,20 @@ function whoIsWho() {
   userN.innerHTML = ` ${actualPlayer}`;
 
   let opponentN = document.getElementById("opponentUsername");
-  opponent == undefined ? null : (opponentN.innerHTML = ` ${opponent}`);
+
+  opponentN.innerHTML =
+    opponent == undefined ? "Waiting for opponent to join" : ` ${opponent}`;
 }
 
 //-------------------------------------------------------------------------------------
 //-------------- Recarga de datos
 //-------------------------------------------------------------------------------------
 
-// $(document).ready(
-//   setInterval(function() {
-//     reload();
-//   }, 5000)
-// );
+$(document).ready(
+  setInterval(function() {
+    reload();
+  }, 5000)
+);
 
 function reload() {
   fetch("/api/game_view/" + gpId)
@@ -161,7 +164,7 @@ function reload() {
       whoIsWho();
       setSalvoes();
       getHits();
-      gameState[gamesJSON.gameState]();
+      gameState[gamesJSON.gameState](gamesJSON.gameState);
     });
 }
 
@@ -317,14 +320,15 @@ function defaultShips() {
 //-------------------------------------------------------------------------------------
 
 var counter = 0;
-salvo_cell = [];
 
 function salvoesClick() {
-  for (let i = 0; i < 10; i++) {
-    for (let j = 0; j < 10; j++) {
-      salvo_cell.push(document.getElementById("salvoes" + i + j));
-    }
-  }
+  const salvo_cell = document.getElementsByClassName("grid-cell");
+
+  // for (let i = 0; i < 10; i++) {
+  //   for (let j = 0; j < 10; j++) {
+  //     salvo_cell.push(document.getElementById("salvoes" + i + j));
+  //   }
+  // }
 
   for (var i = 0; i < salvo_cell.length; i++) {
     salvo_cell[i].addEventListener("click", function(e) {
