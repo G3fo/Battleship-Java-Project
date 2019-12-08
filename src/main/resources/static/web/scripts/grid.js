@@ -4,7 +4,7 @@ https://github.com/gridstack/gridstack.js/tree/develop/doc
 */
 
 //Función principal que dispara el frame gridstack.js y carga la matriz con los barcos
-const loadGrid = function (static) {
+const loadGrid = function(static) {
   var options = {
     //matriz 10 x 10
     width: 10,
@@ -51,7 +51,7 @@ element: es la tag que contendra nuestra matriz, para este ejemplo
 id: sera como lo llamamos, en este caso ship ???)
 */
 
-const createGrid = function (size, element, id) {
+const createGrid = function(size, element, id) {
   // definimos un nuevo elemento: <div></div>
   let wrapper = document.createElement("DIV");
 
@@ -125,8 +125,8 @@ const createGrid = function (size, element, id) {
 /*manejador de evento para rotar los barcos, el mismo se ejecuta al hacer click
 sobre un barco
 function(tipoDeBarco, celda)*/
-const rotateShips = function (shipType, cells) {
-  $(`#${shipType}`).click(function () {
+const rotateShips = function(shipType, cells) {
+  $(`#${shipType}`).click(function() {
     document.getElementById("alert-text").innerHTML = `Rotaste: ${shipType}`;
     console.log($(this));
     //Establecemos nuevos atributos para el widget/barco que giramos
@@ -156,8 +156,8 @@ const rotateShips = function (shipType, cells) {
         */
     if (
       $(this)
-      .children()
-      .hasClass(`${shipType}Horizontal`)
+        .children()
+        .hasClass(`${shipType}Horizontal`)
     ) {
       // grid.isAreaEmpty revisa si un array esta vacio**
       // grid.isAreaEmpty(fila, columna, ancho, alto)
@@ -220,7 +220,7 @@ const rotateShips = function (shipType, cells) {
 };
 
 //Bucle que consulta por todas las celdas para ver si estan ocupadas o no
-const listenBusyCells = function (id) {
+const listenBusyCells = function(id) {
   /* id vendria a ser ships. Recordar el id de las celdas del tablero se arma uniendo 
     la palabra ships + fila + columna contando desde 0. Asi la primer celda tendra id
     ships00 */
@@ -239,12 +239,12 @@ const listenBusyCells = function (id) {
   }
 };
 
-const setShips = function () {
+const setShips = function() {
   for (i = 0; i < gamesJSON.ships.length; i++) {
     //Solo necesito la primera posicion, el resto de la informacion se deduce de la cantidad de celdas
     let shipType = gamesJSON.ships[i].shipType.toLowerCase();
     let x = +gamesJSON.ships[i].locations[0][1];
-    let y = stringToInt(gamesJSON.ships[i].locations[0][0].toUpperCase());
+    let y = stringToInt[gamesJSON.ships[i].locations[0][0].toUpperCase()];
     let w;
     let h;
     let orientation;
@@ -264,11 +264,11 @@ const setShips = function () {
     grid.addWidget(
       $(
         '<div id="' +
-        shipType +
-        '"><div class="grid-stack-item-content ' +
-        shipType +
-        orientation +
-        '"></div><div/>'
+          shipType +
+          '"><div class="grid-stack-item-content ' +
+          shipType +
+          orientation +
+          '"></div><div/>'
       ),
       x,
       y,
@@ -278,7 +278,7 @@ const setShips = function () {
   }
 };
 
-const setSalvoes = function () {
+const setSalvoes = function() {
   var actualPlayer;
   var opponent;
   for (let i = 0; i < gamesJSON.players.length; i++) {
@@ -295,20 +295,21 @@ const setSalvoes = function () {
       let player = gamesJSON.salvoes[i].game_player_id;
 
       let x = +gamesJSON.salvoes[i].locations[j].substring(1);
-      let y = stringToInt(gamesJSON.salvoes[i].locations[j][0].toUpperCase());
+      let y = stringToInt[gamesJSON.salvoes[i].locations[j][0].toUpperCase()];
 
       if (player == actualPlayer) {
-        document.getElementById(`salvoes${y}${x}`).classList.remove("toBeSalvo");
+        document
+          .getElementById(`salvoes${y}${x}`)
+          .classList.remove("toBeSalvo");
         document.getElementById(`salvoes${y}${x}`).classList.add("sentSalvo");
       } else {
         document.getElementById(`ships` + y + x).classList.add("sentSalvo");
       }
     }
   }
-
 };
 
-const getHits = function () {
+const getHits = function() {
   var actualPlayer;
   var opponent;
   for (let i = 0; i < gamesJSON.players.length; i++) {
@@ -325,7 +326,9 @@ const getHits = function () {
       let y = stringToInt(gamesJSON.salvoes[i].hits[j][0].toUpperCase());
 
       if (player == actualPlayer) {
-        document.getElementById(`salvoes${y}${x}`).classList.remove("sentSalvo");
+        document
+          .getElementById(`salvoes${y}${x}`)
+          .classList.remove("sentSalvo");
         document.getElementById(`salvoes${y}${x}`).classList.add("hit");
       } else {
         document.getElementById(`ships${y}${x}`).classList.remove("sentSalvo");
@@ -335,27 +338,27 @@ const getHits = function () {
   }
 };
 
-const intToString = function (int) {
-  switch (int) {
-    case 0:
-      return "A";
-    case 1:
-      return "B";
-    case 2:
-      return "C";
-    case 3:
-      return "D";
-    case 4:
-      return "E";
-    case 5:
-      return "F";
-    case 6:
-      return "G";
-    case 7:
-      return "H";
-    case 8:
-      return "I";
-    case 9:
-      return "J";
-  }
+const intToString = {
+  0: "A",
+  1: "B",
+  2: "C",
+  3: "D",
+  4: "E",
+  5: "F",
+  6: "G",
+  7: "H",
+  8: "I",
+  9: "J"
+};
+const stringToInt = {
+  A: 0,
+  B: 1,
+  C: 2,
+  D: 3,
+  E: 4,
+  F: 5,
+  G: 6,
+  H: 7,
+  I: 8,
+  J: 9
 };

@@ -25,6 +25,10 @@ var defaultShipsArray = [
   }
 ];
 
+//-------------------------------------------------------------------------------------
+//-------------- Funcion inicial
+//-------------------------------------------------------------------------------------
+
 loadGamesJSON();
 
 function loadGamesJSON() {
@@ -37,7 +41,7 @@ function loadGamesJSON() {
       var st = gamesJSON.gameState;
       if (gamesJSON.ships.length > 0) {
         //Sino, en modo estatico, y no puede mover los ships
-        document.getElementById("POSTships").style.display = "none";
+        document.getElementById("startGame").style.display = "none";
         document.getElementById("disableGrid").style.display = "none";
         loadGrid(true);
         createGrid(11, $(".grid-salvoes"), "salvoes");
@@ -62,16 +66,21 @@ function loadGamesJSON() {
           opponent = gamesJSON.players[i].gpid;
         }
       }
-
-      if (gamesJSON.salvoes.length > 0) {
-        setSalvoes();
-        getHits();
-      }
     })
     .catch(function(error) {
       console.log(error);
     });
 }
+
+//-------------------------------------------------------------------------------------
+//-------------- Recarga de datos
+//-------------------------------------------------------------------------------------
+
+$(document).ready(
+  setInterval(function() {
+    reload();
+  }, 15000)
+);
 
 function reload() {
   fetch("/api/game_view/" + gpId)
@@ -80,46 +89,18 @@ function reload() {
     })
     .then(function(json) {
       gamesJSON = json;
-      gameState(gamesJSON.gameState);
 
       setSalvoes();
       getHits();
+      gameState(gamesJSON.gameState);
     });
 }
 
-function defaultShips() {
-  for (var i = 0; i < defaultShipsArray.length; i++) {
-    let shipType = defaultShipsArray[i].shipType.toLowerCase();
-    let x = +defaultShipsArray[i].locations[0][1] - 1;
-    let y = stringToInt(defaultShipsArray[i].locations[0][0].toUpperCase()); //Transformo la string a numero para ubicarla en el axis Y
+//-------------------------------------------------------------------------------------
+//-------------- Posts al servidor
+//-------------------------------------------------------------------------------------
 
-    var w = defaultShipsArray[i].locations.length;
-    var h = 1;
-    var orientation = "Horizontal";
-
-    grid.addWidget(
-      $(
-        '<div id="' +
-          shipType +
-          '"><div class="grid-stack-item-content ' +
-          shipType +
-          orientation +
-          '"></div><div/>'
-      ),
-      x,
-      y,
-      w,
-      h
-    );
-  }
-
-  //Activo los listeners para la rotacion de los barcos
-  rotateShips("carrier", 5);
-  rotateShips("battleship", 4);
-  rotateShips("submarine", 3);
-  rotateShips("destroyer", 3);
-  rotateShips("patrol_boat", 2);
-}
+//---------------- Post de ships
 
 function shipPOST() {
   let shipTypeArray = [
@@ -184,34 +165,7 @@ function shipPOST() {
     });
 }
 
-var counter = 0;
-salvo_cell = [];
-
-function salvoesClick() {
-  for (let i = 0; i < 10; i++) {
-    for (let j = 0; j < 10; j++) {
-      salvo_cell.push(document.getElementById("salvoes" + i + j));
-    }
-  }
-
-  for (var i = 0; i < salvo_cell.length; i++) {
-    salvo_cell[i].addEventListener("click", function(e) {
-      e.preventDefault();
-      var cellId = e.target.id;
-      var cellShot = document.getElementById(cellId);
-
-      if (cellShot.classList.contains("toBeSalvo")) {
-        cellShot = document
-          .getElementById(cellId)
-          .classList.remove("toBeSalvo");
-        counter--;
-      } else if (!cellShot.classList.contains("toBeSalvo") && counter < 5) {
-        cellShot = document.getElementById(cellId).classList.add("toBeSalvo");
-        counter++;
-      }
-    });
-  }
-}
+//----------------------------------------- Post de salvoes
 
 function salvoesPOST() {
   salvoLocations = [];
@@ -219,7 +173,7 @@ function salvoesPOST() {
   for (let i = 0; i < salvoes.length; i++) {
     var salvoId = salvoes[i].id.slice(-2);
     let x = +salvoId[1];
-    let y = intToString(parseInt(salvoId[0]));
+    let y = intToString[parseInt(salvoId[0])];
     salvoLocations.push(y + x);
   }
 
@@ -255,30 +209,72 @@ function salvoesPOST() {
     });
 }
 
-const stringToInt = function(str) {
-  switch (str) {
-    case "A":
-      return 0;
-    case "B":
-      return 1;
-    case "C":
-      return 2;
-    case "D":
-      return 3;
-    case "E":
-      return 4;
-    case "F":
-      return 5;
-    case "G":
-      return 6;
-    case "H":
-      return 7;
-    case "I":
-      return 8;
-    case "J":
-      return 9;
+function defaultShips() {
+  for (var i = 0; i < defaultShipsArray.length; i++) {
+    let shipType = defaultShipsArray[i].shipType.toLowerCase();
+    let x = +defaultShipsArray[i].locations[0][1] - 1;
+    let y = stringToInt[defaultShipsArray[i].locations[0][0].toUpperCase()]; //Transformo la string a numero para ubicarla en el axis Y
+
+    var w = defaultShipsArray[i].locations.length;
+    var h = 1;
+    var orientation = "Horizontal";
+
+    grid.addWidget(
+      $(
+        '<div id="' +
+          shipType +
+          '"><div class="grid-stack-item-content ' +
+          shipType +
+          orientation +
+          '"></div><div/>'
+      ),
+      x,
+      y,
+      w,
+      h
+    );
   }
-};
+
+  //Activo los listeners para la rotacion de los barcos
+  rotateShips("carrier", 5);
+  rotateShips("battleship", 4);
+  rotateShips("submarine", 3);
+  rotateShips("destroyer", 3);
+  rotateShips("patrol_boat", 2);
+}
+
+//-------------------------------------------------------------------------------------
+//-------------- Event Listeners
+//-------------------------------------------------------------------------------------
+
+var counter = 0;
+salvo_cell = [];
+
+function salvoesClick() {
+  for (let i = 0; i < 10; i++) {
+    for (let j = 0; j < 10; j++) {
+      salvo_cell.push(document.getElementById("salvoes" + i + j));
+    }
+  }
+
+  for (var i = 0; i < salvo_cell.length; i++) {
+    salvo_cell[i].addEventListener("click", function(e) {
+      e.preventDefault();
+      var cellId = e.target.id;
+      var cellShot = document.getElementById(cellId);
+
+      if (cellShot.classList.contains("toBeSalvo")) {
+        cellShot = document
+          .getElementById(cellId)
+          .classList.remove("toBeSalvo");
+        counter--;
+      } else if (!cellShot.classList.contains("toBeSalvo") && counter < 5) {
+        cellShot = document.getElementById(cellId).classList.add("toBeSalvo");
+        counter++;
+      }
+    });
+  }
+}
 
 const gameState = function(state) {
   switch (state) {
@@ -303,6 +299,8 @@ const gameState = function(state) {
       document.getElementById("waitText").innerText = "Waiting opponent ships";
       break;
     case "shoot":
+      document.getElementById("startGame").style.display = "none";
+
       setSalvoes();
       salvoesClick();
       document.getElementById("logger").innerHTML = "In battle";
@@ -320,12 +318,19 @@ const gameState = function(state) {
       break;
     case "win":
       document.getElementById("gameView").style.display = "none";
+      document.getElementById("state").style.display = "block";
+      document.getElementById("state").innerText = state;
+
       break;
     case "lose":
       document.getElementById("gameView").style.display = "none";
+      document.getElementById("state").style.display = "block";
+      document.getElementById("state").innerText = state;
       break;
     case "tie":
       document.getElementById("gameView").style.display = "none";
+      document.getElementById("state").style.display = "block";
+      document.getElementById("state").innerText = state;
       break;
   }
 };
