@@ -14,7 +14,7 @@ const placeShips = function() {
   document.getElementById("disableGrid").style.display = "block";
   document.getElementById("POSTsalvoes").style.display = "none";
   document.getElementById("logger").innerHTML = "Wating opponent";
-  document.getElementById("waitText").innerText = "Waiting Opponent";
+  document.getElementById("waitText").innerHTML = `Place ships and start game!`;
 };
 const wait = function() {
   getHits();
@@ -97,7 +97,6 @@ const loadGamesJSON = function() {
     .then(function(json) {
       gamesJSON = json;
       var st = gamesJSON.gameState;
-      whoIsWho();
 
       if (st === "place ships") {
         //Si el jugador ya envio sus ships, carga la grilla en modo estatico, y no puede mover los ships
@@ -113,7 +112,11 @@ const loadGamesJSON = function() {
         loadGrid(false);
         document.getElementById("POSTsalvoes").style.display = "none";
         document.getElementById("disableGrid").style.display = "none";
+        document.getElementById("startGame").style.display = "none";
       }
+
+      whoIsWho();
+      gameState[st]();
     })
     .catch(function(error) {
       console.log(error);
@@ -123,27 +126,30 @@ const loadGamesJSON = function() {
 loadGamesJSON();
 
 function whoIsWho() {
-  for (let i = 0; i < gamesData.gamePlayers.length; i++) {
-    if (gamesData.gamePlayers[i].gpid == gpId) {
-      actualPlayer = gamesData.gamePlayers[i].Players;
+  for (let i = 0; i < gamesJSON.players.length; i++) {
+    if (gamesJSON.players[i].gpid == gpId) {
+      actualPlayer = gamesJSON.players[i].user;
     } else {
-      opponent = gamesData.gamePlayers[i].Players;
+      opponent = gamesJSON.players[i].user;
     }
   }
 
-  let userN = document.getElementById("userInfo");
-  userN.innerHTML = ` ${actualPlayer.user_name}`;
+  let userN = document.getElementById("username");
+  userN.innerHTML = ` ${actualPlayer}`;
+
+  let opponentN = document.getElementById("opponentUsername");
+  opponent == undefined ? null : (opponentN.innerHTML = ` ${opponent}`);
 }
 
 //-------------------------------------------------------------------------------------
 //-------------- Recarga de datos
 //-------------------------------------------------------------------------------------
 
-$(document).ready(
-  setInterval(function() {
-    reload();
-  }, 15000)
-);
+// $(document).ready(
+//   setInterval(function() {
+//     reload();
+//   }, 5000)
+// );
 
 function reload() {
   fetch("/api/game_view/" + gpId)
@@ -152,7 +158,7 @@ function reload() {
     })
     .then(function(json) {
       gamesJSON = json;
-
+      whoIsWho();
       setSalvoes();
       getHits();
       gameState[gamesJSON.gameState]();
@@ -228,7 +234,7 @@ function shipPOST() {
     });
 }
 
-//----------------------------------------- Post de salvoes
+//---------------- Post de salvoes
 
 function salvoesPOST() {
   salvoLocations = [];

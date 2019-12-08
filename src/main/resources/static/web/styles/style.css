@@ -194,10 +194,9 @@
 
 .prepareText {
   color: #fffdf5;
-  text-transform: uppercase;
-  font-weight: bold;
   display: block;
   line-height: 495px;
+  font-family: "Righteous", serif;
 }
 
 .btn {
