@@ -174,9 +174,9 @@ public class GamePlayer {
             enemySinks = 0;
 
             if (this.getShips().size() < 5) {
-                gameState = "place ships"; // Esperando a que se enien los ships
+                gameState = "place ships";
             }else if (this.getShips().size() == 5 && this.getEnemyGamePlayer() == null) {
-                gameState = "wait opponent"; // Esperando a que se conecte el oponente
+                gameState = "wait opponent";
             }
         }
         return gameState;
