@@ -35,24 +35,26 @@ const waitOpponentShips = function () {
   document.getElementById("disableGrid").style.display = "block";
   document.getElementById("waitText").innerText = "Waiting opponent ships";
 };
-const win = function (state) {
+const win = function () {
+  document.getElementById("POSTsalvoes").style.display = "none";
   document.getElementById("disableGrid").style.display = "block";
   document.getElementById("disableShipGrid").style.display = "block";
   document.getElementById("state").style.display = "block";
-  document.getElementById("state").innerText = state;
+  document.getElementById("state").innerText = "You won :)";
 };
-const tie = function (state) {
+const tie = function () {
+  document.getElementById("POSTsalvoes").style.display = "none";
   document.getElementById("disableShipGrid").style.display = "block";
   document.getElementById("disableGrid").style.display = "block";
-
   document.getElementById("state").style.display = "block";
-  document.getElementById("state").innerText = state;
+  document.getElementById("state").innerText = "You lost :(";
 };
-const lose = function (state) {
+const lose = function () {
+  document.getElementById("POSTsalvoes").style.display = "none";
   document.getElementById("disableShipGrid").style.display = "block";
   document.getElementById("disableGrid").style.display = "block";
   document.getElementById("state").style.display = "block";
-  document.getElementById("state").innerText = state;
+  document.getElementById("state").innerText = "It's a tie!";
 };
 
 const gameState = {
@@ -168,7 +170,7 @@ function reload() {
       whoIsWho();
       setSalvoes();
       getHits();
-      gameState[gamesJSON.gameState](gamesJSON.gameState);
+      gameState[gamesJSON.gameState]();
     });
 }
 
