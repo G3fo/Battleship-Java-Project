@@ -2,51 +2,55 @@ var gpId = window.location.search.match(/\d+/g).map(Number);
 var player;
 var opponent;
 
-const shoot = function() {
+const shoot = function () {
   setSalvoes();
-  salvoesClick();
-  document.getElementById("logger").innerHTML = "In battle";
   document.getElementById("POSTsalvoes").style.display = "block";
   document.getElementById("disableGrid").style.display = "none";
+  document.getElementById("startGame").style.display = "none";
+
 };
-const placeShips = function() {
+const placeShips = function () {
   document.getElementById("startGame").style.display = "block";
   document.getElementById("disableGrid").style.display = "block";
+  document.getElementById("disableShipGrid").style.display = "none";
   document.getElementById("POSTsalvoes").style.display = "none";
-  document.getElementById("logger").innerHTML = "Wating opponent";
   document.getElementById("waitText").innerHTML = `Place ships and start game!`;
 };
-const wait = function() {
+const wait = function () {
   getHits();
-  document.getElementById("logger").innerHTML = "In battle";
+  document.getElementById("startGame").style.display = "none";
   document.getElementById("POSTsalvoes").style.display = "none";
   document.getElementById("disableGrid").style.display = "block";
   document.getElementById("waitText").innerText = "Opponent turn";
 };
-const waitOpponent = function() {
+const waitOpponent = function () {
+  document.getElementById("startGame").style.display = "none";
   document.getElementById("POSTsalvoes").style.display = "none";
-  document.getElementById("logger").innerHTML = "Wating opponent";
   document.getElementById("disableGrid").style.display = "block";
   document.getElementById("waitText").innerText = "Waiting Opponent";
 };
-const waitOpponentShips = function() {
-  document.getElementById("logger").innerHTML = "In battle";
+const waitOpponentShips = function () {
+  document.getElementById("startGame").style.display = "none";
   document.getElementById("POSTsalvoes").style.display = "none";
   document.getElementById("disableGrid").style.display = "block";
   document.getElementById("waitText").innerText = "Waiting opponent ships";
 };
-const win = function(state) {
-  document.getElementById("gameView").style.display = "none";
+const win = function (state) {
+  document.getElementById("disableGrid").style.display = "block";
+  document.getElementById("disableShipGrid").style.display = "block";
   document.getElementById("state").style.display = "block";
   document.getElementById("state").innerText = state;
 };
-const tie = function(state) {
-  document.getElementById("gameView").style.display = "none";
+const tie = function (state) {
+  document.getElementById("disableShipGrid").style.display = "block";
+  document.getElementById("disableGrid").style.display = "block";
+
   document.getElementById("state").style.display = "block";
   document.getElementById("state").innerText = state;
 };
-const lose = function(state) {
-  document.getElementById("gameView").style.display = "none";
+const lose = function (state) {
+  document.getElementById("disableShipGrid").style.display = "block";
+  document.getElementById("disableGrid").style.display = "block";
   document.getElementById("state").style.display = "block";
   document.getElementById("state").innerText = state;
 };
@@ -62,8 +66,7 @@ const gameState = {
   lose: lose
 };
 
-const defaultShipsArray = [
-  {
+const defaultShipsArray = [{
     shipType: "CARRIER",
     locations: ["A1", "A2", "A3", "A4", "A5"]
   },
@@ -89,12 +92,12 @@ const defaultShipsArray = [
 //-------------- Funcion inicial
 //-------------------------------------------------------------------------------------
 
-const loadGamesJSON = function() {
+const loadGamesJSON = function () {
   fetch("/api/game_view/" + gpId)
-    .then(function(response) {
+    .then(function (response) {
       return response.json();
     })
-    .then(function(json) {
+    .then(function (json) {
       gamesJSON = json;
       var st = gamesJSON.gameState;
 
@@ -115,11 +118,12 @@ const loadGamesJSON = function() {
 
         document.getElementById("startGame").style.display = "none";
         document.getElementById("disableGrid").style.display = "none";
+        document.getElementById("disableShipGrid").style.display = "none";
       }
-
+      salvoesClick();
       reload();
     })
-    .catch(function(error) {
+    .catch(function (error) {
       console.log(error);
     });
 };
@@ -149,17 +153,17 @@ function whoIsWho() {
 //-------------------------------------------------------------------------------------
 
 $(document).ready(
-  setInterval(function() {
+  setInterval(function () {
     reload();
   }, 5000)
 );
 
 function reload() {
   fetch("/api/game_view/" + gpId)
-    .then(function(response) {
+    .then(function (response) {
       return response.json();
     })
-    .then(function(json) {
+    .then(function (json) {
       gamesJSON = json;
       whoIsWho();
       setSalvoes();
@@ -214,14 +218,14 @@ function shipPOST() {
   }
 
   fetch("/api/games/players/" + gpId + "/ships", {
-    method: "POST",
-    body: JSON.stringify(shipArray),
-    headers: {
-      "Content-Type": "application/json"
-    },
-    credentials: "same-origin"
-  })
-    .then(function(response) {
+      method: "POST",
+      body: JSON.stringify(shipArray),
+      headers: {
+        "Content-Type": "application/json"
+      },
+      credentials: "same-origin"
+    })
+    .then(function (response) {
       response.status;
       if (response.status == 201) {
         console.log("Ships Fetched");
@@ -229,10 +233,11 @@ function shipPOST() {
         console.log("invalid");
       }
     })
-    .then(function() {
+    .then(function () {
+      loadGrid(true)
       reload();
     })
-    .catch(function(error) {
+    .catch(function (error) {
       console.log(error);
     });
 }
@@ -250,14 +255,14 @@ function salvoesPOST() {
   }
 
   fetch("/api/games/players/" + gpId + "/salvoes", {
-    method: "POST",
-    body: JSON.stringify(salvoLocations),
-    headers: {
-      "Content-Type": "application/json"
-    },
-    credentials: "same-origin"
-  })
-    .then(function(response) {
+      method: "POST",
+      body: JSON.stringify(salvoLocations),
+      headers: {
+        "Content-Type": "application/json"
+      },
+      credentials: "same-origin"
+    })
+    .then(function (response) {
       response.status;
       if (response.status == 201) {
         console.log("Salvoes Fetched");
@@ -265,7 +270,7 @@ function salvoesPOST() {
       } else {
         console.log("Invalid");
         swal("Whoops", "You need to place 5 salvoes!", "error").then(
-          function() {
+          function () {
             toBeSalvo = document.querySelectorAll(".toBeSalvo");
             for (var i = 0; i < toBeSalvo.length; i++) {
               toBeSalvo[i].classList.remove("toBeSalvo");
@@ -276,7 +281,7 @@ function salvoesPOST() {
         );
       }
     })
-    .catch(function(error) {
+    .catch(function (error) {
       console.log(error);
     });
 }
@@ -294,11 +299,11 @@ function defaultShips() {
     grid.addWidget(
       $(
         '<div id="' +
-          shipType +
-          '"><div class="grid-stack-item-content ' +
-          shipType +
-          orientation +
-          '"></div><div/>'
+        shipType +
+        '"><div class="grid-stack-item-content ' +
+        shipType +
+        orientation +
+        '"></div><div/>'
       ),
       x,
       y,
@@ -319,31 +324,22 @@ function defaultShips() {
 //-------------- Event Listeners
 //-------------------------------------------------------------------------------------
 
-var counter = 0;
-
 function salvoesClick() {
   const salvo_cell = document.getElementsByClassName("grid-cell");
 
-  // for (let i = 0; i < 10; i++) {
-  //   for (let j = 0; j < 10; j++) {
-  //     salvo_cell.push(document.getElementById("salvoes" + i + j));
-  //   }
-  // }
-
   for (var i = 0; i < salvo_cell.length; i++) {
-    salvo_cell[i].addEventListener("click", function(e) {
+    salvo_cell[i].addEventListener("click", function (e) {
       e.preventDefault();
       var cellId = e.target.id;
       var cellShot = document.getElementById(cellId);
+      var counter = document.getElementsByClassName("toBeSalvo").length;
 
       if (cellShot.classList.contains("toBeSalvo")) {
         cellShot = document
           .getElementById(cellId)
           .classList.remove("toBeSalvo");
-        counter--;
       } else if (!cellShot.classList.contains("toBeSalvo") && counter < 5) {
         cellShot = document.getElementById(cellId).classList.add("toBeSalvo");
-        counter++;
       }
     });
   }
