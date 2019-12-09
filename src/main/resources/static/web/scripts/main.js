@@ -236,7 +236,6 @@ function shipPOST() {
       }
     })
     .then(function () {
-      loadGrid(true)
       reload();
     })
     .catch(function (error) {
