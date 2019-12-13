@@ -155,19 +155,19 @@ public class SalvoController {
             .collect(Collectors.toList()));
     dto.put("gameState", gamePlayer.gameState());
 
-
-    switch (dto.get("gameState").toString()) {
-      case "win":
-        scoreRepo.save(new Score(gamePlayer.getGame(), gamePlayer.getPlayer(), 1, new Date()));
-        break;
-      case "lose":
-        scoreRepo.save(new Score(gamePlayer.getGame(), gamePlayer.getPlayer(), 0, new Date()));
-        break;
-      case "tie":
-        scoreRepo.save(new Score(gamePlayer.getGame(), gamePlayer.getPlayer(), 0.5F, new Date()));
-        break;
+    if (gamePlayer.getPlayer().getScore(gamePlayer.getGame()) == null){
+      switch (dto.get("gameState").toString()) {
+        case "win":
+          scoreRepo.save(new Score(gamePlayer.getGame(), gamePlayer.getPlayer(), 1, new Date()));
+          break;
+        case "lose":
+          scoreRepo.save(new Score(gamePlayer.getGame(), gamePlayer.getPlayer(), 0, new Date()));
+          break;
+        case "tie":
+          scoreRepo.save(new Score(gamePlayer.getGame(), gamePlayer.getPlayer(), 0.5F, new Date()));
+          break;
+      }
     }
-
     return dto;
   }
 
