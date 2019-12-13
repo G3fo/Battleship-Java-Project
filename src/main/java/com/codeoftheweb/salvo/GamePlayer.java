@@ -85,6 +85,9 @@ public class GamePlayer {
         //dto.put("Player", this.getPlayer().createGameDTO_Player());
         dto.put("id", this.getPlayer().getPlayerId());
         dto.put("user", this.getPlayer().getUserName());
+        if(this.getPlayer().getScore(this.getGame()) != null)
+            dto.put("score", this.getPlayer().getScore(this.getGame()).getScore());
+        else dto.put("score", null);
         return dto;
     }
 
@@ -105,6 +108,7 @@ public class GamePlayer {
         GamePlayer enemyGamePlayer = this.getGame().getGamePlayers().stream().filter(gamePlayer -> gamePlayer.getGamePlayerId() != this.getGamePlayerId()).findFirst().orElse(null);
         return enemyGamePlayer;
     }
+    
 
     private long getGamePlayerSink(int turn, Set <Salvo> salvo, Set <Ship> ships){
         List<String> shoot = new LinkedList<>();

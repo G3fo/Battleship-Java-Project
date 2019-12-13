@@ -1,9 +1,6 @@
 package com.codeoftheweb.salvo;
 
-import com.codeoftheweb.salvo.repos.GamePlayerRepository;
-import com.codeoftheweb.salvo.repos.GameRepository;
-import com.codeoftheweb.salvo.repos.PlayerRepository;
-import com.codeoftheweb.salvo.repos.ShipRepository;
+import com.codeoftheweb.salvo.repos.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +27,8 @@ public class SalvoController {
   private PlayerRepository playerRepository;
   @Autowired
   private ShipRepository shipRepo;
+  @Autowired
+  private ScoreRepository scoreRepo;
   @Autowired
   PasswordEncoder passwordEncoder;
 
@@ -155,6 +154,20 @@ public class SalvoController {
             .flatMap(gp -> gp.getSalvoes().stream().sorted(Comparator.comparing(Salvo::getTurn)).map(Salvo::createGameDTO_Salvo))
             .collect(Collectors.toList()));
     dto.put("gameState", gamePlayer.gameState());
+
+
+    switch (dto.get("gameState").toString()) {
+      case "win":
+        scoreRepo.save(new Score(gamePlayer.getGame(), gamePlayer.getPlayer(), 1, new Date()));
+        break;
+      case "lose":
+        scoreRepo.save(new Score(gamePlayer.getGame(), gamePlayer.getPlayer(), 0, new Date()));
+        break;
+      case "tie":
+        scoreRepo.save(new Score(gamePlayer.getGame(), gamePlayer.getPlayer(), 0.5F, new Date()));
+        break;
+    }
+
     return dto;
   }
 
@@ -209,6 +222,7 @@ public class SalvoController {
     ResponseEntity<Object> response;
     Player currentUser = playerRepository.findByUserName(authentication.getName());
 
+
     if(this.isGuest(authentication)){
       response = new ResponseEntity<>(makeMap("error", "You need to login!"), HttpStatus.UNAUTHORIZED);
     } else if(!OPTgamePlayer.isPresent()){
@@ -225,14 +239,8 @@ public class SalvoController {
       gamePlayerRepository.save(gamePlayer);
 
       response = new ResponseEntity<>(makeMap("success","Salvoes were saved succesfully!"), HttpStatus.CREATED);
-
     }
+
     return response;
   }
-
-
-
-
-
 }
-
